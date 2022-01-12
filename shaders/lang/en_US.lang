@@ -1,0 +1,19 @@
+screen.WATER_COLOR_SCREEN = Water colors
+option.WATER_R = Water color red
+option.WATER_G = Water color green
+option.WATER_B = Water color blue
+option.WATER_A = Water color alpha
+
+screen.TORCH_COLOR_SCREEN = Torch colors
+option.TORCH_R = Torch color red
+option.TORCH_G = Torch color green
+option.TORCH_B = Torch color blue
+
+screen.UNDERWATER_COLOR_SCREEN = Underwater colors
+option.UNDERWATER_R = Underwater color red
+option.UNDERWATER_G = Underwater color green
+option.UNDERWATER_B = Underwater color blue
+
+option.CONTRAST = Contrast
+option.SHADOWS = Shadows
+option.SHADOW_MAX_DIST = Max shadows distance
