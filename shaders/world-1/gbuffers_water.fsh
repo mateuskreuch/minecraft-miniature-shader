@@ -16,7 +16,7 @@ varying float texstrength;
 varying float absorption;
 
 void main() {
-   vec4 albedo  = texture2D(texture, texcoord) * color;
+   vec4 albedo  = texture2D(texture, texcoord);
    vec4 ambient = texture2D(lightmap, lmcoord);
 
    albedo = absorption > 0.99 ? vec4(max(1.5*texstrength * albedo.rgb, vec3(1.0)), 1.0) * color * vec4(WATER_R, WATER_G, WATER_B, WATER_A)
