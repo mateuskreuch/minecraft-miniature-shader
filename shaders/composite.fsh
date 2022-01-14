@@ -101,7 +101,6 @@ void main() {
       diffuse *= normal.a < 1.0 ? normal.a : max(dot(normal.xyz, lightPos), 0.0);
 
       // apply diffuse
-      // color.rgb = vec3(CONTRAST * diffuse);
       color.rgb += albedo.rgb * CONTRAST * diffuse * lightColor;
 
       // pass info along
