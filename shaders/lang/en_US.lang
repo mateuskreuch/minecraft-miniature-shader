@@ -1,8 +1,9 @@
-screen.WATER_COLOR_SCREEN = Water colors
+screen.WATER_OPTIONS_SCREEN = Water options
 option.WATER_R = Water color red
 option.WATER_G = Water color green
 option.WATER_B = Water color blue
 option.WATER_A = Water color alpha
+option.WATER_SHOW_SOME_TEXTURE = Show some texture
 
 screen.TORCH_COLOR_SCREEN = Torch colors
 option.TORCH_R = Torch color red
