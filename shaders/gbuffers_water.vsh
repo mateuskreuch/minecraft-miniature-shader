@@ -19,7 +19,7 @@ varying float texstrength;
 varying float absorption;
 
 float noise(vec2 pos) {
-	return 2.0*max(fract(sin(dot(pos ,vec2(18.9898,28.633))) * 4378.5453) - 0.5, 0.0);
+	return 2.0*max(fract(sin(dot(pos, vec2(18.9898, 28.633))) * 4378.5453) - 0.5, 0.0);
 }
 
 void main() {
