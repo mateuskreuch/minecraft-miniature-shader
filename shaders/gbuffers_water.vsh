@@ -37,8 +37,7 @@ void main() {
    
    vec3 worldpos = position.xyz + floor(cameraPosition);
    
-   texstrength = noise(floor(worldpos.xz));
-   texstrength = sin(TAU * texstrength * texstrength);
+   texstrength = max(noise(floor(worldpos.xz)), 0.4);
    #else
    texstrength = 0.0;
    #endif

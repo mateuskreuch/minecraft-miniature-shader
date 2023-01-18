@@ -45,6 +45,7 @@ bool isReflective(vec2 uv) {
 void main() {
    vec4 color = texture2D(colortex3, texcoord);
 
+   #ifdef WATER_REFLECTION
    if (isReflective(texcoord)) {
       float depth  = texture2D(depthtex0, texcoord).x;
 
@@ -106,6 +107,7 @@ void main() {
       // (where pure white doesn't reflect anything)
       color.rgb = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel * (1.0 - color.rgb));
    }
+   #endif
 
    gl_FragData[0] = color;
 }

@@ -3,6 +3,7 @@ option.WATER_R = Water color red
 option.WATER_G = Water color green
 option.WATER_B = Water color blue
 option.WATER_A = Water color alpha
+option.WATER_REFLECTION = Reflection
 option.WATER_SHOW_SOME_TEXTURE = Show some texture
 
 screen.TORCH_COLOR_SCREEN = Torch colors
