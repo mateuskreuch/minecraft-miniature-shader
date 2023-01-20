@@ -45,7 +45,7 @@ bool isReflective(vec2 uv) {
 void main() {
    vec4 color = texture2D(colortex3, texcoord);
 
-   #ifdef WATER_REFLECTION
+   #ifdef REFLECTIONS
    if (isReflective(texcoord)) {
       float depth  = texture2D(depthtex0, texcoord).x;
 

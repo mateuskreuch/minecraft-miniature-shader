@@ -45,7 +45,7 @@ bool isReflective(vec2 uv) {
 void main() {
    vec4 color = texture2D(colortex3, texcoord);
 
-   #ifdef WATER_REFLECTION
+   #ifdef REFLECTIONS
    if (isReflective(texcoord)) {
       float depth  = texture2D(depthtex0, texcoord).x;
 
@@ -103,9 +103,7 @@ void main() {
       // also fade reflection with fresnel
       float fresnel = 1.0 - dot(normal, -normalize(fragPos));
 
-      // lastly, fade reflection depending on color of water
-      // (where pure white doesn't reflect anything)
-      color.rgb = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel * (1.0 - color.rgb));
+      color.rgb = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel);
    }
    #endif
 

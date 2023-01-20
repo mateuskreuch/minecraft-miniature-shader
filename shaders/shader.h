@@ -14,7 +14,7 @@
 #endif
 
 #ifdef final
-#define WATER_REFLECTION
+#define REFLECTIONS
 
 #define MAX_RAYS 15
 #define MAX_REFINEMENTS 4
