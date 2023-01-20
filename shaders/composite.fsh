@@ -98,7 +98,7 @@ void main() {
 
       // objects with lower normal alpha are thin and have
       // constant diffuse to simulate subsurface scattering
-      diffuse *= normal.a < 1.0 ? normal.a : max(dot(normal.xyz, lightPos), 0.0);
+      diffuse *= normal.a < 1.0 ? normal.a : clamp(2.5*dot(normal.xyz, lightPos), 0.0, 1.0);
 
       // apply diffuse
       color.rgb += albedo.rgb * CONTRAST * diffuse * lightColor;
