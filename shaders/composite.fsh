@@ -61,6 +61,9 @@ void main() {
    }
    // has normal, therefore can receive diffuse light
    else if (normal != color) {
+      // re-scale normal back to -1..1
+      normal.xyz = normal.xyz*2.0 - 1.0;
+
       // absorption effect on diffuse strength
       float diffuse = 1.0 - info.b;
 
@@ -91,14 +94,19 @@ void main() {
             diffuse *= 1.0 - shadowFade * clamp(-shadowScreen.z - shadowDepth, 0.0, 1.0);
          }
       }
-      #endif
-
-      // re-scale normal back to -1..1
-      normal.xyz = normal.xyz*2.0 - 1.0;
 
       // objects with lower normal alpha are thin and have
       // constant diffuse to simulate subsurface scattering
       diffuse *= normal.a < 1.0 ? normal.a : clamp(2.5*dot(normal.xyz, lightPos), 0.0, 1.0);
+      #else
+      // since there are no shadows, make it so that thin objects have upwards
+      // normal, to match ground color
+      if (normal.a < 1.0) {
+         normal.xyz = vec3(0.0, 1.0, 0.0);
+      }
+
+      diffuse *= clamp(2.5*dot(normal.xyz, lightPos), 0.0, 1.0);
+      #endif
 
       // apply diffuse
       color.rgb += albedo.rgb * CONTRAST * diffuse * lightColor;
