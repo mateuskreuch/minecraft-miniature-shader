@@ -7,6 +7,7 @@
 
 uniform sampler2D texture;
 uniform sampler2D lightmap;
+uniform vec3 fogColor;
 
 varying vec4 color;
 varying vec2 lmcoord;
@@ -14,6 +15,7 @@ varying vec4 normal;
 varying vec2 texcoord;
 varying float texstrength;
 varying float absorption;
+varying float fogMix;
 
 void main() {
    vec4 albedo  = texture2D(texture, texcoord);
@@ -30,11 +32,15 @@ void main() {
    // remove default torch light and apply ours
    ambient.rgb = ((1.0/CONTRAST) * max(ambient.g - torchLight, 0.0)
                + (0.5 + CONTRAST) * torchLight * vec3(TORCH_R, TORCH_G, TORCH_B));
+
+   ambient *= albedo;
+   ambient.rgb = mix(ambient.rgb, fogColor, fogMix);
    
-   gl_FragData[0] = albedo * ambient;
+   gl_FragData[0] = ambient;
    gl_FragData[1] = normal;
    gl_FragData[2] = albedo;
 
-   // encode specular (r), sky light (g) and absorption (b)
+   // encode lighting interaction (r), sky light (g) and absorption (b)
+   // r == 0.0: normal terrain, 0.5: subsurface scattering, 1.0: reflective
    gl_FragData[3] = vec4(1.0, lmcoord.t, absorption, 1.0);
 }

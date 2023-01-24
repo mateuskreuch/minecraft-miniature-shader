@@ -39,7 +39,7 @@ vec3 world2screen(vec3 world) {
 }
 
 bool isReflective(vec2 uv) {
-   return texture2D(colortex7, uv).x > 0.0;
+   return texture2D(colortex7, uv).x > 0.75;
 }
 
 void main() {
@@ -103,9 +103,7 @@ void main() {
       // also fade reflection with fresnel
       float fresnel = 1.0 - dot(normal, -normalize(fragPos));
 
-      // lastly, fade reflection depending on color of water
-      // (where pure white doesn't reflect anything)
-      color.rgb = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel * (1.0 - color.rgb));
+      color.rgb = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel);
    }
    #endif
 

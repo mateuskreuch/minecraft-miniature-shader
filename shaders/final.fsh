@@ -39,7 +39,7 @@ vec3 world2screen(vec3 world) {
 }
 
 bool isReflective(vec2 uv) {
-   return texture2D(colortex7, uv).x > 0.0;
+   return texture2D(colortex7, uv).x > 0.75;
 }
 
 void main() {

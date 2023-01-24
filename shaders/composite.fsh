@@ -41,6 +41,10 @@ float squaredLength(vec3 v) {
    return dot(v, v);
 }
 
+bool isThin(vec4 info) {
+   return info.x > 0.25 && info.x < 0.75;
+}
+
 void main() {
    vec4 color  = texture2D(colortex0, texcoord);
    vec4 normal = texture2D(colortex2, texcoord);
@@ -95,13 +99,12 @@ void main() {
          }
       }
 
-      // objects with lower normal alpha are thin and have
-      // constant diffuse to simulate subsurface scattering
-      diffuse *= normal.a < 1.0 ? normal.a : clamp(2.5*dot(normal.xyz, lightPos), 0.0, 1.0);
+      // thin objects have constant diffuse to simulate subsurface scattering
+      diffuse *= isThin(info) ? 0.75 : clamp(2.5*dot(normal.xyz, lightPos), 0.0, 1.0);
       #else
       // since there are no shadows, make it so that thin objects have upwards
       // normal, to match ground color
-      if (normal.a < 1.0) {
+      if (isThin(info)) {
          normal.xyz = vec3(0.0, 1.0, 0.0);
       }
 
