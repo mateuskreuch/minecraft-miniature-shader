@@ -11,6 +11,7 @@ uniform vec3 cameraPosition;
 uniform mat4 gbufferModelViewInverse;
 uniform float fogStart;
 uniform float fogEnd;
+uniform int worldTime;
 
 varying vec4 color;
 varying vec2 lmcoord;
@@ -30,8 +31,14 @@ vec3 getWorldPosition() {
         + gbufferModelViewInverse[3].xyz;
 }
 
-float calculateFog(vec3 worldPos) {
-   return clamp((length(worldPos.xz) - fogStart) / (fogEnd - fogStart), 0.0, 1.0);
+float calculateFog(float fogDepth) {
+   float x = worldTime/24000.0;
+
+   x = clamp(25.0*(x < MIDNIGHT ? SUNSET - x : x - SUNRISE) + 0.3,
+             OVERWORLD_FOG_MIN,
+             OVERWORLD_FOG_MAX); 
+
+   return clamp((fogDepth - x*fogStart) / (fogEnd - x*fogStart), 0.0, 1.0);
 }
 
 void main() {
@@ -51,11 +58,11 @@ void main() {
    texstrength = 0.0;
    #endif
 
-   fogMix = calculateFog(worldPos);
+   fogMix = calculateFog(length(worldPos.xz));
 
    // scale normal to 0..1
    normal = vec4(0.5 + 0.5*gl_Normal, 1.0);
 
-   // if the water is pointing directly up there's no texture
+   // if the water is pointing directly up there's just some texture
    texstrength = gl_Normal.x == 0.0 && gl_Normal.z == 0.0 ? texstrength : 1.0;
 }

@@ -16,6 +16,11 @@ option.UNDERWATER_R = Underwater color red
 option.UNDERWATER_G = Underwater color green
 option.UNDERWATER_B = Underwater color blue
 
+screen.FOG_OPTIONS_SCREEN = Fog options
+option.OVERWORLD_FOG_MIN = Min overworld fog
+option.OVERWORLD_FOG_MAX = Max overworld fog
+option.NETHER_FOG = Nether fog
+
 option.CONTRAST = Contrast
 option.SHADOWS = Shadows
 option.SHADOW_MAX_DIST = Max shadows distance

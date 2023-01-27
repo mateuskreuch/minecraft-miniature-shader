@@ -30,8 +30,8 @@ vec3 getWorldPosition() {
         + gbufferModelViewInverse[3].xyz;
 }
 
-float calculateFog(vec3 worldPos) {
-   return clamp((length(worldPos) - fogStart) / (fogEnd - fogStart), 0.0, 1.0);
+float calculateFog(float fogDepth) {
+   return clamp((fogDepth - fogStart) / (NETHER_FOG*fogEnd - fogStart), 0.0, 1.0);
 }
 
 void main() {
@@ -51,11 +51,11 @@ void main() {
    texstrength = 0.0;
    #endif
 
-   fogMix = calculateFog(worldPos);
+   fogMix = calculateFog(length(worldPos));
 
    // scale normal to 0..1
    normal = vec4(0.5 + 0.5*gl_Normal, 1.0);
 
-   // if the water is pointing directly up there's no texture
+   // if the water is pointing directly up there's just some texture
    texstrength = gl_Normal.x == 0.0 && gl_Normal.z == 0.0 ? texstrength : 1.0;
 }

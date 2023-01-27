@@ -1,5 +1,7 @@
 #version 120
 
+#include "/shader.h"
+
 attribute vec4 mc_Entity;
 
 uniform mat4 gbufferModelViewInverse;
@@ -19,8 +21,8 @@ vec3 getWorldPosition() {
         + gbufferModelViewInverse[3].xyz;
 }
 
-float calculateFog(vec3 worldPos) {
-   return clamp((length(worldPos) - fogStart) / (fogEnd - fogStart), 0.0, 1.0);
+float calculateFog(float fogDepth) {
+   return clamp((fogDepth - fogStart) / (NETHER_FOG*fogEnd - fogStart), 0.0, 1.0);
 }
 
 void main() {
@@ -30,7 +32,7 @@ void main() {
    lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    isThin = mc_Entity.x == 10031.0 ? 0.5 : 0.0;
-   fogMix = calculateFog(getWorldPosition());
+   fogMix = calculateFog(length(getWorldPosition()));
 
    // scale normal to 0..1
    normal = vec4(0.5 + 0.5*gl_Normal, 1.0);

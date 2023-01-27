@@ -1,9 +1,6 @@
 #version 120
 
-#define NOON 0.25
-#define SUNSET 0.5325 // 12780
-#define MIDNIGHT 0.75
-#define SUNRISE 0.9675 // 23220
+#include "shader.h"
 
 uniform mat4 gbufferModelViewInverse;
 uniform vec3 moonPosition;
