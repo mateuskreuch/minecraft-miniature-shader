@@ -25,7 +25,7 @@
 #ifdef final
 #define REFLECTIONS
 
-#define MAX_RAYS 15
+#define MAX_RAYS 16
 #define MAX_REFINEMENTS 4
 #define RAY_MULT 2.0
 #define REFINEMENT_MULT 0.1
