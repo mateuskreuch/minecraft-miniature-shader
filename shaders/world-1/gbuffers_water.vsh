@@ -11,6 +11,7 @@ uniform vec3 cameraPosition;
 uniform mat4 gbufferModelViewInverse;
 uniform float fogStart;
 uniform float fogEnd;
+uniform int isEyeInWater;
 
 varying vec4 color;
 varying vec2 lmcoord;
@@ -31,7 +32,7 @@ vec3 getWorldPosition() {
 }
 
 float calculateFog(float fogDepth) {
-   return clamp((fogDepth - fogStart) / (NETHER_FOG*fogEnd - fogStart), 0.0, 1.0);
+   return clamp((fogDepth - fogStart) / ((isEyeInWater == 0 ? NETHER_FOG : 1.0)*fogEnd - fogStart), 0.0, 1.0);
 }
 
 void main() {

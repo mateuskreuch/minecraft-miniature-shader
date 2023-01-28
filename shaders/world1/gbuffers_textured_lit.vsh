@@ -22,7 +22,7 @@ vec3 getWorldPosition() {
 }
 
 float calculateFog(float fogDepth) {
-   return clamp((fogDepth - 0.3*fogStart) / (fogEnd - 0.3*fogStart), 0.0, 1.0);
+   return clamp((fogDepth - fogStart) / (fogEnd - fogStart), 0.0, 1.0);
 }
 
 void main() {

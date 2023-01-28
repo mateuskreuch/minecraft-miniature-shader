@@ -13,7 +13,6 @@ uniform sampler2D depthtex0;
 uniform mat4 gbufferProjectionInverse;
 uniform mat4 gbufferModelViewInverse;
 uniform float rainStrength;
-uniform int isEyeInWater;
 
 #ifdef SHADOWS
 uniform sampler2D shadow;
@@ -53,18 +52,8 @@ void main() {
 
    gl_FragData[1] = normal;
 
-   // is in liquid
-   if (isEyeInWater > 0) {
-      float depth = texture2D(depthtex0, texcoord).x;
-
-      color.rgb = mix(
-         color.rgb,
-         isEyeInWater == 1 ? gl_Fog.color.rgb * vec3(UNDERWATER_R, UNDERWATER_G, UNDERWATER_B) : gl_Fog.color.rgb,
-         isEyeInWater == 1 ? exp(300.0*(depth - 1.0)) : clamp(3.0*depth - 1.9, 0.0, 1.0)
-      );
-   }
    // has normal, therefore can receive diffuse light
-   else if (normal != color) {
+   if (normal.a > 0.01) {
       // re-scale normal back to -1..1
       normal.xyz = normal.xyz*2.0 - 1.0;
 
@@ -110,6 +99,10 @@ void main() {
 
       diffuse *= clamp(2.5*dot(normal.xyz, lightPos), 0.0, 1.0);
       #endif
+      
+      // tint shadows blue based on absorption
+      color.rg *= vec2(0.85 + 0.15*info.b);
+      albedo.b *= 0.85 + 0.15*info.b;
 
       // apply diffuse
       color.rgb += albedo.rgb * CONTRAST * diffuse * lightColor;
