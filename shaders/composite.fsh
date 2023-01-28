@@ -75,7 +75,7 @@ void main() {
       diffuse *= max(1.0 - rainStrength, 0.1);
 
       // reduce diffuse on dark spots
-      diffuse *= 2.0*max(info.g - 0.5, 0.0);
+      diffuse *= 2.0*max(min(1.6*info.g, 1.0) - 0.5, 0.0);
 
       #ifdef SHADOWS
       float depth  = texture2D(depthtex0, texcoord).x;
