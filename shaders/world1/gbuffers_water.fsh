@@ -42,5 +42,5 @@ void main() {
 
    // encode lighting interaction (r), sky light (g) and absorption (b)
    // r == 0.0: normal terrain, 0.5: subsurface scattering, 1.0: reflective
-   gl_FragData[3] = vec4(1.0, lmcoord.t, absorption, 1.0);
+   gl_FragData[3] = vec4(1.0, lmcoord.t, max(absorption, fogMix), 1.0);
 }
