@@ -28,7 +28,7 @@ void main() {
 
    // make light redder on sunrise and sunset
    lightColor = isDay ? normalize(vec3(1.0 + clamp(66.0*(y - NOON)*(y - NOON) - 3.7142, 0.4, 1.0), 1.1, 1.0))
-                      : vec3(0.05, 0.05, 0.15); 
+                      : vec3(0.04, 0.04, 0.12); 
    
    // create transition between color presets
    lightColor *= clamp(2.0*75.0*abs(x - (x < MIDNIGHT ? SUNSET : SUNRISE)) - 1.0, 0.0, 1.0);
