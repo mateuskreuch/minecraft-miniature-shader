@@ -3,21 +3,15 @@
 #include "shader.h"
 
 uniform mat4 gbufferModelViewInverse;
-uniform vec3 moonPosition;
-uniform vec3 sunPosition;
+uniform vec3 shadowLightPosition;
 uniform int  worldTime;
 
 varying vec3 lightColor;
-varying vec3 lightPos;
+varying vec3 lightPosition;
 varying vec2 texcoord;
 
 vec3 screen2world(vec3 screen) {
-   mat4 modelViewInverse = gbufferModelViewInverse;
-
-   // clear transformations to stabilize conversions
-   modelViewInverse[3] = vec4(0.0, 0.0, 0.0, 1.0);
-
-   return (modelViewInverse * vec4(screen, 1.0)).xyz;
+   return mat3(gbufferModelViewInverse) * screen;
 }
 
 void main() {
@@ -25,12 +19,12 @@ void main() {
 
    texcoord = gl_MultiTexCoord0.st;
 
-   float x    = worldTime/24000.0;
+   float x    = worldTime * NORMALIZE_TIME;
    float y    = x > SUNRISE ? x - 1.0 : x;
    bool isDay = x > SUNRISE || x < SUNSET;
    
    // get world-space light position
-   lightPos = screen2world(normalize(isDay ? sunPosition : moonPosition));
+   lightPosition = screen2world(normalize(shadowLightPosition));
 
    // make light redder on sunrise and sunset
    lightColor = isDay ? normalize(vec3(1.0 + clamp(66.0*(y - NOON)*(y - NOON) - 3.7142, 0.4, 1.0), 1.1, 1.0))

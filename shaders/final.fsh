@@ -17,12 +17,8 @@ vec3 nvec3(vec4 pos) {
    return pos.xyz / pos.w;
 }
 
-// vec3 screen2world(vec3 screen) {
-//    return (gbufferModelViewInverse * vec4(screen, 1.0)).xyz;
-// }
-
-vec3 screen2uv(vec3 screen) {
-   return 0.5*nvec3(gbufferProjection * vec4(screen, 1.0)) + 0.5;
+vec2 screen2uv(vec3 screen) {
+   return (0.5*nvec3(gbufferProjection * vec4(screen, 1.0)) + 0.5).st;
 }
 
 vec3 uv2screen(vec2 uv, float depth) {
@@ -30,12 +26,7 @@ vec3 uv2screen(vec2 uv, float depth) {
 }
 
 vec3 world2screen(vec3 world) {
-   mat4 modelView = gbufferModelView;
-
-   // clear transformations to stabilize conversions
-   modelView[3] = vec4(0.0, 0.0, 0.0, 1.0);
-
-   return (modelView * vec4(world, 1.0)).xyz;
+   return mat3(gbufferModelView) * world;
 }
 
 bool isReflective(vec2 uv) {
@@ -47,12 +38,12 @@ void main() {
 
    #ifdef REFLECTIONS
    if (isReflective(texcoord)) {
-      float depth  = texture2D(depthtex0, texcoord).x;
+      float depth = texture2D(depthtex0, texcoord).x;
 
       // the normal doesn't come premultiplied by the normal matrix to
       // avoid the modelview transformations when view bobbing is on
       // which causes severe artifacts when moving
-      vec3 normal  = normalize(world2screen(texture2D(colortex6, texcoord).xyz*2.0 - 1.0));
+      vec3 normal  = world2screen(texture2D(colortex6, texcoord).xyz*2.0 - 1.0);
       vec3 fragPos = uv2screen(texcoord, depth);
 
       vec4 reflectionColor = vec4(0.0);
@@ -63,29 +54,27 @@ void main() {
       int j = 0;
       
       for (int _ = 0; _ < MAX_RAYS; _++) {
-         vec3 curUV = screen2uv(curPos);
+         vec2 curUV = screen2uv(curPos);
 
-         if (curUV.x < 0.0 || curUV.x > 1.0
-         ||  curUV.y < 0.0 || curUV.y > 1.0
-         ||  curUV.z < 0.0 || curUV.z > 1.0)
+         if (curUV.s < 0.0 || curUV.s > 1.0 || curUV.t < 0.0 || curUV.t > 1.0)
             break;
          
-         vec3 sample = uv2screen(curUV.st, texture2D(depthtex0, curUV.st).x);
+         vec3 sample = uv2screen(curUV, texture2D(depthtex0, curUV).x);
          float dist  = abs(curPos.z - sample.z);
          float len   = dot(reflection, reflection);
 
          // check if distance between last and current depth is
          // smaller than the current length of the reflection vector
          // the numbers are trial and error to produce less distortion
-         if (dist*dist < 2.0*len * exp(0.03*len) && !isReflective(curUV.st)) {
+         if (dist*dist < 2.0*len * exp(0.03*len) && !isReflective(curUV)) {
             j++;
 
             if (j >= MAX_REFINEMENTS) {
                // fade reflection with vignette
-               vec2 vignette = curUV.st * (1.0 - curUV.st);
+               vec2 vignette = curUV * (1.0 - curUV);
 
                reflectionColor = vec4(
-                  texture2D(colortex3, curUV.st).rgb,
+                  texture2D(colortex3, curUV).rgb,
                   clamp(pow(15.0*vignette.s*vignette.t, 1.5), 0.0, 1.0)
                );
                break;

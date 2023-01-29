@@ -1,8 +1,14 @@
+const float NORMALIZE_TIME = 1.0/24000.0;
+
 #define CONTRAST 1.2 //[1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0]
+
+const float INV_CONTRAST = 1.0/CONTRAST;
 
 #define TORCH_R 1.0 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 #define TORCH_G 0.8 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 #define TORCH_B 0.6 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+
+const vec3 TORCH_COLOR = vec3(TORCH_R, TORCH_G, TORCH_B);
 
 #define NOON 0.25 // 6000
 #define SUNSET 0.5325 // 12780
@@ -17,9 +23,8 @@
 #define SHADOWS
 #define SHADOW_MAX_DIST 96.0 //[8.0 16.0 24.0 32.0 48.0 64.0 96.0 128.0 192.0 256.0]
 
-#define UNDERWATER_R 1.0 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define UNDERWATER_G 1.0 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define UNDERWATER_B 0.6 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+const float SHADOW_MAX_DIST_SQUARED = SHADOW_MAX_DIST * SHADOW_MAX_DIST;
+const float INV_SHADOW_MAX_DIST_SQUARED = 1.0/SHADOW_MAX_DIST_SQUARED;
 #endif
 
 #ifdef final
@@ -38,4 +43,6 @@
 #define WATER_G 0.4  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 #define WATER_B 0.25 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 #define WATER_A 0.6  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+
+const vec4 WATER_COLOR = vec4(WATER_R, WATER_G, WATER_B, WATER_A);
 #endif

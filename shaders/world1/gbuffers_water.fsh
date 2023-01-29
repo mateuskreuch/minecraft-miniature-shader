@@ -13,9 +13,12 @@ varying vec4 color;
 varying vec2 lmcoord;
 varying vec4 normal;
 varying vec2 texcoord;
+
 varying float texstrength;
 varying float absorption;
 varying float fogMix;
+varying float torchLight;
+varying vec3 torchColor;
 
 void main() {
    vec4 albedo  = texture2D(texture, texcoord);
@@ -23,15 +26,11 @@ void main() {
 
    albedo = absorption > 0.99 
       ? vec4(max(3.0*texstrength * (albedo.rgb - 0.5) + 0.5, vec3(1.0)), 1.0)
-      * color
-      * vec4(WATER_R, WATER_G, WATER_B, WATER_A)
+      * color * WATER_COLOR
       : albedo * color;
-   
-   float torchLight = pow(lmcoord.s, CONTRAST + 1.5);
 
    // remove default torch light and apply ours
-   ambient.rgb = ((1.0/CONTRAST) * max(ambient.g - torchLight, 0.0)
-               + (0.5 + CONTRAST) * torchLight * vec3(TORCH_R, TORCH_G, TORCH_B));
+   ambient.rgb = INV_CONTRAST * max(ambient.g - torchLight, 0.0) + torchColor;
 
    ambient *= albedo;
    ambient.rgb = mix(ambient.rgb, fogColor, fogMix);

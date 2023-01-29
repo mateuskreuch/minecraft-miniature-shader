@@ -15,8 +15,11 @@ varying vec4 color;
 varying vec4 normal;
 varying vec2 lmcoord;
 varying vec2 texcoord;
+
 varying float isThin;
 varying float fogMix;
+varying float torchLight;
+varying vec3 torchColor;
 
 void main() {
    vec4 albedo  = texture2D(texture, texcoord) * color;
@@ -28,11 +31,8 @@ void main() {
    // render entity color changes (e.g taking damage)
    albedo.rgb = mix(albedo.rgb, entityColor.rgb, entityColor.a);
 
-   float torchLight = pow(lmcoord.s, CONTRAST + 1.5);
-
    // remove default torch light and apply ours
-   ambient.rgb = ((1.0/CONTRAST) * max(ambient.g - torchLight, 0.0)
-               + (0.5 + CONTRAST) * torchLight * vec3(TORCH_R, TORCH_G, TORCH_B));
+   ambient.rgb = INV_CONTRAST * max(ambient.g - torchLight, 0.0) + torchColor;
    
    ambient *= albedo;
    ambient.rgb = mix(ambient.rgb, fogColor, fogMix);
