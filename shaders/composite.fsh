@@ -42,10 +42,6 @@ void main() {
 
    // has diffuse info
    if (info.a > 0.01) {
-      // tint shadows blue based on reflectiveness
-      color.rg *= (1.0 - SHADOW_BLUENESS) + SHADOW_BLUENESS * info.x;
-      albedo.b *= (1.0 - SHADOW_BLUENESS) + SHADOW_BLUENESS * info.x;
-
       float lightStrength = 1.0;
       float depth  = texture2D(depthtex0, texcoord).x;
       vec3 fragPos = uv2screen(texcoord, depth);
@@ -67,7 +63,7 @@ void main() {
          }
       }
 
-      color.rgb += (CONTRAST * min(info.z*2.0 - 1.0, lightStrength))
+      color.rgb += (CONTRAST * min(info.x*2.0 - 1.0, lightStrength))
                  * (albedo.rgb * lightColor);
    }
 

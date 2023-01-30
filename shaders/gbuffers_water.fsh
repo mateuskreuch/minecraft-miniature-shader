@@ -35,12 +35,15 @@ void main() {
    ambient.rgb = INV_CONTRAST * max(ambient.g - torchLight, 0.0) + torchColor;
 
    ambient *= albedo;
+
+   // tint shadows blue based on reflectiveness
+   ambient.rg *= (1.0 - SHADOW_BLUENESS) + SHADOW_BLUENESS * reflectiveness;
+   albedo.b   *= (1.0 - SHADOW_BLUENESS) + SHADOW_BLUENESS * reflectiveness;
+
    ambient.rgb = mix(ambient.rgb, fogColor, fogMix);
    
    gl_FragData[0] = ambient;
    gl_FragData[1] = normal;
    gl_FragData[2] = albedo;
-
-   // encode reflectiveness (x) and diffuse (z)
-   gl_FragData[3] = vec4(reflectiveness, 0.0, diffuse, 1.0);
+   gl_FragData[3] = vec4(diffuse, 0.0, 0.0, 1.0);
 }
