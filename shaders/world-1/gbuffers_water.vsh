@@ -58,11 +58,15 @@ void main() {
    texstrength = 0.0;
    #endif
 
-   fogMix = calculateFog(length(worldPos));
-
    // scale normal to 0..1
    normal = vec4(0.5 + 0.5*gl_Normal, 1.0);
 
    // if the water is pointing directly up there's just some texture
    texstrength = gl_Normal.x == 0.0 && gl_Normal.z == 0.0 ? texstrength : 1.0;
+
+   #if MC_VERSION >= 11300
+   fogMix = calculateFog(length(worldPos));
+   #else
+   texstrength = 0.0;
+   #endif
 }

@@ -3,7 +3,7 @@
 #define composite
 #include "shader.h"
 
-/* DRAWBUFFERS:36 */
+/* DRAWBUFFERS:367 */
 
 uniform mat4 gbufferModelViewInverse;
 uniform mat4 gbufferProjectionInverse;
@@ -41,7 +41,7 @@ void main() {
    vec4 info   = texture2D(colortex5, texcoord);
 
    // has diffuse info
-   if (info.a > 0.01) {
+   if (info.a > 0.01 && info != color) {
       float lightStrength = 1.0;
       float depth  = texture2D(depthtex0, texcoord).x;
       vec3 fragPos = uv2screen(texcoord, depth);
@@ -65,6 +65,8 @@ void main() {
 
       color.rgb += (CONTRAST * min(info.x*2.0 - 1.0, lightStrength))
                  * (albedo.rgb * lightColor);
+
+      gl_FragData[2] = info;
    }
 
    gl_FragData[0] = color;

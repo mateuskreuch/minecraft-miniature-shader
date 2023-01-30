@@ -45,5 +45,5 @@ void main() {
    gl_FragData[0] = ambient;
    gl_FragData[1] = normal;
    gl_FragData[2] = albedo;
-   gl_FragData[3] = vec4(diffuse, 0.0, 0.0, 1.0);
+   gl_FragData[3] = vec4(diffuse, reflectiveness, 0.0, 1.0);
 }

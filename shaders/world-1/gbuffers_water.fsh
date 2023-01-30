@@ -3,7 +3,7 @@
 #define gbuffers_water
 #include "/shader.h"
 
-/* DRAWBUFFERS:02 */
+/* DRAWBUFFERS:025 */
 
 uniform vec3 fogColor;
 uniform sampler2D lightmap;
@@ -38,4 +38,5 @@ void main() {
    
    gl_FragData[0] = ambient;
    gl_FragData[1] = normal;
+   gl_FragData[2] = vec4(0.0, reflectiveness, 0.0, 1.0);
 }

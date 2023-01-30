@@ -54,9 +54,14 @@ void main() {
    texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    
    isThin = mc_Entity.x == 10031.0 ? 0.5 : 0.0;
-   fogMix = calculateFog(length(getWorldPosition().xz));
    torchLight = pow(lmcoord.s, CONTRAST + 1.5);
    torchColor = (0.5 + CONTRAST) * torchLight * TORCH_COLOR;
+
+   #if MC_VERSION >= 11300
+   fogMix = calculateFog(length(getWorldPosition().xz));
+   #else
+   fogMix = 0.0;
+   #endif
 
    vec3 lightPosition = screen2world(normalize(shadowLightPosition));
    

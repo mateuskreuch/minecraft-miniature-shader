@@ -35,7 +35,10 @@ void main() {
    lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
 
-   fogMix = calculateFog(length(getWorldPosition()));
    torchLight = pow(lmcoord.s, CONTRAST + 1.5);
    torchColor = (0.5 + CONTRAST) * torchLight * TORCH_COLOR;
+
+   #if MC_VERSION >= 11300
+   fogMix = calculateFog(length(getWorldPosition()));
+   #endif
 }

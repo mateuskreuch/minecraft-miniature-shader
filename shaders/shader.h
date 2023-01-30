@@ -23,28 +23,35 @@ const vec3 TORCH_COLOR = vec3(TORCH_R, TORCH_G, TORCH_B);
 #define NETHER_FOG 1.0 //[0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
 
 #ifdef composite
-#define SHADOW_MAX_DIST 96.0 //[8.0 16.0 24.0 32.0 48.0 64.0 96.0 128.0 192.0 256.0]
+   #define SHADOW_MAX_DIST 96.0 //[8.0 16.0 24.0 32.0 48.0 64.0 96.0 128.0 192.0 256.0]
 
-const float SHADOW_MAX_DIST_SQUARED = SHADOW_MAX_DIST * SHADOW_MAX_DIST;
-const float INV_SHADOW_MAX_DIST_SQUARED = 1.0/SHADOW_MAX_DIST_SQUARED;
+   const float SHADOW_MAX_DIST_SQUARED = SHADOW_MAX_DIST * SHADOW_MAX_DIST;
+   const float INV_SHADOW_MAX_DIST_SQUARED = 1.0/SHADOW_MAX_DIST_SQUARED;
 #endif
 
 #ifdef final
-#define REFLECTIONS
+   #define REFLECTIONS
 
-#define MAX_RAYS 16
-#define MAX_REFINEMENTS 4
-#define RAY_MULT 2.0
-#define REFINEMENT_MULT 0.1
+   #define MAX_RAYS 16
+   #define MAX_REFINEMENTS 4
+   #define RAY_MULT 2.0
+   #define REFINEMENT_MULT 0.1
 #endif
 
 #ifdef gbuffers_water
-#define WATER_SHOW_SOME_TEXTURE
+   #define WATER_SHOW_SOME_TEXTURE
 
-#define WATER_R 0.4  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define WATER_G 0.4  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define WATER_B 0.25 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-#define WATER_A 0.6  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+   #if MC_VERSION >= 11300
+      #define WATER_R 0.4  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+      #define WATER_G 0.4  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+      #define WATER_B 0.25 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+      #define WATER_A 0.6  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+   #else
+      #define WATER_R 0.1  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+      #define WATER_G 0.15  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+      #define WATER_B 0.2 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+      #define WATER_A 0.6  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+   #endif
 
-const vec4 WATER_COLOR = vec4(WATER_R, WATER_G, WATER_B, WATER_A);
+   const vec4 WATER_COLOR = vec4(WATER_R, WATER_G, WATER_B, WATER_A);
 #endif

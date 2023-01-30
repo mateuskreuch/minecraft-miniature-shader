@@ -75,7 +75,18 @@ void main() {
    texstrength = 0.0;
    #endif
 
-   fogMix = calculateFog(length(worldPos.xz));
+   // scale normal to 0..1
+   normal = vec4(0.5 + 0.5*gl_Normal, 1.0);
+
+   // if the water is pointing directly up there's just some texture
+   texstrength = gl_Normal.x == 0.0 && gl_Normal.z == 0.0 ? texstrength : 1.0;
+
+   #if MC_VERSION >= 11300
+   fogMix = calculateFog(length(worldPos));
+   #else
+   fogMix = 0.0;
+   texstrength = 0.0;
+   #endif
 
    vec3 lightPosition = screen2world(normalize(shadowLightPosition));
    
@@ -90,10 +101,4 @@ void main() {
            * 2.0*max(min(1.6*lmcoord.t, 1.0) - 0.5, 0.0)
          //  thin objects have constant diffuse
            * clamp(2.5*dot(gl_Normal, lightPosition), MAX_SHADOW_SUBTRACT, 1.0);
-
-   // scale normal to 0..1
-   normal = vec4(0.5 + 0.5*gl_Normal, 1.0);
-
-   // if the water is pointing directly up there's just some texture
-   texstrength = gl_Normal.x == 0.0 && gl_Normal.z == 0.0 ? texstrength : 1.0;
 }
