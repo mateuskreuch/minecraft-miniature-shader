@@ -29,7 +29,7 @@ vec3 nvec3(vec4 pos) {
 }
 
 vec3 screen2world(vec3 screen) {
-   return mat3(gbufferModelViewInverse) * screen;
+   return (gbufferModelViewInverse * vec4(screen, 1.0)).xyz;
 }
 
 vec3 uv2screen(vec2 uv, float depth) {
