@@ -55,6 +55,10 @@ void main() {
       vec4 albedo = texture2D(colortex4, texcoord);
       vec4 info   = texture2D(colortex5, texcoord);
 
+      // tint shadows blue based on absorption
+      color.rg *= 0.85 + 0.15*info.b;
+      albedo.b *= 0.85 + 0.15*info.b;
+
       // re-scale normal back to -1..1
       normal.xyz = normal.xyz*2.0 - 1.0;
 
@@ -68,44 +72,51 @@ void main() {
       diffuse *= 2.0*max(min(1.6*info.g, 1.0) - 0.5, 0.0);
 
       #ifdef SHADOWS
-      float depth  = texture2D(depthtex0, texcoord).x;
-      vec3 fragPos = uv2screen(texcoord, depth);
-      
-      // limit shadow render distance to increase performance
-      if (squaredLength(fragPos) < SHADOW_MAX_DIST_SQUARED) {
-         vec3 worldPos     = screen2world(fragPos);
-         vec4 shadowScreen = shadowModelView * vec4(worldPos, 1.0);
-         vec2 shadowUV     = nvec3(shadowProjection * shadowScreen).st*0.5 + 0.5;
-
-         if (-shadowScreen.z > 0.0 &&
-            shadowUV.s > 0.0 && shadowUV.s < 1.0 &&
-            shadowUV.t > 0.0 && shadowUV.t < 1.0)
-         {
-            float shadowFade  = min(1.0 - squaredLength(worldPos) * INV_SHADOW_MAX_DIST_SQUARED, 1.0);
-            float shadowDepth = 256.0*texture2D(shadow, shadowUV).x;
-
-            diffuse *= 1.0 - shadowFade * clamp(-shadowScreen.z - shadowDepth, 0.0, 1.0);
-         }
-      }
-
       // thin objects have constant diffuse to simulate subsurface scattering
-      diffuse *= isThin(info) ? 0.75 : clamp(2.5*dot(normal.xyz, lightPosition), 0.0, 1.0);
+      diffuse *= isThin(info) ? 0.75 : min(2.5*dot(normal.xyz, lightPosition), 1.0);
+
+      // if its supposed to receive light then calculate shadow
+      if (diffuse > -0.1) {
+         float depth  = texture2D(depthtex0, texcoord).x;
+         vec3 fragPos = uv2screen(texcoord, depth);
+         
+         // limit shadow render distance to increase performance
+         if (squaredLength(fragPos) < SHADOW_MAX_DIST_SQUARED) {
+            vec3 worldPos     = screen2world(fragPos);
+            vec4 shadowScreen = shadowModelView * vec4(worldPos, 1.0);
+            vec2 shadowUV     = nvec3(shadowProjection * shadowScreen).st*0.5 + 0.5;
+
+            if (-shadowScreen.z > 0.0 &&
+               shadowUV.s > 0.0 && shadowUV.s < 1.0 &&
+               shadowUV.t > 0.0 && shadowUV.t < 1.0)
+            {
+               float shadowFade  = min(1.0 - squaredLength(worldPos) * INV_SHADOW_MAX_DIST_SQUARED, 1.0);
+               float shadowDepth = 256.0*texture2D(shadow, shadowUV).x;
+
+               diffuse *= 1.0 - shadowFade * clamp(-shadowScreen.z - shadowDepth, 0.0, 1.0);
+            }
+         }
+
+         color.rgb += albedo.rgb * CONTRAST * diffuse * lightColor;
+      }
+      else {
+         // adds even more shadow to opposite faces for more oompf
+         color.rgb *= 0.8;
+      }
       #else
       // since there are no shadows, make it so that thin objects have upwards
       // normal, to match ground color
-      if (isThin(info)) {
+      if (isThin(info))
          normal.xyz = vec3(0.0, 1.0, 0.0);
-      }
 
-      diffuse *= clamp(2.5*dot(normal.xyz, lightPosition), 0.0, 1.0);
+      diffuse *= min(2.5*dot(normal.xyz, lightPosition), 1.0);
+
+      // adds even more shadow to opposite faces for more oompf
+      if (diffuse > -0.1)
+         color.rgb += albedo.rgb * CONTRAST * diffuse * lightColor;
+      else
+         color.rgb *= 0.8;
       #endif
-      
-      // tint shadows blue based on absorption
-      color.rg *= vec2(0.85 + 0.15*info.b);
-      albedo.b *= 0.85 + 0.15*info.b;
-
-      // apply diffuse
-      color.rgb += albedo.rgb * CONTRAST * diffuse * lightColor;
 
       // pass info along
       gl_FragData[2] = info;
