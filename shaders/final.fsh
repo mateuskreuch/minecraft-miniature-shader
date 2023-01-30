@@ -3,13 +3,12 @@
 #define final
 #include "shader.h"
 
-uniform sampler2D colortex3;
-uniform sampler2D colortex6;
-uniform sampler2D colortex7;
-uniform sampler2D depthtex0;
+uniform mat4 gbufferModelView;
 uniform mat4 gbufferProjection;
 uniform mat4 gbufferProjectionInverse;
-uniform mat4 gbufferModelView;
+uniform sampler2D colortex3;
+uniform sampler2D colortex6;
+uniform sampler2D depthtex0;
 
 varying vec2 texcoord;
 
@@ -30,7 +29,7 @@ vec3 world2screen(vec3 world) {
 }
 
 bool isReflective(vec2 uv) {
-   return texture2D(colortex7, uv).x > 0.75;
+   return texture2D(colortex6, uv).a > 0.1;
 }
 
 void main() {

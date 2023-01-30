@@ -1,7 +1,7 @@
 #version 120
 
-varying vec4 color;
 varying vec2 texcoord;
+varying vec4 color;
 varying float lmcoord;
 
 void main() {

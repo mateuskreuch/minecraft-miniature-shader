@@ -3,7 +3,7 @@
 #define composite
 #include "/shader.h"
 
-/* DRAWBUFFERS:367 */
+/* DRAWBUFFERS:36 */
 
 uniform sampler2D colortex0;
 uniform sampler2D colortex2;
@@ -14,5 +14,4 @@ varying vec2 texcoord;
 void main() {
    gl_FragData[0] = texture2D(colortex0, texcoord); // color
    gl_FragData[1] = texture2D(colortex2, texcoord); // normal
-   gl_FragData[2] = texture2D(colortex5, texcoord); // info
 }

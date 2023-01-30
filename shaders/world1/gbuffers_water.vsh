@@ -7,19 +7,20 @@ attribute vec4 mc_Entity;
 
 uniform vec3 cameraPosition;
 uniform mat4 gbufferModelViewInverse;
-uniform float fogStart;
 uniform float fogEnd;
+uniform float fogStart;
 
-varying vec4 color;
 varying vec2 lmcoord;
-varying vec4 normal;
 varying vec2 texcoord;
+varying vec4 color;
+varying vec4 normal;
 
-varying float texstrength;
-varying float absorption;
-varying float fogMix;
 varying float torchLight;
 varying vec3 torchColor;
+
+varying float fogMix;
+varying float reflectiveness;
+varying float texstrength;
 
 float noise(vec2 pos) {
 	return 2.0*max(fract(sin(dot(pos, vec2(18.9898, 28.633))) * 4378.5453) - 0.5, 0.2);
@@ -42,7 +43,7 @@ void main() {
    lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
 
-   absorption = mc_Entity.x == 10008.0 ? 1.0 : 0.5;
+   reflectiveness = mc_Entity.x == 10008.0 ? 1.0 : 0.5;
    torchLight = pow(lmcoord.s, CONTRAST + 1.5);
    torchColor = (0.5 + CONTRAST) * torchLight * TORCH_COLOR;
 

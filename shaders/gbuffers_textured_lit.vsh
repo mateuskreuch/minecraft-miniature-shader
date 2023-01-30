@@ -4,22 +4,28 @@
 
 attribute vec4 mc_Entity;
 
-uniform mat4 gbufferModelViewInverse;
-uniform float fogStart;
-uniform float fogEnd;
-uniform float rainStrength;
 uniform int isEyeInWater;
 uniform int worldTime;
+uniform vec3 shadowLightPosition;
+uniform mat4 gbufferModelViewInverse;
+uniform float fogEnd;
+uniform float fogStart;
+uniform float rainStrength;
 
-varying vec4 color;
 varying vec2 lmcoord;
 varying vec2 texcoord;
-varying vec4 normal;
+varying vec4 color;
 
-varying float isThin;
-varying float fogMix;
-varying float torchLight;
 varying vec3 torchColor;
+varying float torchLight;
+
+varying float diffuse;
+varying float fogMix;
+varying float isThin;
+
+vec3 screen2world(vec3 screen) {
+   return mat3(gbufferModelViewInverse) * screen;
+}
 
 vec3 getWorldPosition() {
    return mat3(gbufferModelViewInverse)
@@ -52,6 +58,15 @@ void main() {
    torchLight = pow(lmcoord.s, CONTRAST + 1.5);
    torchColor = (0.5 + CONTRAST) * torchLight * TORCH_COLOR;
 
-   // scale normal to 0..1
-   normal = vec4(0.5 + 0.5*gl_Normal, 1.0);
+   vec3 lightPosition = screen2world(normalize(shadowLightPosition));
+   
+   diffuse = 0.5 + 0.5
+         //  reduce with fog
+           * (1.0 - fogMix)
+         //  reduce with rain strength
+           * (1.0 - rainStrength)
+         //  reduce with sky light
+           * 2.0*max(min(1.6*lmcoord.t, 1.0) - 0.5, 0.0)
+         //  thin objects have constant diffuse
+           * (mc_Entity.x == 10031.0 ? 0.75 : clamp(2.5*dot(gl_Normal, lightPosition), MAX_SHADOW_SUBTRACT, 1.0));
 }

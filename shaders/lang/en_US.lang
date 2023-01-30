@@ -17,5 +17,5 @@ option.OVERWORLD_FOG_MAX = Max overworld fog
 option.NETHER_FOG = Nether fog
 
 option.CONTRAST = Contrast
-option.SHADOWS = Shadows
+option.SHADOW_BLUENESS = Shadow blueness
 option.SHADOW_MAX_DIST = Max shadows distance
