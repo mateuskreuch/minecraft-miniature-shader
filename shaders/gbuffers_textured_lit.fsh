@@ -20,7 +20,6 @@ varying float torchLight;
 
 varying float diffuse;
 varying float fogMix;
-varying float isThin;
 
 void main() {
    vec4 albedo  = texture2D(texture, texcoord) * color;
