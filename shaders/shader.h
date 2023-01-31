@@ -30,6 +30,8 @@ const vec3 TORCH_COLOR = vec3(TORCH_R, TORCH_G, TORCH_B);
 #endif
 
 #ifdef composite
+   #define SHADOW_PIXEL 16 //[0 4 8 16 32 64 128 256 512]
+
    const float shadowDistance = 96.0; //[8.0 16.0 32.0 64.0 96.0 128.0 192.0 256.0]
    const int shadowMapResolution = 1024; //[256 512 1024 2048 3072 4096]
 

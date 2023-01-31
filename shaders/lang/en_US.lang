@@ -16,8 +16,11 @@ option.OVERWORLD_FOG_MIN = Min overworld fog
 option.OVERWORLD_FOG_MAX = Max overworld fog
 option.NETHER_FOG = Nether fog
 
-option.CONTRAST = Contrast
+screen.SHADOW_OPTIONS_SCREEN = Shadow options
 option.SHADOW_BLUENESS = Shadow blueness
 option.shadowDistance = Max shadow distance
 option.shadowMapResolution = Shadow resolution
+option.SHADOW_PIXEL = Shadow pixelization
+
+option.CONTRAST = Contrast
 option.IS_OPTIFINE = Disable for Iris compatibility

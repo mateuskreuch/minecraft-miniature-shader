@@ -5,6 +5,7 @@
 
 /* DRAWBUFFERS:367 */
 
+uniform vec3 cameraPosition;
 uniform mat4 gbufferModelViewInverse;
 uniform mat4 gbufferProjectionInverse;
 uniform mat4 shadowModelView;
@@ -48,7 +49,13 @@ void main() {
       
       // limit shadow render distance to increase performance
       if (squaredLength(fragPos) < SHADOW_MAX_DIST_SQUARED) {
-         vec3 worldPos     = screen2world(fragPos);
+         vec3 worldPos = screen2world(fragPos);
+
+         #if SHADOW_PIXEL > 0
+         worldPos = (floor((worldPos + cameraPosition) * SHADOW_PIXEL + 0.01) + 0.5)
+                  / SHADOW_PIXEL - cameraPosition;
+         #endif
+
          vec4 shadowScreen = shadowModelView * vec4(worldPos, 1.0);
          vec2 shadowUV     = nvec3(shadowProjection * shadowScreen).st*0.5 + 0.5;
 
