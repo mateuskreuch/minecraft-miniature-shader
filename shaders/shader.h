@@ -30,9 +30,10 @@ const vec3 TORCH_COLOR = vec3(TORCH_R, TORCH_G, TORCH_B);
 #endif
 
 #ifdef composite
-   #define SHADOW_MAX_DIST 96.0 //[8.0 16.0 24.0 32.0 48.0 64.0 96.0 128.0 192.0 256.0]
+   const float shadowDistance = 96.0; //[8.0 16.0 32.0 64.0 96.0 128.0 192.0 256.0]
+   const int shadowMapResolution = 1024; //[256 512 1024 2048 3072 4096]
 
-   const float SHADOW_MAX_DIST_SQUARED = SHADOW_MAX_DIST * SHADOW_MAX_DIST;
+   const float SHADOW_MAX_DIST_SQUARED = shadowDistance * shadowDistance;
    const float INV_SHADOW_MAX_DIST_SQUARED = 1.0/SHADOW_MAX_DIST_SQUARED;
 #endif
 
