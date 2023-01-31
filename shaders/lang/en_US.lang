@@ -19,3 +19,4 @@ option.NETHER_FOG = Nether fog
 option.CONTRAST = Contrast
 option.SHADOW_BLUENESS = Shadow blueness
 option.SHADOW_MAX_DIST = Max shadows distance
+option.IS_OPTIFINE = Disable for Iris compatibility

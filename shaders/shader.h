@@ -15,12 +15,19 @@ const vec3 TORCH_COLOR = vec3(TORCH_R, TORCH_G, TORCH_B);
 #define MIDNIGHT 0.75 // 18000
 #define SUNRISE 0.9675 // 23220
 
-#define MAX_SHADOW_SUBTRACT -0.15
 #define SHADOW_BLUENESS 0.05 //[0.0 0.05 0.1 0.15 0.2]
 
 #define OVERWORLD_FOG_MIN 0.3 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1]
 #define OVERWORLD_FOG_MAX 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1]
 #define NETHER_FOG 1.0 //[0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+
+#define IS_OPTIFINE
+
+#ifdef IS_OPTIFINE
+   #define MAX_SHADOW_SUBTRACT 0.0
+#else
+   #define MAX_SHADOW_SUBTRACT -0.15
+#endif
 
 #ifdef composite
    #define SHADOW_MAX_DIST 96.0 //[8.0 16.0 24.0 32.0 48.0 64.0 96.0 128.0 192.0 256.0]
