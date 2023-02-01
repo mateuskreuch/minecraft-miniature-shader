@@ -3,8 +3,8 @@ option.WATER_R = Water color red
 option.WATER_G = Water color green
 option.WATER_B = Water color blue
 option.WATER_A = Water color alpha
-option.REFLECTIONS = Reflections
 option.WATER_SHOW_SOME_TEXTURE = Show some texture
+option.WATER_MIRROR = Flat water
 
 screen.TORCH_COLOR_SCREEN = Torch colors
 option.TORCH_R = Torch color red
@@ -23,4 +23,5 @@ option.shadowMapResolution = Shadow resolution
 option.SHADOW_PIXEL = Shadow pixelization
 
 option.CONTRAST = Contrast
+option.REFLECTIONS = Reflections
 option.IS_OPTIFINE = Disable for Iris compatibility

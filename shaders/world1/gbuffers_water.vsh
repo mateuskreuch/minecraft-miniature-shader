@@ -7,6 +7,7 @@ attribute vec4 mc_Entity;
 
 uniform vec3 cameraPosition;
 uniform mat4 gbufferModelViewInverse;
+uniform float frameTimeCounter;
 uniform float fogEnd;
 uniform float fogStart;
 
@@ -46,19 +47,34 @@ void main() {
    reflectiveness = mc_Entity.x == 10008.0 ? 1.0 : 0.5;
    torchLight = pow(lmcoord.s, CONTRAST + 1.5);
    torchColor = (0.5 + CONTRAST) * torchLight * TORCH_COLOR;
+   normal.xyz = gl_Normal;
 
    vec3 worldPos = getWorldPosition();
 
-   #ifdef WATER_SHOW_SOME_TEXTURE
-   vec2 waterPos = floor(worldPos.xz) + floor(cameraPosition.xz);
-   
-   texstrength = noise(waterPos);
-   #else
-   texstrength = 0.0;
+   #ifdef WATER_SHOW_SOME_TEXTURE || not(WATER_MIRROR)
+      vec2 waterPos = floor(worldPos.xz) + floor(cameraPosition.xz);
+
+      #ifndef WATER_MIRROR
+         if (mc_Entity.x == 10008.0) {
+            normal.xyz += vec3(
+               0.1*sin(sin(2.0*waterPos.x) * frameTimeCounter) * cos(cos(waterPos.x) * frameTimeCounter)
+                  *cos(cos(2.0*waterPos.y) * frameTimeCounter) * sin(sin(waterPos.y) * frameTimeCounter),
+               0.0,
+               0.1*sin(sin(waterPos.x) * frameTimeCounter) * cos(cos(2.0*waterPos.x) * frameTimeCounter)
+                  *cos(cos(waterPos.y) * frameTimeCounter) * sin(sin(2.0*waterPos.y) * frameTimeCounter)
+            );
+         }
+      #endif
+
+      #ifdef WATER_SHOW_SOME_TEXTURE
+         texstrength = noise(waterPos);
+      #else
+         texstrength = 0.0;
+      #endif
    #endif
 
    // scale normal to 0..1
-   normal = vec4(0.5 + 0.5*gl_Normal, 1.0);
+   normal = vec4(0.5 + 0.5*normal.xyz, 1.0);
 
    // if the water is pointing directly up there's just some texture
    texstrength = gl_Normal.x == 0.0 && gl_Normal.z == 0.0 ? texstrength : 1.0;

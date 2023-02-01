@@ -36,7 +36,7 @@ bool isReflective(vec2 uv) {
 void main() {
    vec4 color = texture2D(colortex3, texcoord);
 
-   #ifdef REFLECTIONS
+   #if REFLECTIONS > 0.0
    if (isReflective(texcoord)) {
       float depth = texture2D(depthtex0, texcoord).x;
 
@@ -92,7 +92,7 @@ void main() {
       // also fade reflection with fresnel
       float fresnel = 1.0 - dot(normal, -normalize(fragPos));
 
-      color.rgb = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel);
+      color.rgb = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel * REFLECTIONS * 0.1);
    }
    #endif
 
