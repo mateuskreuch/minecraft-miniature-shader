@@ -40,7 +40,7 @@ const vec3 TORCH_COLOR = vec3(TORCH_R, TORCH_G, TORCH_B);
 #endif
 
 #ifdef final
-   #define REFLECTIONS 10.0 //[0.0 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0]
+   #define REFLECTIONS 10 //[0 1 2 3 4 5 6 7 8 9 10]
 
    #define MAX_RAYS 16
    #define MAX_REFINEMENTS 4

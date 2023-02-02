@@ -51,27 +51,24 @@ void main() {
    normal.xyz = gl_Normal;
 
    vec3 worldPos = getWorldPosition();
+   vec2 waterPos = floor(worldPos.xz) + floor(cameraPosition.xz);
 
-   #ifdef WATER_SHOW_SOME_TEXTURE || not(WATER_MIRROR)
-      vec2 waterPos = floor(worldPos.xz) + floor(cameraPosition.xz);
+   #ifndef WATER_MIRROR
+      if (mc_Entity.x == 10008.0) {
+         normal.xyz += vec3(
+            0.1*sin(sin(2.0*waterPos.x) * frameTimeCounter) * cos(cos(waterPos.x) * frameTimeCounter)
+               *cos(cos(2.0*waterPos.y) * frameTimeCounter) * sin(sin(waterPos.y) * frameTimeCounter),
+            0.0,
+            0.1*sin(sin(waterPos.x) * frameTimeCounter) * cos(cos(2.0*waterPos.x) * frameTimeCounter)
+               *cos(cos(waterPos.y) * frameTimeCounter) * sin(sin(2.0*waterPos.y) * frameTimeCounter)
+         );
+      }
+   #endif
 
-      #ifndef WATER_MIRROR
-         if (mc_Entity.x == 10008.0) {
-            normal.xyz += vec3(
-               0.1*sin(sin(2.0*waterPos.x) * frameTimeCounter) * cos(cos(waterPos.x) * frameTimeCounter)
-                  *cos(cos(2.0*waterPos.y) * frameTimeCounter) * sin(sin(waterPos.y) * frameTimeCounter),
-               0.0,
-               0.1*sin(sin(waterPos.x) * frameTimeCounter) * cos(cos(2.0*waterPos.x) * frameTimeCounter)
-                  *cos(cos(waterPos.y) * frameTimeCounter) * sin(sin(2.0*waterPos.y) * frameTimeCounter)
-            );
-         }
-      #endif
-
-      #ifdef WATER_SHOW_SOME_TEXTURE
-         texstrength = noise(waterPos);
-      #else
-         texstrength = 0.0;
-      #endif
+   #ifdef WATER_SHOW_SOME_TEXTURE
+      texstrength = noise(waterPos);
+   #else
+      texstrength = 0.0;
    #endif
 
    // scale normal to 0..1

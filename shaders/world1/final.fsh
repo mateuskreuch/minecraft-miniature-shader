@@ -36,7 +36,7 @@ bool isReflective(vec2 uv) {
 void main() {
    vec4 color = texture2D(colortex3, texcoord);
 
-   #if REFLECTIONS > 0.0
+   #if REFLECTIONS > 0
    if (isReflective(texcoord)) {
       float depth = texture2D(depthtex0, texcoord).x;
 
