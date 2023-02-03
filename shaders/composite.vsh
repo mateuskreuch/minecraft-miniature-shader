@@ -3,9 +3,15 @@
 #include "shader.h"
 
 uniform int worldTime;
+uniform vec3 shadowLightPosition;
+uniform mat4 gbufferModelViewInverse;
 
 varying vec3 lightColor;
 varying vec2 texcoord;
+
+float getLightWorldHeight() {
+   return (gbufferModelViewInverse * vec4(shadowLightPosition, 1.0)).y;
+}
 
 void main() {
    gl_Position = ftransform();
@@ -21,5 +27,5 @@ void main() {
                       : vec3(0.04, 0.04, 0.12); 
    
    // create transition between color presets
-   lightColor *= clamp(2.0*75.0*abs(x - (x < MIDNIGHT ? SUNSET : SUNRISE)) - 1.0, 0.0, 1.0);
+   lightColor *= clamp(2.0*0.1123*getLightWorldHeight() - 1.0, 0.0, 1.0);
 }
