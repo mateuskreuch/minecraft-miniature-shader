@@ -22,10 +22,6 @@ varying float torchLight;
 varying float diffuse;
 varying float fogMix;
 
-vec3 screen2world(vec3 screen) {
-   return mat3(gbufferModelViewInverse) * screen;
-}
-
 vec3 getWorldPosition() {
    return mat3(gbufferModelViewInverse)
         * (gl_ModelViewMatrix * gl_Vertex).xyz
@@ -61,8 +57,6 @@ void main() {
    fogMix = 0.0;
    #endif
 
-   vec3 lightPosition = screen2world(normalize(shadowLightPosition));
-   
    diffuse = 0.5 + 0.5
          //  reduce with fog
            * (1.0 - fogMix)
@@ -71,5 +65,5 @@ void main() {
          //  reduce with sky light
            * 2.0*max(min(1.6*lmcoord.t, 1.0) - 0.5, 0.0)
          //  thin objects have constant diffuse
-           * (mc_Entity.x == 10031.0 ? 0.75 : clamp(2.5*dot(gl_Normal, lightPosition), MAX_SHADOW_SUBTRACT, 1.0));
+           * (mc_Entity.x == 10031.0 ? 0.75 : clamp(2.5*dot(gl_NormalMatrix * gl_Normal, shadowLightPosition), MAX_SHADOW_SUBTRACT, 1.0));
 }
