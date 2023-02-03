@@ -24,7 +24,7 @@ varying float reflectiveness;
 varying float texstrength;
 
 float noise(vec2 pos) {
-	return 2.0*max(fract(sin(dot(pos, vec2(18.9898, 28.633))) * 4378.5453) - 0.5, 0.2);
+	return fract(sin(dot(pos, vec2(18.9898, 28.633))) * 4378.5453);
 }
 
 vec3 getWorldPosition() {
@@ -49,23 +49,22 @@ void main() {
    torchColor = (0.5 + CONTRAST) * torchLight * TORCH_COLOR;
    normal.xyz = gl_Normal;
 
-   vec3 worldPos = getWorldPosition();
-   vec2 waterPos = floor(worldPos.xz) + floor(cameraPosition.xz);
+   vec3 worldPos  = getWorldPosition();
+   vec2 waterPos  = floor(worldPos.xz) + floor(cameraPosition.xz);
+   float posNoise = noise(waterPos);
 
-   #ifndef WATER_MIRROR
+   #if WATER_WAVE_SIZE > 0
       if (mc_Entity.x == 10008.0) {
          normal.xyz += vec3(
-            0.1*sin(sin(2.0*waterPos.x) * frameTimeCounter) * cos(cos(waterPos.x) * frameTimeCounter)
-               *cos(cos(2.0*waterPos.y) * frameTimeCounter) * sin(sin(waterPos.y) * frameTimeCounter),
+            0.01*WATER_WAVE_SIZE*sin(posNoise * frameTimeCounter),
             0.0,
-            0.1*sin(sin(waterPos.x) * frameTimeCounter) * cos(cos(2.0*waterPos.x) * frameTimeCounter)
-               *cos(cos(waterPos.y) * frameTimeCounter) * sin(sin(2.0*waterPos.y) * frameTimeCounter)
+            0.01*WATER_WAVE_SIZE*cos(posNoise * frameTimeCounter)
          );
       }
    #endif
 
    #ifdef WATER_SHOW_SOME_TEXTURE
-      texstrength = noise(waterPos);
+      texstrength = 2.0*max(posNoise - 0.5, 0.2);
    #else
       texstrength = 0.0;
    #endif
