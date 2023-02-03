@@ -12,9 +12,10 @@ option.TORCH_G = Torch color green
 option.TORCH_B = Torch color blue
 
 screen.FOG_OPTIONS_SCREEN = Fog options
-option.OVERWORLD_FOG_MIN = Min overworld fog
-option.OVERWORLD_FOG_MAX = Max overworld fog
-option.NETHER_FOG = Nether fog
+option.ENABLE_FOG = Enable fog
+option.OVERWORLD_FOG_MAX_SLIDER = Max overworld fog
+option.OVERWORLD_FOG_MIN_SLIDER = Min overworld fog
+option.NETHER_FOG_SLIDER = Nether fog
 
 screen.SHADOW_OPTIONS_SCREEN = Shadow options
 option.SHADOW_BLUENESS = Shadow blueness

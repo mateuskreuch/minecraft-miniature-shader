@@ -38,7 +38,9 @@ void main() {
    torchLight = pow(lmcoord.s, CONTRAST + 1.5);
    torchColor = (0.5 + CONTRAST) * torchLight * TORCH_COLOR;
 
-   #if MC_VERSION >= 11300
+   #if MC_VERSION >= 11300 && defined(ENABLE_FOG)
    fogMix = calculateFog(length(getWorldPosition()));
+   #else
+   fogMix = 0.0;
    #endif
 }

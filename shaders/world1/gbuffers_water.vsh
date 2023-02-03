@@ -76,9 +76,10 @@ void main() {
    // if the water is pointing directly up there's just some texture
    texstrength = gl_Normal.x == 0.0 && gl_Normal.z == 0.0 ? texstrength : 1.0;
 
-   #if MC_VERSION >= 11300
+   #if MC_VERSION >= 11300 && defined(ENABLE_FOG)
    fogMix = calculateFog(length(worldPos));
    #else
+   fogMix = 0.0;
    texstrength = 0.0;
    #endif
 }

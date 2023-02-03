@@ -17,9 +17,18 @@ const vec3 TORCH_COLOR = vec3(TORCH_R, TORCH_G, TORCH_B);
 
 #define SHADOW_BLUENESS 0.05 //[0.0 0.05 0.1 0.15 0.2]
 
-#define OVERWORLD_FOG_MIN 0.3 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1]
-#define OVERWORLD_FOG_MAX 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1]
-#define NETHER_FOG 1.0 //[0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+#define ENABLE_FOG
+#define OVERWORLD_FOG_MAX_SLIDER 7 //[0 1 2 3 4 5 6 7 8 9 10]
+#define OVERWORLD_FOG_MIN_SLIDER 0 //[0 1 2 3 4 5 6 7 8 9 10]
+#define NETHER_FOG_SLIDER 10 //[0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]
+
+const float OVERWORLD_FOG_MIN = 1.0 - 0.1*OVERWORLD_FOG_MAX_SLIDER;
+const float OVERWORLD_FOG_MAX = 1.0 - 0.1*OVERWORLD_FOG_MIN_SLIDER;
+const float NETHER_FOG = 2.0 - 0.1*NETHER_FOG_SLIDER;
+
+// optifine needs this to show on menu
+#ifdef ENABLE_FOG
+#endif
 
 #define IS_OPTIFINE
 
