@@ -57,6 +57,8 @@ void main() {
    fogMix = 0.0;
    #endif
 
+   bool isThin = gl_Normal.x != 0.0 && abs(abs(gl_Normal.x) - abs(gl_Normal.z)) < 0.01;
+
    diffuse = 0.5 + 0.5
          //  reduce with fog
            * (1.0 - fogMix)
@@ -65,6 +67,6 @@ void main() {
          //  reduce with sky light
            * 2.0*max(min(1.6*lmcoord.t, 1.0) - 0.5, 0.0)
          //  thin objects have constant diffuse
-           * (mc_Entity.x == 10031.0 ? 0.75 : clamp(2.5*dot(normalize(gl_NormalMatrix * gl_Normal),
-                                                            normalize(shadowLightPosition)), MAX_SHADOW_SUBTRACT, 1.0));
+           * (isThin ? 0.75 : clamp(2.5*dot(normalize(gl_NormalMatrix * gl_Normal),
+                                            normalize(shadowLightPosition)), MAX_SHADOW_SUBTRACT, 1.0));
 }

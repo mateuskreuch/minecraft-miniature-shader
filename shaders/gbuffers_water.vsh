@@ -28,10 +28,6 @@ varying float fogMix;
 varying float reflectiveness;
 varying float texstrength;
 
-vec3 screen2world(vec3 screen) {
-   return mat3(gbufferModelViewInverse) * screen;
-}
-
 float noise(vec2 pos) {
 	return fract(sin(dot(pos, vec2(18.9898, 28.633))) * 4378.5453);
 }
@@ -100,8 +96,6 @@ void main() {
    texstrength = 0.0;
    #endif
 
-   vec3 lightPosition = screen2world(normalize(shadowLightPosition));
-   
    diffuse = 0.5 + 0.5
          //  reduce with reflectiveness
            * (1.0 - reflectiveness)
@@ -112,5 +106,6 @@ void main() {
          //  reduce with sky light
            * 2.0*max(min(1.6*lmcoord.t, 1.0) - 0.5, 0.0)
          //  thin objects have constant diffuse
-           * clamp(2.5*dot(gl_Normal, lightPosition), MAX_SHADOW_SUBTRACT, 1.0);
+           * clamp(2.5*dot(normalize(gl_NormalMatrix * gl_Normal),
+                           normalize(shadowLightPosition)), MAX_SHADOW_SUBTRACT, 1.0);
 }
