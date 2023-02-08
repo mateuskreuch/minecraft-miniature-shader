@@ -57,7 +57,9 @@ void main() {
    fogMix = 0.0;
    #endif
 
-   bool isThin = gl_Normal.x != 0.0 && abs(abs(gl_Normal.x) - abs(gl_Normal.z)) < 0.01;
+   bool isThin = mc_Entity.x == 10031.0 || mc_Entity.x == 10059.0
+              || mc_Entity.x == 10175.0 || mc_Entity.x == 10176.0
+              || gl_Normal.y == 0.0 && abs(abs(gl_Normal.x) - abs(gl_Normal.z)) < 0.01;
 
    diffuse = 0.5 + 0.5
          //  reduce with fog
