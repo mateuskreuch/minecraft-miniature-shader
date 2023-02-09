@@ -70,8 +70,8 @@ void main() {
          }
       }
 
-      color.rgb += (CONTRAST * min(info.x*2.0 - 1.0, lightStrength))
-                 * (albedo.rgb * lightColor);
+      color.rgb += albedo.rgb * mix(vec3(length(lightColor)), lightColor, info.z)
+                 * min(info.x*2.0 - 1.0, lightStrength);
 
       gl_FragData[2] = info;
    }

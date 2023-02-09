@@ -43,6 +43,6 @@ void main() {
    ambient.rgb = mix(ambient.rgb, fogColor, fogMix);
 
    gl_FragData[0] = ambient;
-   gl_FragData[1] = albedo;
-   gl_FragData[2] = vec4(diffuse, 0.0, 0.0, 1.0);
+   gl_FragData[1] = albedo * CONTRAST;
+   gl_FragData[2] = vec4(diffuse, 0.0, lmcoord.t, 1.0);
 }
