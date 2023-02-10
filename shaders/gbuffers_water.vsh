@@ -77,8 +77,8 @@ void main() {
       }
    #endif
 
-   #ifdef WATER_SHOW_SOME_TEXTURE
-      texstrength = 2.0*max(posNoise - 0.5, 0.2);
+   #if WATER_MIN_TEXTURE >= 0
+      texstrength = 2.0*max(posNoise - 0.5, 0.05*WATER_MIN_TEXTURE);
    #else
       texstrength = 0.0;
    #endif

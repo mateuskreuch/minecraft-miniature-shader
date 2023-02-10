@@ -58,7 +58,7 @@ const float NETHER_FOG = 2.0 - 0.1*NETHER_FOG_SLIDER;
 #endif
 
 #ifdef gbuffers_water
-   #define WATER_SHOW_SOME_TEXTURE
+   #define WATER_MIN_TEXTURE 4 //[-1 0 1 2 3 4 5 6 7 8 9 10]
    #define WATER_WAVE_SIZE 0 //[0 1 2 3 4 5 6 7 8 9 10]
 
    #define WATER_R 0.4  //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]

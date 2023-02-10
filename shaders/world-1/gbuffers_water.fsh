@@ -26,7 +26,7 @@ void main() {
    vec4 ambient = texture2D(lightmap, lmcoord);
 
    albedo = reflectiveness > 0.99 
-      ? vec4(max(3.0*texstrength * (albedo.rgb - 0.5) + 0.5, vec3(1.0)), 1.0)
+      ? vec4(max(3.2*texstrength * (albedo.rgb - 0.5) + 0.5, vec3(1.0)), 1.0)
       * color * WATER_COLOR
       : albedo * color;
 
