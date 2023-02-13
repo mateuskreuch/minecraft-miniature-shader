@@ -1,5 +1,3 @@
-#version 120
-
 varying vec2 texcoord;
 
 void main() {

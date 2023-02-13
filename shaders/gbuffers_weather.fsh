@@ -2,12 +2,11 @@
 
 uniform sampler2D texture;
 
-varying vec2 texcoord;
+varying vec2 texUV;
 varying vec4 color;
-varying float lmcoord;
 
 void main() {
-	vec4 albedo = texture2D(texture, texcoord) * color;
+	vec4 albedo = texture2D(texture, texUV) * color;
 
 	albedo.a *= 0.25;
 	

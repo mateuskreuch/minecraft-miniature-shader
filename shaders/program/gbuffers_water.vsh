@@ -1,27 +1,27 @@
-#version 120
-
-#define gbuffers_textured_lit
+#define gbuffers_water
 
 #include "/shader.h"
 
 attribute vec4 mc_Entity;
 
-uniform int isEyeInWater;
 uniform int worldTime;
+uniform int isEyeInWater;
+uniform vec3 cameraPosition;
 uniform vec3 shadowLightPosition;
 uniform mat4 gbufferModelViewInverse;
 uniform float fogEnd;
 uniform float fogStart;
 uniform float rainStrength;
+uniform float frameTimeCounter;
 
-varying vec2 texUV;
 varying vec2 lightUV;
-varying vec3 worldPos;
-varying vec3 lightColor;
+varying vec2 texUV;
 varying vec4 color;
+varying vec4 normal;
+
 varying float fogMix;
-varying float diffuse;
-varying float torchLight;
+varying float isWater;
+varying float texstrength;
 
 #include "/common/math.glsl"
 #include "/common/transformations.vsh"
@@ -32,14 +32,13 @@ void main() {
    color   = gl_Color;
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
+   isWater = mc_Entity.x == 10008.0 ? 1.0 : 0.0;
 
-   torchLight = rescale(lightUV.s, TORCH_UV_SCALE.x, TORCH_UV_SCALE.y)
-              * 0.9166*CONTRAST;
+   // simulate light passthrough property of translucents
+   lightUV.s = mix(AMBIENT_UV.s, lightUV.s, 0.7);
 
-   torchLight *= torchLight;
+   vec3 worldPos = getWorldPosition();
    
-   worldPos = getWorldPosition();
-
+   #include "/common/water.vsh"
    #include "/common/fog.vsh"
-   #include "/common/shadow.vsh"
 }

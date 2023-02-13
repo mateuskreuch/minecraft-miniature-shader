@@ -1,8 +1,7 @@
 screen.WATER_OPTIONS_SCREEN = Water options
-option.WATER_R = Water color red
-option.WATER_G = Water color green
-option.WATER_B = Water color blue
-option.WATER_A = Water color alpha
+option.WATER_BRIGHTNESS = Water brightness
+option.WATER_B = Water blueness
+option.WATER_A = Water opacity
 option.WATER_MIN_TEXTURE = Minimum water texture
 option.WATER_WAVE_SIZE = Wave size
 

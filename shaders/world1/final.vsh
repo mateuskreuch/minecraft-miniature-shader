@@ -1,9 +1,5 @@
 #version 120
 
-varying vec2 texcoord;
+#define THE_END
 
-void main() {
-   gl_Position = ftransform();
-
-   texcoord = gl_MultiTexCoord0.st;
-}
+#include "/program/final.vsh"
