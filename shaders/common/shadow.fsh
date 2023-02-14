@@ -1,13 +1,9 @@
 float getShadow() {
    #if SHADOW_PIXEL > 0
-
    vec3 pos = (floor((worldPos + cameraPosition) * SHADOW_PIXEL + 0.01) + 0.5)
             / SHADOW_PIXEL - cameraPosition;
-   
    #else
-
    vec3 pos = worldPos;
-
    #endif
 
    float posDistance = squaredLength(pos);

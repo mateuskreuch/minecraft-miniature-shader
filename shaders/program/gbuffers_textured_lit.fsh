@@ -14,12 +14,37 @@ varying vec4 color;
 varying float fogMix;
 varying float torchLight;
 
+#ifdef OVERWORLD
+uniform vec3 cameraPosition;
+uniform mat4 shadowModelView;
+uniform mat4 shadowProjection;
+uniform mat4 gbufferProjectionInverse;
+uniform sampler2D shadowtex1;
+
+varying vec3 worldPos;
+varying vec3 lightColor;
+varying float diffuse;
+
+#include "/common/math.glsl"
+#include "/common/shadow.fsh"
+#endif
+
 void main() {
    vec4 albedo  = texture2D(texture, texUV) * color;
    vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
 
    ambient.rgb *= INV_CONTRAST;
+   
+   #ifdef OVERWORLD
+   ambient.rg *= (1.0 - SHADOW_BLUENESS);
+   albedo.b   *= (1.0 - SHADOW_BLUENESS);
+   #endif
+
    ambient.rgb += TORCH_COLOR * max(0.0, torchLight - 0.5*length(ambient.rgb));
+
+   #ifdef OVERWORLD
+   ambient.rgb += CONTRAST * lightColor * getShadow();
+   #endif
    
    // render thunder
    albedo.a = entityId == 11000.0 ? 0.15 : albedo.a;

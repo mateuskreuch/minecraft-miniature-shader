@@ -1,6 +1,5 @@
 {
 #if MC_VERSION >= 11300 && defined ENABLE_FOG
-
    #if defined THE_NETHER
       
       fogMix = rescale(length(worldPos), fogStart, fogEnd * (isEyeInWater == 0 ? NETHER_FOG : 1.0));
@@ -23,7 +22,6 @@
       fogMix = rescale(length(worldPos.xz), x*fogStart, fogEnd);
 
    #endif
-
 #else
 
    fogMix = 0.0;
