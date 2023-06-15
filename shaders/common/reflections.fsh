@@ -60,7 +60,7 @@ if (isReflective(texcoord)) {
    // also fade reflection with fresnel
    float fresnel = 1.0 - dot(normal, -normalize(fragPos));
 
-   color.rgb = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel * REFLECTIONS * 0.1);
+   color.rgb = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel * REFLECTIONS * 0.1 * (1.0 - color.rgb));
 }
 
 #endif
