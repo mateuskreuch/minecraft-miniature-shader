@@ -37,7 +37,6 @@ void main() {
    
    #ifdef OVERWORLD
    ambient.b *= 1.0 + SHADOW_BLUENESS;
-   ambient.rgb = normalize(ambient.rgb);
    #endif
 
    ambient.rgb += TORCH_COLOR * max(0.0, torchLight - 0.5*length(ambient.rgb));
