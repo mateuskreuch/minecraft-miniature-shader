@@ -7,9 +7,9 @@ normal.xyz = gl_Normal;
 
 if (isWater > 0.9) {
    normal.xyz += vec3(
-      0.01*WATER_WAVE_SIZE*sin(posNoise * frameTimeCounter),
+      WATER_BANDING_MULT * pow(sin(posNoise * WATER_WAVE_SPEED * frameTimeCounter), 3.0),
       0.0,
-      0.01*WATER_WAVE_SIZE*cos(posNoise * frameTimeCounter)
+      WATER_BANDING_MULT * pow(cos(posNoise * WATER_WAVE_SPEED * frameTimeCounter), 3.0)
    );
 }
 

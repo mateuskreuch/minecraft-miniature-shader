@@ -11,7 +11,15 @@ if (isReflective(texcoord)) {
    // the normal doesn't come premultiplied by the normal matrix to
    // avoid the modelview transformations when view bobbing is on
    // which causes severe artifacts when moving
-   vec3 normal  = world2screen(texture2D(colortex6, texcoord).xyz*2.0 - 1.0);
+   vec3 prenormal = texture2D(colortex6, texcoord).xyz*2.0 - 1.0;
+
+   #if WATER_WAVE_SIZE > 0
+
+   prenormal.xz *= 0.01 * INV_WATER_BANDING_MULT * WATER_WAVE_SIZE;
+
+   #endif
+
+   vec3 normal  = world2screen(prenormal);
    vec3 fragPos = uv2screen(texcoord, depth);
 
    vec4 reflectionColor = vec4(0.0);

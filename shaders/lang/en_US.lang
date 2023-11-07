@@ -4,6 +4,7 @@ option.WATER_B = Water blueness
 option.WATER_A = Water opacity
 option.WATER_MIN_TEXTURE = Minimum water texture
 option.WATER_WAVE_SIZE = Wave size
+option.WATER_WAVE_SPEED = Wave speed
 
 screen.TORCH_COLOR_SCREEN = Torch colors
 option.TORCH_R = Torch color red
