@@ -9,6 +9,7 @@ uniform sampler2D colortex0;
 uniform sampler2D colortex6;
 uniform sampler2D colortex7;
 uniform sampler2D depthtex0;
+uniform vec3 fogColor;
 
 varying vec2 texcoord;
 

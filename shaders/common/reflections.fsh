@@ -47,11 +47,14 @@ if (isReflective(texcoord)) {
 
          if (j >= MAX_REFINEMENTS) {
             // fade reflection with vignette
-            vec2 vignette = curUV * (1.0 - curUV);
+            vec2 vignette = curUV;
+
+            vignette.y = 1.0 - vignette.y;
+            vignette.x *= 1.0 - vignette.x;
 
             reflectionColor = vec4(
                texture2D(colortex0, curUV).rgb,
-               clamp(1.2*pow(15.0*vignette.s*vignette.t, 1.5), 0.0, 1.0)
+               1.0 - pow(1.0 - vignette.x, 50.0*vignette.y*vignette.y)
             );
             break;
          }
@@ -68,7 +71,9 @@ if (isReflective(texcoord)) {
    // also fade reflection with fresnel
    float fresnel = 1.0 - dot(normal, -normalize(fragPos));
 
-   color.rgb = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel * REFLECTIONS * 0.1 * (1.0 - color.rgb));
+   vec3 c = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel * 0.1*REFLECTIONS * (1.0 - color.rgb));
+
+   color.rgb = mix(c, fogColor * vec3(fresnel), pow(fresnel, 128.0));
 }
 
 #endif
