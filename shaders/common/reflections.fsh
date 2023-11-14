@@ -73,7 +73,7 @@ if (isReflective(texcoord)) {
 
    vec3 c = mix(color.rgb, reflectionColor.rgb, reflectionColor.a * fresnel * 0.1*REFLECTIONS * (1.0 - color.rgb));
 
-   color.rgb = mix(c, fogColor * vec3(fresnel), pow(fresnel, 128.0));
+   color.rgb = mix(c, fogColor * vec3(fresnel), pow(fresnel, 192.0));
 }
 
 #endif
