@@ -1,3 +1,7 @@
+profile.LOW = Low
+profile.NORMAL = Normal
+profile.HIGH = High
+
 screen.WATER_OPTIONS_SCREEN = Water options
 option.WATER_BRIGHTNESS = Water brightness
 option.WATER_B = Water blueness
@@ -21,8 +25,9 @@ screen.SHADOW_OPTIONS_SCREEN = Shadow options
 option.SHADOW_BLUENESS = Shadow blueness
 option.shadowDistance = Max shadow distance
 option.shadowMapResolution = Shadow resolution
+option.shadowIntervalSize = Shadow change rate
 option.SHADOW_PIXEL = Shadow pixelization
+option.SHADOW_ENTITY = Entity shadow
 
 option.CONTRAST = Contrast
 option.REFLECTIONS = Reflections
-option.IS_OPTIFINE = Disable for Iris compatibility
