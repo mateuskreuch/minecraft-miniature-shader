@@ -17,7 +17,7 @@
                OVERWORLD_FOG_MAX);
 
       x = min(x, 1.0 - rainStrength);
-      x = isEyeInWater == 0 ? x : 1.0;
+      x = max(x, float(isEyeInWater != 0));
 
       fogMix = rescale(length(worldPos.xz), x*fogStart, fogEnd);
 

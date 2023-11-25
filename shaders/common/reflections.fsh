@@ -15,7 +15,9 @@ if (isReflective(texcoord)) {
 
    #if WATER_WAVE_SIZE > 0
 
-   prenormal.xz *= 0.01 * INV_WATER_BANDING_MULT * WATER_WAVE_SIZE;
+   if (prenormal.y > 0.99) {
+      prenormal.xz *= 0.01 * INV_WATER_BANDING_MULT * WATER_WAVE_SIZE;
+   }
 
    #endif
 
