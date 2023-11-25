@@ -6,10 +6,15 @@ normal.xyz = gl_Normal;
 #if WATER_WAVE_SIZE > 0
 
 if (isWater > 0.9) {
+   float v = (1.0 / (0.05*(WATER_WAVE_SIZE - 0.4)))
+           / max(1.0, length(worldPos.xz));
+
+   v = min(1.0, v) * WATER_BANDING_MULT;
+
    normal.xyz += vec3(
-      WATER_BANDING_MULT * pow(sin(posNoise * WATER_WAVE_SPEED * frameTimeCounter), 3.0),
+      v * pow(sin(posNoise * WATER_WAVE_SPEED * frameTimeCounter), 3.0),
       0.0,
-      WATER_BANDING_MULT * pow(cos(posNoise * WATER_WAVE_SPEED * frameTimeCounter), 3.0)
+      v * pow(cos(posNoise * WATER_WAVE_SPEED * frameTimeCounter), 3.0)
    );
 }
 
