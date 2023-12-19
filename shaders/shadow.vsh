@@ -2,11 +2,12 @@
 
 attribute vec4 mc_Entity;
 
+varying vec2 texUV;
 varying vec4 color;
 
 void main() {
     gl_Position = gl_ProjectionMatrix * (gl_ModelViewMatrix * gl_Vertex);
     color       = gl_Color;
 
-    color.a = 1.0 - float(mc_Entity.x == 10020.0);
+    texUV = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
 }
