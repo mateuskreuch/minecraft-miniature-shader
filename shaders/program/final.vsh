@@ -1,7 +1,7 @@
-varying vec2 texcoord;
+varying vec2 texUV;
 
 void main() {
    gl_Position = ftransform();
 
-   texcoord = gl_MultiTexCoord0.st;
+   texUV = gl_MultiTexCoord0.st;
 }

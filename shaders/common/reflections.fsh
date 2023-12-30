@@ -5,13 +5,16 @@
 #define RAY_MULT 2.0
 #define REFINEMENT_MULT 0.1
 
-if (isReflective(texcoord)) {
-   float depth = texture2D(depthtex0, texcoord).x;
+if (isReflective(texUV)) {
+   float depth = texture2D(depthtex0, texUV).x;
 
    // the normal doesn't come premultiplied by the normal matrix to
    // avoid the modelview transformations when view bobbing is on
    // which causes severe artifacts when moving
-   vec3 prenormal = texture2D(colortex6, texcoord).xyz*2.0 - 1.0;
+   vec3 prenormal = texture2D(colortex6, texUV).xyz*2.0 - 1.0;
+   float skyStrength = rescale(eyeAltitude, 50.0, 55.0)
+                     * (eyeBrightnessSmooth.y/240.0)
+                     * float(prenormal.y > 0.99);
 
    #if WATER_WAVE_SIZE > 0
 
@@ -22,7 +25,7 @@ if (isReflective(texcoord)) {
    #endif
 
    vec3 normal  = world2screen(prenormal);
-   vec3 fragPos = uv2screen(texcoord, depth);
+   vec3 fragPos = uv2screen(texUV, depth);
 
    vec4 reflectionColor = vec4(0.0);
    vec3 reflection = normalize(reflect(fragPos, normal));
@@ -37,9 +40,10 @@ if (isReflective(texcoord)) {
       if (curUV.s < 0.0 || curUV.s > 1.0 || curUV.t < 0.0 || curUV.t > 1.0)
          break;
       
-      vec3 sample = uv2screen(curUV, texture2D(depthtex0, curUV).x);
-      float dist  = abs(curPos.z - sample.z);
-      float len   = squaredLength(reflection);
+      float sampleDepth = texture2D(depthtex0, curUV).x;
+      vec3  sample      = uv2screen(curUV, sampleDepth);
+      float dist        = abs(curPos.z - sample.z);
+      float len         = squaredLength(reflection);
 
       // check if distance between last and current depth is
       // smaller than the current length of the reflection vector
@@ -54,10 +58,8 @@ if (isReflective(texcoord)) {
             vignette.y = 1.0 - vignette.y;
             vignette.x *= 1.0 - vignette.x;
 
-            reflectionColor = vec4(
-               texture2D(colortex0, curUV).rgb,
-               1.0 - pow(1.0 - vignette.x, 50.0*vignette.y*vignette.y)
-            );
+            reflectionColor.rgb = mix(texture2D(colortex0, curUV).rgb, fogColor, skyStrength*float(sampleDepth < depth));
+            reflectionColor.a = 1.0 - pow(1.0 - vignette.x, 50.0*vignette.y*vignette.y);
             break;
          }
 

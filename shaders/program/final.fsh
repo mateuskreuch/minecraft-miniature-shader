@@ -9,9 +9,10 @@ uniform sampler2D colortex0;
 uniform sampler2D colortex6;
 uniform sampler2D colortex7;
 uniform sampler2D depthtex0;
+uniform float eyeAltitude;
+uniform ivec2 eyeBrightnessSmooth;
 uniform vec3 fogColor;
-
-varying vec2 texcoord;
+varying vec2 texUV;
 
 #include "/common/math.glsl"
 #include "/common/transformations.fsh"
@@ -21,7 +22,7 @@ bool isReflective(vec2 uv) {
 }
 
 void main() {
-   vec4 color = texture2D(colortex0, texcoord);
+   vec4 color = texture2D(colortex0, texUV);
 
    #include "/common/reflections.fsh"
 
