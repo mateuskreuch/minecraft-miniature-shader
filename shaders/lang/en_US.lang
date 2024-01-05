@@ -28,6 +28,8 @@ option.shadowMapResolution = Shadow resolution
 option.shadowIntervalSize = Shadow change rate
 option.SHADOW_PIXEL = Shadow pixelization
 option.SHADOW_ENTITY = Entity shadow
+option.SUN_BRIGHTNESS = Sun brightness
+option.SHADOW_DARKNESS = Shadow darkness
 
-option.CONTRAST = Contrast
 option.REFLECTIONS = Reflections
+option.FLAT_LIGHTING = Use flat lighting

@@ -33,16 +33,17 @@ void main() {
    vec4 albedo  = texture2D(texture, texUV) * color;
    vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
 
-   ambient.rgb *= INV_CONTRAST;
-   
    #ifdef OVERWORLD
-   ambient.b *= 1.0 + SHADOW_BLUENESS;
+   float diffuse = getShadow();
+   
+   ambient.rgb *= 1.0 - SHADOW_DARKNESS;
+   ambient.b *= mix(1.0 + SHADOW_BLUENESS, 1.0, diffuse);
    #endif
 
    ambient.rgb += TORCH_COLOR * max(0.0, torchLight - 0.5*length(ambient.rgb));
 
    #ifdef OVERWORLD
-   ambient.rgb += CONTRAST * lightColor * getShadow();
+   ambient.rgb += SUN_BRIGHTNESS * lightColor * diffuse;
    #endif
    
    // render thunder

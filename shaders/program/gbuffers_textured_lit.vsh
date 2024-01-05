@@ -31,9 +31,7 @@ void main() {
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
 
-   torchLight = rescale(lightUV.s, TORCH_UV_SCALE.x, TORCH_UV_SCALE.y)
-              * 0.9166*CONTRAST;
-
+   torchLight = 1.1*rescale(lightUV.s, TORCH_UV_SCALE.x, TORCH_UV_SCALE.y);
    torchLight *= torchLight;
    
    worldPos = getWorldPosition();

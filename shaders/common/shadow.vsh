@@ -13,7 +13,7 @@ diffuse = (isEyeInWater == 0 ? 1.0 : 0.5)
          * 2.0*max(min(1.6*lightUV.t, 1.0) - 0.5, 0.0)
       //  thin objects have constant diffuse
          * (isThin ? 0.75 : clamp(2.5*dot(normalize(gl_NormalMatrix * gl_Normal),
-                                          normalize(shadowLightPosition)), MAX_SHADOW_SUBTRACT, 1.0));
+                                          normalize(shadowLightPosition)), 0.0, 1.0));
 }
 
 //----------------------------------------------------------------------------//
