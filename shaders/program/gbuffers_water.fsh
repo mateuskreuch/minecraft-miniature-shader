@@ -8,20 +8,27 @@ uniform sampler2D lightmap;
 
 varying vec2 texUV;
 varying vec2 lightUV;
+varying vec3 worldPos;
 varying vec4 color;
 varying vec4 normal;
 
 varying float fogMix;
 varying float isWater;
-varying float texstrength;
+varying float torchLight;
+varying float texStrength;
 
 void main() {
    vec4 albedo  = texture2D(texture, texUV);
-   vec4 ambient = texture2D(lightmap, lightUV);
+   vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
+   vec3 torchColor;
+
+   #include "/common/torchLight.fsh"
+
+   ambient.rgb += 0.5*torchColor;
 
    albedo = isWater < 0.9
       ? albedo * color
-      : vec4(WATER_BRIGHTNESS * max(vec3(1.0), 3.2*texstrength * (albedo.rgb - 0.5) + 0.5), 1.0)
+      : vec4(WATER_BRIGHTNESS * max(vec3(1.0), 3.2*texStrength * (albedo.rgb - 0.5) + 0.5), 1.0)
       * min(color, vec4(1.0, 1.0, max(color.r, color.g)*WATER_B, WATER_A));
 
    albedo *= ambient;

@@ -32,6 +32,9 @@ varying float diffuse;
 void main() {
    vec4 albedo  = texture2D(texture, texUV) * color;
    vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
+   vec3 torchColor;
+
+   #include "/common/torchLight.fsh"
 
    #ifdef OVERWORLD
    float diffuse = getShadow();
@@ -40,7 +43,7 @@ void main() {
    ambient.b *= mix(1.0 + SHADOW_BLUENESS, 1.0, diffuse);
    #endif
 
-   ambient.rgb += TORCH_COLOR * max(0.0, torchLight - 0.5*length(ambient.rgb));
+   ambient.rgb += torchColor;
 
    #ifdef OVERWORLD
    ambient.rgb += SUN_BRIGHTNESS * lightColor * diffuse;

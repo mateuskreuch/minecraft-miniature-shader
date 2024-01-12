@@ -19,22 +19,24 @@ const float OVERWORLD_FOG_MAX = 1.0 - 0.1*OVERWORLD_FOG_MIN_SLIDER;
 const float NETHER_FOG = 2.0 - 0.1*NETHER_FOG_SLIDER;
 
 #define FLAT_LIGHTING
+#define SHADOW_ENTITY
 
 // optifine needs this to show on menu
 #ifdef ENABLE_FOG
 #endif
-
 #ifdef FLAT_LIGHTING
 #endif
+#ifdef SHADOW_ENTITY
+#endif
+
+#define TORCH_R 1.0 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+#define TORCH_G 0.8 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+#define TORCH_B 0.6 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+
+const vec2 TORCH_UV_SCALE = vec2(8.0/255.0, 231.0/255.0);
+const vec3 TORCH_COLOR = vec3(TORCH_R, TORCH_G, TORCH_B);
 
 #ifdef gbuffers_textured_lit
-   #define TORCH_R 1.0 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-   #define TORCH_G 0.8 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-   #define TORCH_B 0.6 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
-
-   const vec2 TORCH_UV_SCALE = vec2(8.0/255.0, 231.0/255.0);
-   const vec3 TORCH_COLOR = vec3(TORCH_R, TORCH_G, TORCH_B);
-
    #define SHADOW_PIXEL 16 //[0 4 8 16 32 64 128 256 512]
    #define SHADOW_BLUENESS 0.05 //[0.0 0.05 0.1 0.15 0.2]
 
@@ -44,10 +46,6 @@ const float NETHER_FOG = 2.0 - 0.1*NETHER_FOG_SLIDER;
 
    const float SHADOW_MAX_DIST_SQUARED = shadowDistance * shadowDistance;
    const float INV_SHADOW_MAX_DIST_SQUARED = 1.0/SHADOW_MAX_DIST_SQUARED;
-   
-   #define SHADOW_ENTITY
-   #ifdef SHADOW_ENTITY
-   #endif
 #endif
 
 #ifdef final

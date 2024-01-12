@@ -16,12 +16,14 @@ uniform float frameTimeCounter;
 
 varying vec2 lightUV;
 varying vec2 texUV;
+varying vec3 worldPos;
 varying vec4 color;
 varying vec4 normal;
 
 varying float fogMix;
 varying float isWater;
-varying float texstrength;
+varying float torchLight;
+varying float texStrength;
 
 #include "/common/math.glsl"
 #include "/common/transformations.vsh"
@@ -34,10 +36,10 @@ void main() {
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    isWater = float(mc_Entity.x == 10008.0);
 
-   // simulate light passthrough property of translucents
-   lightUV.s = mix(AMBIENT_UV.s, lightUV.s, 0.7);
+   torchLight = 1.1*rescale(lightUV.s, TORCH_UV_SCALE.x, TORCH_UV_SCALE.y);
+   torchLight *= torchLight;
 
-   vec3 worldPos = getWorldPosition();
+   worldPos = getWorldPosition();
    
    #include "/common/water.vsh"
    #include "/common/fog.vsh"
