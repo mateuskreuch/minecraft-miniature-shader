@@ -10,23 +10,28 @@ uniform sampler2D lightmap;
 
 varying vec2 texUV;
 varying vec2 lightUV;
+varying vec3 worldPos;
 varying vec4 color;
 varying float fogMix;
 varying float torchLight;
 
+#ifdef HAND_DYNAMIC_LIGHTING
+   uniform int heldBlockLightValue;
+   uniform int heldBlockLightValue2;
+#endif
+
 #ifdef OVERWORLD
-uniform vec3 cameraPosition;
-uniform mat4 shadowModelView;
-uniform mat4 shadowProjection;
-uniform mat4 gbufferProjectionInverse;
-uniform sampler2D shadowtex1;
+   uniform vec3 cameraPosition;
+   uniform mat4 shadowModelView;
+   uniform mat4 shadowProjection;
+   uniform mat4 gbufferProjectionInverse;
+   uniform sampler2D shadowtex1;
 
-varying vec3 worldPos;
-varying vec3 lightColor;
-varying float diffuse;
+   varying vec3 lightColor;
+   varying float diffuse;
 
-#include "/common/math.glsl"
-#include "/common/shadow.fsh"
+   #include "/common/math.glsl"
+   #include "/common/shadow.fsh"
 #endif
 
 void main() {

@@ -15,11 +15,14 @@ uniform float rainStrength;
 varying vec2 texUV;
 varying vec2 lightUV;
 varying vec3 worldPos;
-varying vec3 lightColor;
 varying vec4 color;
 varying float fogMix;
-varying float diffuse;
 varying float torchLight;
+
+#ifdef OVERWORLD
+   varying float diffuse;
+   varying vec3 lightColor;
+#endif
 
 #include "/common/math.glsl"
 #include "/common/transformations.vsh"

@@ -17,6 +17,11 @@ varying float isWater;
 varying float torchLight;
 varying float texStrength;
 
+#ifdef HAND_DYNAMIC_LIGHTING
+   uniform int heldBlockLightValue;
+   uniform int heldBlockLightValue2;
+#endif
+
 void main() {
    vec4 albedo  = texture2D(texture, texUV);
    vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
