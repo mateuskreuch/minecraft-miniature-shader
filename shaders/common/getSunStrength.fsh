@@ -3,7 +3,7 @@
 
       vec3 pos = worldPos + cameraPosition;
       pos = pos * SHADOW_PIXEL + 0.01;
-      pos = floor(pos + 0.5);
+      pos = floor(pos) + 0.5;
       pos = pos / SHADOW_PIXEL - cameraPosition;
 
    #else
