@@ -14,6 +14,10 @@ float squaredLength(vec3 v) {
    return dot(v, v);
 }
 
+float bandify(float value, float bands) {
+   return floor(bands*value) / (bands - 1.0);
+}
+
 vec3 nvec3(vec4 pos) {
    return pos.xyz / pos.w;
 }
