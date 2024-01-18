@@ -6,16 +6,18 @@ if (isWater > 0.9) {
 
    #if WATER_WAVE_SIZE > 0
 
-      float v = (20.0 / (WATER_WAVE_SIZE - 0.4))
-              / max(1.0, length(worldPos.xz));
-      
-      v = min(1.0, v);
+      if (abs(normal.y) > 0.8) {
+         float v = (20.0 / (WATER_WAVE_SIZE - 0.4))
+               / max(1.0, length(worldPos.xz));
+         
+         v = min(1.0, v);
 
-      normal.xyz += vec3(
-         v * pow(sin(posNoise * WATER_WAVE_SPEED * frameTimeCounter), 3.0),
-         0.0,
-         v * pow(cos(posNoise * WATER_WAVE_SPEED * frameTimeCounter), 3.0)
-      );
+         normal.xyz += vec3(
+            v * pow3(sin(posNoise * WATER_WAVE_SPEED * frameTimeCounter)),
+            0.0,
+            v * pow3(cos(posNoise * WATER_WAVE_SPEED * frameTimeCounter))
+         );
+      }
 
    #endif
 

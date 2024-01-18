@@ -21,3 +21,11 @@ float bandify(float value, float bands) {
 vec3 nvec3(vec4 pos) {
    return pos.xyz / pos.w;
 }
+
+float pow2(float x) {
+   return x*x;
+}
+
+float pow3(float x) {
+   return x*x*x;
+}

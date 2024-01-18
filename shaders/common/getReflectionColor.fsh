@@ -26,7 +26,7 @@
       if (dist*dist < 2.0*len * exp(0.03*len) && !(texture2D(colortex7, curUV).x > 0.99)) {
          j++;
 
-         if (j >= MAX_REFINEMENTS && sampleDepth >= depth) {
+         if (j >= MAX_REFINEMENTS && sampleDepth + 0.001 >= depth) {
             // fade reflection with vignette
             vec2 vignette = curUV;
 

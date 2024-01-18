@@ -3,7 +3,7 @@
 
    float strength = float(max(heldBlockLightValue, heldBlockLightValue2));
 
-   strength = max(torchStrength, min(1.0, strength / pow(length(worldPos) + 1.5, 2.0)));
+   strength = max(torchStrength, min(1.0, strength / pow2(length(worldPos) + 1.5)));
 
 #else
 
