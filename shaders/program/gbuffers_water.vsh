@@ -22,11 +22,10 @@ varying vec4 normal;
 
 varying float fogMix;
 varying float isWater;
-varying float torchLight;
+varying float torchStrength;
 varying float texStrength;
 
 #include "/common/math.glsl"
-#include "/common/transformations.vsh"
 
 void main() {
    gl_Position = ftransform();
@@ -36,11 +35,8 @@ void main() {
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    isWater = float(mc_Entity.x == 10008.0);
 
-   torchLight = 1.1*rescale(lightUV.s, TORCH_UV_SCALE.x, TORCH_UV_SCALE.y);
-   torchLight *= torchLight;
-
-   worldPos = getWorldPosition();
-   
+   #include "/common/getTorchStrength.vsh"
+   #include "/common/getWorldPosition.vsh"
    #include "/common/water.vsh"
    #include "/common/fog.vsh"
 }

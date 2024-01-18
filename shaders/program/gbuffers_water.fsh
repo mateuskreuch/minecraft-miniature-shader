@@ -14,7 +14,7 @@ varying vec4 normal;
 
 varying float fogMix;
 varying float isWater;
-varying float torchLight;
+varying float torchStrength;
 varying float texStrength;
 
 #ifdef HAND_DYNAMIC_LIGHTING
@@ -22,12 +22,18 @@ varying float texStrength;
    uniform int heldBlockLightValue2;
 #endif
 
+#include "/common/math.glsl"
+
 void main() {
+   /* DRAWBUFFERS:067 */
+
    vec4 albedo  = texture2D(texture, texUV);
    vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
-   vec3 torchColor;
 
-   #include "/common/torchLight.fsh"
+   gl_FragData[2] = vec4(1.0, luma(ambient.rgb), 0.0, 1.0);
+
+   vec3 torchColor;
+   #include "/common/getTorchColor.fsh"
 
    ambient.rgb += 0.5*torchColor;
 
@@ -40,8 +46,6 @@ void main() {
 
    albedo.rgb = mix(albedo.rgb, fogColor, fogMix);
    
-   /* DRAWBUFFERS:067 */
    gl_FragData[0] = albedo;
    gl_FragData[1] = normal;
-   gl_FragData[2] = vec4(1.0, 0.0, 0.0, 1.0);
 }

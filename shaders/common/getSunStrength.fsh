@@ -1,10 +1,18 @@
-float getShadow() {
+{
    #if SHADOW_PIXEL > 0
-   vec3 pos = (floor((worldPos + cameraPosition) * SHADOW_PIXEL + 0.01) + 0.5)
-            / SHADOW_PIXEL - cameraPosition;
+
+   vec3 pos = worldPos + cameraPosition;
+   pos = pos * SHADOW_PIXEL + 0.01;
+   pos = floor(pos + 0.5);
+   pos = pos / SHADOW_PIXEL - cameraPosition;
+
    #else
+
    vec3 pos = worldPos;
+
    #endif
+
+   sunStrength = diffuse;
 
    float posDistance = squaredLength(pos);
    vec4 shadowScreen = shadowModelView * vec4(pos, 1.0);
@@ -18,8 +26,6 @@ float getShadow() {
       float shadowFade  = 1.0 - posDistance * INV_SHADOW_MAX_DIST_SQUARED;
       float shadowDepth = 256.0*texture2D(shadowtex1, shadowUV).x;
 
-      return diffuse * (1.0 - shadowFade * clamp(-shadowScreen.z - shadowDepth, 0.0, 1.0));
+      sunStrength *= (1.0 - shadowFade * clamp(-shadowScreen.z - shadowDepth, 0.0, 1.0));
    }
-
-   return diffuse;
 }

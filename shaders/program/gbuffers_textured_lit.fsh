@@ -13,7 +13,7 @@ varying vec2 lightUV;
 varying vec3 worldPos;
 varying vec4 color;
 varying float fogMix;
-varying float torchLight;
+varying float torchStrength;
 
 #ifdef HAND_DYNAMIC_LIGHTING
    uniform int heldBlockLightValue;
@@ -27,31 +27,31 @@ varying float torchLight;
    uniform mat4 gbufferProjectionInverse;
    uniform sampler2D shadowtex1;
 
-   varying vec3 lightColor;
+   varying vec3 sunColor;
    varying float diffuse;
 
    #include "/common/math.glsl"
-   #include "/common/shadow.fsh"
 #endif
 
 void main() {
    vec4 albedo  = texture2D(texture, texUV) * color;
    vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
+   
    vec3 torchColor;
-
-   #include "/common/torchLight.fsh"
+   #include "/common/getTorchColor.fsh"
 
    #ifdef OVERWORLD
-   float diffuse = getShadow();
+   float sunStrength;
+   #include "/common/getSunStrength.fsh"
    
    ambient.rgb *= 1.0 - SHADOW_DARKNESS;
-   ambient.b *= mix(1.0 + SHADOW_BLUENESS, 1.0, diffuse);
+   ambient.b *= mix(1.0 + SHADOW_BLUENESS, 1.0, sunStrength);
    #endif
 
    ambient.rgb += torchColor;
 
    #ifdef OVERWORLD
-   ambient.rgb += SUN_BRIGHTNESS * lightColor * diffuse;
+   ambient.rgb += (SUN_BRIGHTNESS * sunStrength) * sunColor;
    #endif
    
    // render thunder
