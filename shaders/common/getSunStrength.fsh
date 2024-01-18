@@ -1,14 +1,14 @@
 {
    #if SHADOW_PIXEL > 0
 
-   vec3 pos = worldPos + cameraPosition;
-   pos = pos * SHADOW_PIXEL + 0.01;
-   pos = floor(pos + 0.5);
-   pos = pos / SHADOW_PIXEL - cameraPosition;
+      vec3 pos = worldPos + cameraPosition;
+      pos = pos * SHADOW_PIXEL + 0.01;
+      pos = floor(pos + 0.5);
+      pos = pos / SHADOW_PIXEL - cameraPosition;
 
    #else
 
-   vec3 pos = worldPos;
+      vec3 pos = worldPos;
 
    #endif
 

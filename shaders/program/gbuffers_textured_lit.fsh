@@ -41,17 +41,21 @@ void main() {
    #include "/common/getTorchColor.fsh"
 
    #ifdef OVERWORLD
-   float sunStrength;
-   #include "/common/getSunStrength.fsh"
-   
-   ambient.rgb *= 1.0 - SHADOW_DARKNESS;
-   ambient.b *= mix(1.0 + SHADOW_BLUENESS, 1.0, sunStrength);
+
+      float sunStrength;
+      #include "/common/getSunStrength.fsh"
+      
+      ambient.rgb *= 1.0 - SHADOW_DARKNESS;
+      ambient.b *= mix(1.0 + SHADOW_BLUENESS, 1.0, sunStrength);
+
    #endif
 
    ambient.rgb += torchColor;
 
    #ifdef OVERWORLD
-   ambient.rgb += (SUN_BRIGHTNESS * sunStrength) * sunColor;
+
+      ambient.rgb += (SUN_BRIGHTNESS * sunStrength) * sunColor;
+
    #endif
    
    // render thunder

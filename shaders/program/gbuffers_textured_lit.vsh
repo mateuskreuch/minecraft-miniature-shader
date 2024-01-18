@@ -38,6 +38,6 @@ void main() {
    #include "/common/fog.vsh"
 
    #ifdef OVERWORLD
-   #include "/common/shadow.vsh"
+      #include "/common/shadow.vsh"
    #endif
 }
