@@ -8,6 +8,7 @@ uniform int isEyeInWater;
 uniform int worldTime;
 uniform vec3 shadowLightPosition;
 uniform mat4 gbufferModelViewInverse;
+uniform int fogShape;
 uniform float fogEnd;
 uniform float fogStart;
 uniform float rainStrength;
@@ -35,9 +36,10 @@ void main() {
 
    #include "/common/getTorchStrength.vsh"
    #include "/common/getWorldPosition.vsh"
-   #include "/common/fog.vsh"
+   #include "/common/getFogMix.vsh"
 
    #ifdef OVERWORLD
-      #include "/common/shadow.vsh"
+      #include "/common/getDiffuse.vsh"
+      #include "/common/getSunColor.vsh"
    #endif
 }

@@ -1,14 +1,8 @@
 {
 #if MC_VERSION >= 11300 && defined ENABLE_FOG
-   #if defined THE_NETHER
-      
-      fogMix = rescale(length(worldPos), fogStart, fogEnd * (isEyeInWater == 0 ? NETHER_FOG : 1.0));
+   float len = length(fogShape == 1 ? vec3(worldPos.xz, 0.0) : worldPos);
 
-   #elif defined THE_END
-
-      fogMix = rescale(length(worldPos), fogStart, fogEnd);
-
-   #else
+   #if defined OVERWORLD
 
       float x = worldTime * NORMALIZE_TIME;
 
@@ -19,7 +13,15 @@
       x = min(x, 1.0 - rainStrength);
       x = max(x, float(isEyeInWater != 0));
 
-      fogMix = rescale(length(worldPos.xz), x*fogStart, fogEnd);
+      fogMix = rescale(len, x*fogStart, fogEnd);
+   
+   #elif defined THE_NETHER
+      
+      fogMix = rescale(len, fogStart, fogEnd * (isEyeInWater == 0 ? NETHER_FOG : 1.0));
+   
+   #else
+
+      fogMix = rescale(len, fogStart, fogEnd);
 
    #endif
 #else
