@@ -37,9 +37,6 @@ void main() {
    vec4 albedo  = texture2D(texture, texUV) * color;
    vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
    
-   vec3 torchColor;
-   #include "/common/getTorchColor.fsh"
-
    #ifdef OVERWORLD
 
       float sunStrength;
@@ -49,6 +46,9 @@ void main() {
       ambient.b *= mix(1.0 + SHADOW_BLUENESS, 1.0, sunStrength);
 
    #endif
+
+   vec3 torchColor;
+   #include "/common/getTorchColor.fsh"
 
    ambient.rgb += torchColor;
 
