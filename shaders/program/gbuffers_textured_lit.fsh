@@ -6,12 +6,12 @@ uniform int entityId;
 uniform vec3 fogColor;
 uniform vec4 entityColor;
 uniform sampler2D texture;
-uniform sampler2D lightmap;
 
 varying vec2 texUV;
 varying vec2 lightUV;
 varying vec3 worldPos;
 varying vec4 color;
+varying vec4 ambient;
 varying float fogMix;
 varying float torchStrength;
 
@@ -35,7 +35,7 @@ varying float torchStrength;
 
 void main() {
    vec4 albedo  = texture2D(texture, texUV) * color;
-   vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
+   vec4 ambient = ambient;
    
    #ifdef OVERWORLD
 

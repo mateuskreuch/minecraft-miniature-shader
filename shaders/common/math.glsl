@@ -22,6 +22,10 @@ vec3 nvec3(vec4 pos) {
    return pos.xyz / pos.w;
 }
 
+vec3 contrast(vec3 color, float contrast) {
+   return contrast * (color.rgb - 0.5) + 0.5;
+}
+
 float pow2(float x) {
    return x*x;
 }
