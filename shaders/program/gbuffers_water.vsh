@@ -8,7 +8,6 @@ uniform int fogShape;
 uniform int worldTime;
 uniform int isEyeInWater;
 uniform vec3 cameraPosition;
-uniform vec3 shadowLightPosition;
 uniform mat4 gbufferModelViewInverse;
 uniform float fogEnd;
 uniform float fogStart;

@@ -15,10 +15,6 @@ varying vec2 texUV;
 #include "/common/math.glsl"
 #include "/common/transformations.fsh"
 
-bool isReflective(vec2 uv) {
-   return texture2D(colortex7, uv).r > 0.99;
-}
-
 void main() {
    vec4 color = texture2D(colortex0, texUV);
    vec4 info  = texture2D(colortex7, texUV);

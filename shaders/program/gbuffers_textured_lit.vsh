@@ -7,7 +7,6 @@ attribute vec4 mc_Entity;
 uniform int fogShape;
 uniform int worldTime;
 uniform int isEyeInWater;
-uniform vec3 shadowLightPosition;
 uniform mat4 gbufferModelViewInverse;
 uniform float fogEnd;
 uniform float fogStart;
@@ -28,6 +27,8 @@ varying float torchStrength;
 #endif
 
 #ifdef OVERWORLD
+   uniform vec3 shadowLightPosition;
+
    varying vec3 sunColor;
    varying float diffuse;
 #endif
