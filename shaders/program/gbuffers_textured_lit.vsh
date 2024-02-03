@@ -22,6 +22,11 @@ varying vec4 ambient;
 varying float fogMix;
 varying float torchStrength;
 
+#ifdef HIGHLIGHT_WAXED
+   uniform int heldItemId;
+   uniform int heldItemId2;
+#endif
+
 #ifdef OVERWORLD
    varying vec3 sunColor;
    varying float diffuse;
@@ -36,6 +41,14 @@ void main() {
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    ambient = texture2DLod(lightmap, vec2(AMBIENT_UV.s, lightUV.t), 1);
+
+   #ifdef HIGHLIGHT_WAXED
+
+      if ((heldItemId == 10041 || heldItemId2 == 10041) && mc_Entity.x == 10041.0) {
+         color.rgb *= 0.4;
+      }
+   
+   #endif
 
    #include "/common/getTorchStrength.vsh"
    #include "/common/getWorldPosition.vsh"
