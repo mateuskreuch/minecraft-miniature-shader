@@ -31,6 +31,10 @@ const float shadowIntervalSize = 15.0; //[1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10
 #define HIGHLIGHT_WAXED
 #define SHADOW_ENTITY
 
+#ifdef OVERWORLD
+   #define ENABLE_SHADOWS
+#endif
+
 #if MC_VERSION >= 11300
    #define HAND_DYNAMIC_LIGHTING
 #endif

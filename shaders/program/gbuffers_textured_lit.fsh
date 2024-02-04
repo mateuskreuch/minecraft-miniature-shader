@@ -24,7 +24,7 @@ varying float torchStrength;
    uniform int heldBlockLightValue2;
 #endif
 
-#ifdef OVERWORLD
+#ifdef ENABLE_SHADOWS
    uniform vec3 cameraPosition;
    uniform mat4 shadowModelView;
    uniform mat4 shadowProjection;
@@ -55,7 +55,7 @@ void main() {
 
    albedo *= color;
    
-   #ifdef OVERWORLD
+   #ifdef ENABLE_SHADOWS
 
       float sunStrength;
       #include "/common/getSunStrength.fsh"
@@ -70,7 +70,7 @@ void main() {
 
    ambient.rgb += torchColor;
 
-   #ifdef OVERWORLD
+   #ifdef ENABLE_SHADOWS
 
       ambient.rgb += (SUN_BRIGHTNESS * sunStrength) * sunColor;
 

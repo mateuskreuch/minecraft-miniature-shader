@@ -30,7 +30,7 @@ varying float torchStrength;
    uniform int heldItemId2;
 #endif
 
-#ifdef OVERWORLD
+#ifdef ENABLE_SHADOWS
    uniform vec3 shadowLightPosition;
 
    varying vec3 sunColor;
@@ -65,7 +65,7 @@ void main() {
    #include "/common/getWorldPosition.vsh"
    #include "/common/getFogMix.vsh"
 
-   #ifdef OVERWORLD
+   #ifdef ENABLE_SHADOWS
       #include "/common/getDiffuse.vsh"
       #include "/common/getSunColor.vsh"
    #endif
