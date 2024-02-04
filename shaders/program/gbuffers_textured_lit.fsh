@@ -44,8 +44,11 @@ void main() {
    #ifdef GLOWING_ORES
 
       if (isOre > 0.9) {
-         ambient.rgb += rescale(luma(pow(albedo.rgb, vec3(6.0))), 0.1, 0.7);
-         ambient.rgb = min(ambient.rgb, vec3(1.0));
+         ambient.rgb = mix(
+            ambient.rgb,
+            vec3(1.0),
+            invpow2(1.0 - 0.3333*squaredLength(pow(albedo.rgb, vec3(6.0))))
+         );
       }
 
    #endif

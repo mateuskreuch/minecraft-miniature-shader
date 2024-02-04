@@ -26,6 +26,10 @@ vec3 contrast(vec3 color, float contrast) {
    return contrast * (color.rgb - 0.5) + 0.5;
 }
 
+float invpow2(float x) {
+   return 1.0 - x*x;
+}
+
 float pow2(float x) {
    return x*x;
 }
