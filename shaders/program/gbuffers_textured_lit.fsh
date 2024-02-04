@@ -15,6 +15,10 @@ varying vec4 ambient;
 varying float fogMix;
 varying float torchStrength;
 
+#ifdef GLOWING_ORES
+   varying float isOre;
+#endif
+
 #ifdef HAND_DYNAMIC_LIGHTING
    uniform int heldBlockLightValue;
    uniform int heldBlockLightValue2;
@@ -29,13 +33,24 @@ varying float torchStrength;
 
    varying vec3 sunColor;
    varying float diffuse;
-
-   #include "/common/math.glsl"
 #endif
 
+#include "/common/math.glsl"
+
 void main() {
-   vec4 albedo  = texture2D(texture, texUV) * color;
+   vec4 albedo  = texture2D(texture, texUV);
    vec4 ambient = ambient;
+
+   #ifdef GLOWING_ORES
+
+      if (isOre > 0.9) {
+         ambient.rgb += rescale(luma(pow(albedo.rgb, vec3(6.0))), 0.1, 0.7);
+         ambient.rgb = min(ambient.rgb, vec3(1.0));
+      }
+
+   #endif
+
+   albedo *= color;
    
    #ifdef OVERWORLD
 

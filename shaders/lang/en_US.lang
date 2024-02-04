@@ -38,3 +38,4 @@ option.HAND_DYNAMIC_LIGHTING = Hand dynamic lighting
 option.FLAT_LIGHTING = Use flat lighting
 option.HIGHLIGHT_WAXED = Highlight waxed blocks
 option.HIGHLIGHT_WAXED.comment=Waxed blocks are highlighted when holding honeycomb
+option.GLOWING_ORES = Glowing ores

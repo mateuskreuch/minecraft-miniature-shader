@@ -21,6 +21,10 @@ varying vec4 ambient;
 varying float fogMix;
 varying float torchStrength;
 
+#ifdef GLOWING_ORES
+   varying float isOre;
+#endif
+
 #ifdef HIGHLIGHT_WAXED
    uniform int heldItemId;
    uniform int heldItemId2;
@@ -42,6 +46,12 @@ void main() {
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    ambient = texture2DLod(lightmap, vec2(AMBIENT_UV.s, lightUV.t), 1);
+
+   #ifdef GLOWING_ORES
+
+      isOre = float(mc_Entity.x == 10014.0);
+
+   #endif
 
    #ifdef HIGHLIGHT_WAXED
 
