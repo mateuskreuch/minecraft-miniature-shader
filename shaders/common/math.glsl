@@ -10,6 +10,10 @@ float rescale(float x, float a, float b) {
    return clamp((x - a) / (b - a), 0.0, 1.0);
 }
 
+vec3 rescale(vec3 x, vec3 a, vec3 b) {
+   return clamp((x - a) / (b - a), vec3(0.0), vec3(1.0));
+}
+
 float squaredLength(vec3 v) {
    return dot(v, v);
 }
