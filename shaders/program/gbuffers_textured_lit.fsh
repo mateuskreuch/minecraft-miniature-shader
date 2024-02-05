@@ -46,8 +46,8 @@ void main() {
       if (isOre > 0.9) {
          ambient.rgb = mix(
             ambient.rgb,
-            vec3(1.0),
-            invpow2(1.0 - 0.3333*squaredLength(pow(albedo.rgb, vec3(6.0))))
+            vec3(1.0, 0.9, 0.9),
+            invpow2(1.0 - 0.3333*squaredLength(pow(albedo.rgb, vec3(5.0))))
          );
       }
 
