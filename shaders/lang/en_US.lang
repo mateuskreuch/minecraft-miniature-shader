@@ -15,6 +15,9 @@ screen.COLORS_SCREEN = Colors
 option.TORCH_R = Torch color red
 option.TORCH_G = Torch color green
 option.TORCH_B = Torch color blue
+option.TORCH_OUTER_R = Outer torch color red
+option.TORCH_OUTER_G = Outer torch color green
+option.TORCH_OUTER_B = Outer torch color blue
 
 screen.FOG_SCREEN = Fog
 option.ENABLE_FOG = Enable fog
