@@ -1,4 +1,6 @@
 {
+   sunStrength = diffuse;
+
    #if SHADOW_PIXEL > 0
 
       vec3 pos = worldPos + cameraPosition;
@@ -11,8 +13,6 @@
       vec3 pos = worldPos;
 
    #endif
-
-   sunStrength = diffuse;
 
    float posDistance = squaredLength(pos);
    vec4 shadowScreen = shadowModelView * vec4(pos, 1.0);

@@ -39,6 +39,7 @@ void main() {
    ambient.rgb += 0.5*torchColor;
 
    albedo *= color * ambient;
+
    albedo.rgb = mix(albedo.rgb, fogColor, fogMix);
    
    /* DRAWBUFFERS:067 */

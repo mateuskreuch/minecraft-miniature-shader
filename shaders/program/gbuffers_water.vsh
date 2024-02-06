@@ -34,8 +34,8 @@ void main() {
    color   = gl_Color;
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
-   isWater = float(mc_Entity.x == 10008.0);
    ambient = texture2DLod(lightmap, vec2(AMBIENT_UV.s, lightUV.t), 1);
+   isWater = float(mc_Entity.x == 10008.0);
 
    #include "/common/getTorchStrength.vsh"
    #include "/common/getWorldPosition.vsh"
