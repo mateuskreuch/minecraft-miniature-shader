@@ -59,9 +59,12 @@ void main() {
 
       float sunStrength;
       #include "/common/getSunStrength.fsh"
+
+      float blueness = (1.0 - sunStrength) * SHADOW_BLUENESS;
       
       ambient.rgb *= 1.0 - SHADOW_DARKNESS;
-      ambient.b *= mix(1.0 + SHADOW_BLUENESS, 1.0, sunStrength);
+      ambient.g *= 1.0 + 0.3333*blueness;
+      ambient.b *= 1.0 + blueness;
 
    #endif
 
