@@ -42,13 +42,11 @@ void main() {
 
    #ifdef GLOWING_ORES
 
-      if (isOre > 0.9) {
-         ambient.rgb = mix(
-            ambient.rgb,
-            vec3(1.0, 0.9, 0.9),
-            0.3333*squaredLength(rescale(albedo.rgb, vec3(0.59), vec3(1.0)))
-         );
-      }
+      ambient.rgb = mix(
+         ambient.rgb,
+         vec3(1.0, 0.9, 0.9),
+         isOre * 0.3333*squaredLength(rescale(albedo.rgb, vec3(0.59), vec3(1.0)))
+      );
 
    #endif
 
@@ -70,11 +68,13 @@ void main() {
    vec3 torchColor;
    #include "/common/getTorchColor.fsh"
 
-   ambient.rgb += torchColor;
+   ambient.rgb += (1.0 - 0.9*sunStrength) * torchColor;
 
    #ifdef ENABLE_SHADOWS
 
-      ambient.rgb += (SUN_BRIGHTNESS * sunStrength) * sunColor;
+      float sunBrightness = max(0.0, SUN_BRIGHTNESS - 0.5*pow3(luma(albedo.rgb)));
+
+      ambient.rgb *= 1.0 + (sunBrightness * sunStrength) * sunColor;
 
    #endif
    
