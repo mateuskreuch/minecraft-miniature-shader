@@ -1,7 +1,7 @@
 {
 #ifdef HAND_DYNAMIC_LIGHTING
 
-   float strength = float(max(heldBlockLightValue, heldBlockLightValue2));
+   float strength = float(heldBlockLightValue);
 
    strength = max(torchStrength, min(1.0, strength / pow2(length(worldPos) + 1.5)));
 

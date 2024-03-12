@@ -18,7 +18,6 @@ varying float torchStrength;
 
 #ifdef HAND_DYNAMIC_LIGHTING
    uniform int heldBlockLightValue;
-   uniform int heldBlockLightValue2;
 #endif
 
 #include "/common/math.glsl"
