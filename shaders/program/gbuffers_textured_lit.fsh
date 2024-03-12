@@ -51,10 +51,10 @@ void main() {
    #endif
 
    albedo *= color;
+
+   float sunStrength = 0.0;
    
    #ifdef ENABLE_SHADOWS
-
-      float sunStrength;
       #include "/common/getSunStrength.fsh"
 
       float blueness = (1.0 - sunStrength) * SHADOW_BLUENESS;
