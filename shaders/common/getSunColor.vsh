@@ -4,7 +4,7 @@ float y    = x > SUNRISE ? (x - 1.0) - NOON : x - NOON;
 bool isDay = x > SUNRISE || x < SUNSET;
 
 // make light redder on sunrise and sunset
-sunColor = isDay ? normalize(vec3(1.0 + clamp(66.0*y*y - 3.7142, 0.3, 1.0), 1.1, 1.0))
+sunColor = isDay ? normalize(vec3(1.0 + clamp(66.0*y*y - 3.7142, 0.12, 1.0), 1.06, 1.0))
                  : vec3(0.04, 0.04, 0.12); 
 
 // create transition between color presets using light height
