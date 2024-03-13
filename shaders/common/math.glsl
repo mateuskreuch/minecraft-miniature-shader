@@ -34,6 +34,10 @@ float invpow2(float x) {
    return 1.0 - x*x;
 }
 
+float smoothe(float x) {
+   return x*x*(3.0 - 2.0*x);
+}
+
 float pow2(float x) {
    return x*x;
 }

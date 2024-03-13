@@ -55,6 +55,7 @@ void main() {
    float sunStrength = 0.0;
    
    #ifdef ENABLE_SHADOWS
+
       #include "/common/getSunStrength.fsh"
 
       float blueness = (1.0 - sunStrength) * SHADOW_BLUENESS;
@@ -63,20 +64,16 @@ void main() {
       ambient.g *= 1.0 + 0.3333*blueness;
       ambient.b *= 1.0 + blueness;
 
-   #endif
-
-   vec3 torchColor;
-   #include "/common/getTorchColor.fsh"
-
-   ambient.rgb += (1.0 - 0.9*sunStrength) * torchColor;
-
-   #ifdef ENABLE_SHADOWS
-
       float sunBrightness = max(0.0, SUN_BRIGHTNESS - 0.5*pow3(luma(albedo.rgb)));
 
       ambient.rgb *= 1.0 + (sunBrightness * sunStrength) * sunColor;
 
    #endif
+
+   vec3 torchColor;
+   #include "/common/getTorchColor.fsh"
+
+   ambient.rgb += max(1.0 - luma(ambient.rgb), 0.0) * torchColor;
    
    // render thunder
    albedo.a = entityId == 11000.0 ? 0.15 : albedo.a;
