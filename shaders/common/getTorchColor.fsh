@@ -12,5 +12,5 @@
 #endif
 
 strength = smoothe(strength);
-torchColor = mix(TORCH_OUTER_COLOR, TORCH_COLOR, strength) * strength;
+torchColor = mix(TORCH_OUTER_COLOR, TORCH_COLOR, strength) * strength * max(1.0 - luma(ambient.rgb), 0.0);
 }

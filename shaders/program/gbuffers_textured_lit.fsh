@@ -73,7 +73,7 @@ void main() {
    vec3 torchColor;
    #include "/common/getTorchColor.fsh"
 
-   ambient.rgb += max(1.0 - luma(ambient.rgb), 0.0) * torchColor;
+   ambient.rgb += torchColor;
    
    // render thunder
    albedo.a = entityId == 11000.0 ? 0.15 : albedo.a;
