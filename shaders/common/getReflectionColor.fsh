@@ -16,8 +16,8 @@
          break;
       
       float sampleDepth = texture2D(depthtex0, curUV).x;
-      vec3  sample      = uv2screen(curUV, sampleDepth);
-      float dist        = abs(curPos.z - sample.z);
+      vec3  samplePos   = uv2screen(curUV, sampleDepth);
+      float dist        = abs(curPos.z - samplePos.z);
       float len         = squaredLength(reflection);
 
       // check if distance between last and current depth is
