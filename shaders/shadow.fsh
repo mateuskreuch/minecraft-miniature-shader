@@ -3,12 +3,12 @@
 uniform sampler2D texture;
 
 varying vec2 texUV;
-varying vec4 color;
+varying float alpha;
 
 void main() {
-    vec4 albedo = texture2D(texture, texUV) * color;
+    vec4 albedo = texture2DLod(texture, texUV, 0);
 
-    if (albedo.a <= 0.01) discard;
+    albedo.a *= alpha;
 
     gl_FragData[0] = albedo;
 }
