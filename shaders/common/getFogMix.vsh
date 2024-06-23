@@ -14,11 +14,11 @@
       x = max(x, float(isEyeInWater != 0));
 
       fogMix = rescale(len, x*fogStart, fogEnd);
-   
+
    #elif defined THE_NETHER
-      
+
       fogMix = rescale(len, fogStart, fogEnd * (isEyeInWater == 0 ? NETHER_FOG : 1.0));
-   
+
    #else
 
       fogMix = rescale(len, fogStart, fogEnd);
@@ -27,6 +27,6 @@
 #else
 
    fogMix = 0.0;
-   
+
 #endif
 }

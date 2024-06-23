@@ -41,7 +41,9 @@ void main() {
    vec4 ambient = ambient;
 
    #ifdef THE_END
+
       ambient.rgb *= END_AMBIENT;
+
    #endif
 
    #ifdef GLOWING_ORES
@@ -57,13 +59,13 @@ void main() {
    albedo *= color;
 
    float sunStrength = 0.0;
-   
+
    #ifdef ENABLE_SHADOWS
 
       #include "/common/getSunStrength.fsh"
 
       float blueness = (1.0 - sunStrength) * SHADOW_BLUENESS;
-      
+
       ambient.rgb *= 1.0 - SHADOW_DARKNESS;
       ambient.g *= 1.0 + 0.3333*blueness;
       ambient.b *= 1.0 + blueness;
@@ -78,7 +80,7 @@ void main() {
    #include "/common/getTorchColor.fsh"
 
    ambient.rgb += torchColor;
-   
+
    // render thunder
    albedo.a = entityId == 11000.0 ? 0.15 : albedo.a;
 
@@ -86,7 +88,7 @@ void main() {
    albedo.rgb = mix(albedo.rgb, entityColor.rgb, entityColor.a);
 
    albedo *= ambient;
-   
+
    albedo.rgb = mix(albedo.rgb, fogColor, fogMix);
 
    gl_FragData[0] = albedo;

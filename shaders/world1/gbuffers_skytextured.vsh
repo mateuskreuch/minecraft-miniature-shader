@@ -1,5 +1,7 @@
 #version 120
 
+#define THE_END
+
 #include "/shader.h"
 
 uniform mat4 gbufferModelViewInverse;

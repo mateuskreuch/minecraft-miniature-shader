@@ -58,7 +58,7 @@ void main() {
       if ((heldItemId == 10041 || heldItemId2 == 10041) && mc_Entity.x == 10041.0) {
          color.rgb *= 0.4;
       }
-   
+
    #endif
 
    #include "/common/getTorchStrength.vsh"

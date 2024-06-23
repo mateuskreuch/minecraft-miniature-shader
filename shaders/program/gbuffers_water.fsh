@@ -40,7 +40,7 @@ void main() {
    albedo *= color * ambient;
 
    albedo.rgb = mix(albedo.rgb, fogColor, fogMix);
-   
+
    /* DRAWBUFFERS:067 */
    gl_FragData[0] = albedo;
    gl_FragData[1] = normal;

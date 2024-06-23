@@ -8,13 +8,13 @@
    vec3 curPos = fragPos + reflection;
    vec3 oldPos = fragPos;
    int j = 0;
-   
+
    for (int _ = 0; _ < MAX_RAYS; _++) {
       vec2 curUV = screen2uv(curPos);
 
       if (curUV.s < 0.0 || curUV.s > 1.0 || curUV.t < 0.0 || curUV.t > 1.0)
          break;
-      
+
       float sampleDepth = texture2D(depthtex0, curUV).x;
       vec3  samplePos   = uv2screen(curUV, sampleDepth);
       float dist        = abs(curPos.z - samplePos.z);
