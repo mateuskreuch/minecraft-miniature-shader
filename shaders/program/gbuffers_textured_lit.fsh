@@ -40,12 +40,6 @@ void main() {
    vec4 albedo  = texture2D(texture, texUV);
    vec4 ambient = ambient;
 
-   #ifdef THE_END
-
-      ambient.rgb *= END_AMBIENT;
-
-   #endif
-
    #ifdef GLOWING_ORES
 
       ambient.rgb = mix(

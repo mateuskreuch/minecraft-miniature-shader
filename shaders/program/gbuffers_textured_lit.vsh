@@ -47,6 +47,12 @@ void main() {
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    ambient = texture2DLod(lightmap, vec2(AMBIENT_UV.s, lightUV.t), 1);
 
+   #ifdef THE_END
+
+      ambient.rgb *= END_AMBIENT + 0.03*(gl_NormalMatrix * gl_Normal).xyz;
+
+   #endif
+
    #ifdef GLOWING_ORES
 
       isOre = float(mc_Entity.x == 10014.0);

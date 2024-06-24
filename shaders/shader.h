@@ -79,7 +79,7 @@ const vec3 TORCH_OUTER_COLOR = vec3(TORCH_OUTER_R, TORCH_OUTER_G, TORCH_OUTER_B)
 const vec3 MOON_COLOR = vec3(MOON_R, MOON_G, MOON_B);
 
 const vec4 END_STARS_DRAG = vec4(200, 500, 100, 100);
-const vec3 END_AMBIENT    = vec3(0.66, 0.55, 0.77);
+const vec3 END_AMBIENT    = vec3(0.7, 0.55, 0.8);
 
 const float SHADOW_MAX_DIST_SQUARED = shadowDistance * shadowDistance;
 const float INV_SHADOW_MAX_DIST_SQUARED = 1.0/SHADOW_MAX_DIST_SQUARED;
