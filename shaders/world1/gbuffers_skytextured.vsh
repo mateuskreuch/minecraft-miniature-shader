@@ -12,6 +12,7 @@ varying vec3 worldPos;
 
 void main() {
    gl_Position = ftransform();
+
    color = gl_Color;
    texUV = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
 
