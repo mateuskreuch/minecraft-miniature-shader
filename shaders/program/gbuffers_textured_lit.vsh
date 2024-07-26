@@ -49,7 +49,7 @@ void main() {
 
    #ifdef THE_END
 
-      ambient.rgb *= END_AMBIENT + 0.03*(gl_NormalMatrix * gl_Normal).xyz;
+      ambient.rgb *= END_AMBIENT + 0.02*(gl_NormalMatrix * gl_Normal).xyz;
 
    #endif
 
