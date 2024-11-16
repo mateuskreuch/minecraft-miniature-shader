@@ -14,7 +14,8 @@ varying vec2 texUV;
 
 #include "/common/math.glsl"
 #include "/common/transformations.fsh"
-#include "/common/getReflectionColor.fsh"
+#include "/common/getReflectionUV.fsh"
+#include "/common/getReflectionVignette.fsh"
 
 void main() {
    vec4 color = texture2D(colortex0, texUV);
@@ -37,8 +38,10 @@ void main() {
       float depth          = texture2D(depthtex0, texUV).x;
       vec3 normal          = world2screen(prenormal);
       vec3 fragPos         = uv2screen(texUV, depth);
-      vec4 reflectionColor = getReflectionColor(depth, normal, fragPos);
       float fresnel        = 1.0 - dot(normal, -normalize(fragPos));
+      vec2 reflectionUV    = getReflectionUV(depth, normal, fragPos);
+      vec4 reflectionColor = vec4(texture2D(colortex0, reflectionUV).rgb,
+                                  getReflectionVignette(reflectionUV));
 
       color.rgb = mix(
          color.rgb,

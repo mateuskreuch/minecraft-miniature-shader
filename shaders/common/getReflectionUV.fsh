@@ -1,9 +1,9 @@
-vec4 getReflectionColor(float depth, vec3 normal, vec3 fragPos) {
-   #define MAX_RAYS 16
-   #define MAX_REFINEMENTS 4
-   #define RAY_MULT 2.0
-   #define REFINEMENT_MULT 0.1
+#define MAX_RAYS 16
+#define MAX_REFINEMENTS 4
+#define RAY_MULT 2.0
+#define REFINEMENT_MULT 0.1
 
+vec2 getReflectionUV(float depth, vec3 normal, vec3 fragPos) {
    vec3 reflection = normalize(reflect(fragPos, normal));
    vec3 curPos = fragPos + reflection;
    vec3 oldPos = fragPos;
@@ -27,17 +27,7 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 fragPos) {
          j++;
 
          if (j >= MAX_REFINEMENTS && sampleDepth + 0.001 >= depth) {
-            // fade reflection with vignette
-            vec2 vignette = curUV;
-
-            vignette.y = 1.0 - vignette.y;
-            vignette.x *= 1.0 - vignette.x;
-            vignette.y *= vignette.y;
-
-            return vec4(
-               texture2D(colortex0, curUV).rgb,
-               1.0 - pow(1.0 - vignette.x, 50.0*vignette.y)
-            );
+            return curUV;
          }
 
          curPos = oldPos;
