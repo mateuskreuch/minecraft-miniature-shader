@@ -13,7 +13,7 @@ varying vec4 normal;
 varying vec4 ambient;
 varying float fogMix;
 varying float isWater;
-varying float texStrength;
+varying float waterTexStrength;
 varying float torchStrength;
 
 #ifdef HAND_DYNAMIC_LIGHTING
@@ -21,6 +21,7 @@ varying float torchStrength;
 #endif
 
 #include "/common/math.glsl"
+#include "/common/getTorchColor.fsh"
 
 void main() {
    vec4 albedo  = texture2D(texture, texUV);
@@ -28,14 +29,11 @@ void main() {
    vec4 color   = color;
 
    if (isWater > 0.9) {
-      albedo = vec4(WATER_BRIGHTNESS * max(vec3(1.0), contrast(albedo.rgb, 3.2*texStrength)), 1.0);
+      albedo = vec4(WATER_BRIGHTNESS * max(vec3(1.0), contrast(albedo.rgb, 3.2*waterTexStrength)), 1.0);
       color.ba = min(color.ba, vec2(max(color.r, color.g)*WATER_B, WATER_A));
    }
 
-   vec3 torchColor;
-   #include "/common/getTorchColor.fsh"
-
-   ambient.rgb += 0.5*torchColor;
+   ambient.rgb += 0.5*getTorchColor(ambient.rgb);
 
    albedo *= color * ambient;
 

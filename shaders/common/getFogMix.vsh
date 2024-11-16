@@ -1,4 +1,4 @@
-{
+float getFogMix() {
 #if MC_VERSION >= 11300 && defined ENABLE_FOG
    float len = length(fogShape == 1 ? vec3(worldPos.xz, 0.0) : worldPos);
 
@@ -13,20 +13,20 @@
       x = min(x, 1.0 - rainStrength);
       x = max(x, float(isEyeInWater != 0));
 
-      fogMix = rescale(len, x*fogStart, fogEnd);
+      return rescale(len, x*fogStart, fogEnd);
 
    #elif defined THE_NETHER
 
-      fogMix = rescale(len, fogStart, fogEnd * (isEyeInWater == 0 ? NETHER_FOG : 1.0));
+      return rescale(len, fogStart, fogEnd * (isEyeInWater == 0 ? NETHER_FOG : 1.0));
 
    #else
 
-      fogMix = rescale(len, fogStart, fogEnd);
+      return rescale(len, fogStart, fogEnd);
 
    #endif
 #else
 
-   fogMix = 0.0;
+   return 0.0;
 
 #endif
 }

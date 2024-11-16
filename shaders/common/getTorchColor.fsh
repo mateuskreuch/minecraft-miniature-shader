@@ -1,16 +1,17 @@
-{
-#ifdef HAND_DYNAMIC_LIGHTING
+vec3 getTorchColor(vec3 ambient) {
+   #ifdef HAND_DYNAMIC_LIGHTING
 
-   float strength = float(heldBlockLightValue);
+      float strength = float(heldBlockLightValue);
 
-   strength = max(torchStrength, min(1.0, strength / pow2(length(worldPos) + 1.5)));
+      strength = max(torchStrength, min(1.0, strength / pow2(length(worldPos) + 1.5)));
 
-#else
+   #else
 
-   float strength = torchStrength;
+      float strength = torchStrength;
 
-#endif
+   #endif
 
-strength = smoothe(strength);
-torchColor = mix(TORCH_OUTER_COLOR, TORCH_COLOR, strength) * strength * max(0.0, 1.0 - luma(ambient.rgb));
+   strength = smoothe(strength);
+
+   return mix(TORCH_OUTER_COLOR, TORCH_COLOR, strength) * strength * max(0.0, 1.0 - luma(ambient));
 }

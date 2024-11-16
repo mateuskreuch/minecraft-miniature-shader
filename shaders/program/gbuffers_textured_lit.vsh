@@ -38,6 +38,11 @@ varying float torchStrength;
 #endif
 
 #include "/common/math.glsl"
+#include "/common/getDiffuse.vsh"
+#include "/common/getFogMix.vsh"
+#include "/common/getSunColor.vsh"
+#include "/common/getWorldPosition.vsh"
+#include "/common/getTorchStrength.vsh"
 
 void main() {
    gl_Position = ftransform();
@@ -67,12 +72,12 @@ void main() {
 
    #endif
 
-   #include "/common/getTorchStrength.vsh"
-   #include "/common/getWorldPosition.vsh"
-   #include "/common/getFogMix.vsh"
+   torchStrength = getTorchStrength(lightUV.s);
+   worldPos = getWorldPosition();
+   fogMix = getFogMix();
 
    #ifdef ENABLE_SHADOWS
-      #include "/common/getDiffuse.vsh"
-      #include "/common/getSunColor.vsh"
+      diffuse = getDiffuse(lightUV.t);
+      sunColor = getSunColor();
    #endif
 }

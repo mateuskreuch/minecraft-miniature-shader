@@ -1,4 +1,4 @@
-{
+vec4 getReflectionColor(float depth, vec3 normal, vec3 fragPos) {
    #define MAX_RAYS 16
    #define MAX_REFINEMENTS 4
    #define RAY_MULT 2.0
@@ -34,9 +34,10 @@
             vignette.x *= 1.0 - vignette.x;
             vignette.y *= vignette.y;
 
-            reflectionColor.rgb = texture2D(colortex0, curUV).rgb;
-            reflectionColor.a = 1.0 - pow(1.0 - vignette.x, 50.0*vignette.y);
-            break;
+            return vec4(
+               texture2D(colortex0, curUV).rgb,
+               1.0 - pow(1.0 - vignette.x, 50.0*vignette.y)
+            );
          }
 
          curPos = oldPos;

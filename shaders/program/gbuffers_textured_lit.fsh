@@ -35,6 +35,8 @@ varying float torchStrength;
 #endif
 
 #include "/common/math.glsl"
+#include "/common/getTorchColor.fsh"
+#include "/common/getSunStrength.fsh"
 
 void main() {
    vec4 albedo  = texture2D(texture, texUV);
@@ -52,12 +54,9 @@ void main() {
 
    albedo *= color;
 
-   float sunStrength = 0.0;
-
    #ifdef ENABLE_SHADOWS
 
-      #include "/common/getSunStrength.fsh"
-
+      float sunStrength = getSunStrength();
       float blueness = (1.0 - sunStrength) * SHADOW_BLUENESS;
 
       ambient.rgb *= 1.0 - SHADOW_DARKNESS;
@@ -70,10 +69,7 @@ void main() {
 
    #endif
 
-   vec3 torchColor;
-   #include "/common/getTorchColor.fsh"
-
-   ambient.rgb += torchColor;
+   ambient.rgb += getTorchColor(ambient.rgb);
 
    // render thunder
    albedo.a = entityId == 11000.0 ? 0.15 : albedo.a;
