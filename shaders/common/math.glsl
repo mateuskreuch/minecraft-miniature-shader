@@ -1,4 +1,4 @@
-float noise(vec2 pos) {
+float random(vec2 pos) {
 	return fract(sin(dot(pos, vec2(18.9898, 28.633))) * 4378.5453);
 }
 

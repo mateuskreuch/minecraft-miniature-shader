@@ -48,7 +48,7 @@ void main() {
    fogMix = getFogMix();
 
    if (isWater > 0.9) {
-      float posRandom = noise(floor(worldPos.xz) + floor(cameraPosition.xz));
+      float posRandom = random(floor(worldPos.xz) + floor(cameraPosition.xz));
 
       #if WATER_WAVE_SIZE > 0
 
