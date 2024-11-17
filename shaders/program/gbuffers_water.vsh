@@ -45,7 +45,7 @@ void main() {
 
    torchStrength = getTorchStrength(lightUV.s);
    worldPos = getWorldPosition();
-   fogMix = getFogMix();
+   fogMix = getFogMix(worldPos);
 
    if (isWater > 0.9) {
       float posRandom = random(floor(worldPos.xz) + floor(cameraPosition.xz));

@@ -1,8 +1,12 @@
-float getFogMix() {
+float getFogMix(vec3 worldPos) {
 #if MC_VERSION >= 11300 && defined ENABLE_FOG
-   float len = length(fogShape == 1 ? vec3(worldPos.xz, 0.0) : worldPos);
+   float len = fogShape == 1 ? length(worldPos.xz) : length(worldPos);
 
-   #if defined OVERWORLD
+   #if defined gbuffers_clouds
+
+      return rescale(len, fogStart, 1.5*fogEnd);
+
+   #elif defined OVERWORLD
 
       float x = worldTime * NORMALIZE_TIME;
 

@@ -74,7 +74,7 @@ void main() {
 
    torchStrength = getTorchStrength(lightUV.s);
    worldPos = getWorldPosition();
-   fogMix = getFogMix();
+   fogMix = getFogMix(worldPos);
 
    #ifdef ENABLE_SHADOWS
       diffuse = getDiffuse(lightUV.t);
