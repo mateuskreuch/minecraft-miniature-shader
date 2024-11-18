@@ -2,6 +2,10 @@ float random(vec2 pos) {
 	return fract(sin(dot(pos, vec2(18.9898, 28.633))) * 4378.5453);
 }
 
+float random(vec3 pos) {
+   return fract(sin(dot(pos, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
+}
+
 float luma(vec3 color) {
    return dot(vec3(0.299, 0.587, 0.114), color);
 }

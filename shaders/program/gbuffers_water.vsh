@@ -52,7 +52,7 @@ void main() {
 
       #if WATER_WAVE_SIZE > 0
 
-         normal.xyz += getWaterWave(posRandom);
+         getWaterWave(normal, posRandom);
 
       #endif
 
