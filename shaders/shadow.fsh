@@ -10,5 +10,9 @@ void main() {
 
    albedo.a *= alpha;
 
+   if (albedo.a < 0.1) {
+      discard;
+   }
+
    gl_FragData[0] = albedo;
 }

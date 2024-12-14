@@ -1,3 +1,5 @@
+#include "/common/getShadowDistortion.glsl"
+
 float getSunStrength() {
    #if SHADOW_PIXEL > 0
 
@@ -14,7 +16,11 @@ float getSunStrength() {
 
    float posDistance = squaredLength(pos);
    vec4 shadowView   = shadowModelView * vec4(pos, 1.0);
-   vec3 shadowUV     = nvec3(shadowProjection * shadowView)*0.5 + 0.5;
+   vec4 shadowClip = shadowProjection * shadowView;
+
+   shadowClip.xyz = getShadowDistortion(shadowClip.xyz);
+
+   vec3 shadowUV = nvec3(shadowClip)*0.5 + 0.5;
 
    if (posDistance < SHADOW_MAX_DIST_SQUARED &&
       diffuse    > 0.0 && shadowUV.z < 1.0 &&
