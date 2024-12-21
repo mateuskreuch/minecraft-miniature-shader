@@ -39,6 +39,7 @@ void main() {
       vec3 fragPos         = uv2screen(texUV, depth);
       vec4 reflectionColor = getReflectionColor(depth, normal, fragPos);
       float fresnel        = 1.0 - dot(normal, -normalize(fragPos));
+
       color.rgb = mix(
          color.rgb,
          reflectionColor.rgb,
