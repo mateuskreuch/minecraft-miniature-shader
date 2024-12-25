@@ -30,19 +30,20 @@ varying float torchStrength;
    uniform int heldItemId2;
 #endif
 
+#include "/common/math.glsl"
+#include "/common/getFogMix.vsh"
+#include "/common/getWorldPosition.vsh"
+#include "/common/getTorchStrength.vsh"
+
 #ifdef ENABLE_SHADOWS
    uniform vec3 shadowLightPosition;
 
    varying vec3 sunColor;
    varying float diffuse;
-#endif
 
-#include "/common/math.glsl"
-#include "/common/getDiffuse.vsh"
-#include "/common/getFogMix.vsh"
-#include "/common/getSunColor.vsh"
-#include "/common/getWorldPosition.vsh"
-#include "/common/getTorchStrength.vsh"
+   #include "/common/getDiffuse.vsh"
+   #include "/common/getSunColor.vsh"
+#endif
 
 void main() {
    gl_Position = ftransform();

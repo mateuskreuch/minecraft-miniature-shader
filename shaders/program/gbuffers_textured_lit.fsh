@@ -23,6 +23,9 @@ varying float torchStrength;
    uniform int heldBlockLightValue;
 #endif
 
+#include "/common/math.glsl"
+#include "/common/getTorchColor.fsh"
+
 #ifdef ENABLE_SHADOWS
    uniform vec3 cameraPosition;
    uniform mat4 shadowModelView;
@@ -32,11 +35,9 @@ varying float torchStrength;
 
    varying vec3 sunColor;
    varying float diffuse;
-#endif
 
-#include "/common/math.glsl"
-#include "/common/getTorchColor.fsh"
-#include "/common/getSunStrength.fsh"
+   #include "/common/getSunStrength.fsh"
+#endif
 
 void main() {
    vec4 albedo  = texture2D(texture, texUV);
