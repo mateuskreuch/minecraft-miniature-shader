@@ -30,7 +30,7 @@ float getSunStrength() {
       float shadowFade  = 1.0 - posDistance * INV_SHADOW_MAX_DIST_SQUARED;
       float shadowDepth = texture2D(shadowtex1, shadowUV.st).x;
 
-      return diffuse * (1.0 - shadowFade * clamp(2.0*(shadowDepth - shadowUV.z) / shadowProjection[2].z, 0.0, 1.0));
+      return diffuse * (1.0 - shadowFade * clamp(3.0*(shadowDepth - shadowUV.z) / shadowProjection[2].z, 0.0, 1.0));
    }
 
    return diffuse;
