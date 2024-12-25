@@ -29,7 +29,11 @@ void main() {
    vec4 color   = color;
 
    if (isWater > 0.9) {
-      albedo = vec4(WATER_BRIGHTNESS * max(vec3(1.0), contrast(albedo.rgb, 3.2*waterTexStrength)), 1.0);
+      #if MC_VERSION >= 11300
+
+         albedo.rgb = vec3(WATER_BRIGHTNESS * max(vec3(1.0), contrast(albedo.rgb, 3.2*waterTexStrength)));
+
+      #endif
       color.ba = min(color.ba, vec2(max(color.r, color.g)*WATER_B, WATER_A));
    }
 
