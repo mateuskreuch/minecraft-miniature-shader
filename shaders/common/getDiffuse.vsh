@@ -13,5 +13,5 @@ float getDiffuse(float skyLight) {
           * rescale(skyLight, 0.3137, 0.6235)
         //  thin objects have constant diffuse
           * (isThin ? 0.75 : clamp(2.5*dot(normalize(gl_NormalMatrix * gl_Normal),
-                                           normalize(shadowLightPosition)), 0.0, 1.0));
+                                           normalize(shadowLightPosition)), -0.3333, 1.0));
 }
