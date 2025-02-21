@@ -40,7 +40,7 @@ void main() {
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    normal  = vec4(gl_Normal, 1.0);
-   ambient = texture2DLod(lightmap, vec2(AMBIENT_UV.s, lightUV.t), 1);
+   ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
    isWater = float(mc_Entity.x == 10008.0);
 
    torchStrength = getTorchStrength(lightUV.s);

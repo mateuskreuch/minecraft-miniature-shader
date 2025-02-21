@@ -1,11 +1,5 @@
 #version 120
 
-varying vec2 texUV;
-varying vec4 color;
+#define OVERWORLD
 
-void main() {
-   gl_Position = ftransform();
-
-   color = gl_Color;
-   texUV = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
-}
+#include "/program/gbuffers_weather.vsh"

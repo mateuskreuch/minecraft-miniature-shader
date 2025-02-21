@@ -4,7 +4,7 @@ float getFogMix(vec3 worldPos) {
 
    #if defined gbuffers_clouds
 
-      return rescale(len, fogStart, 1.5*fogEnd);
+      return rescale(len, fogStart, fogStart + 150.0);
 
    #elif defined OVERWORLD
 

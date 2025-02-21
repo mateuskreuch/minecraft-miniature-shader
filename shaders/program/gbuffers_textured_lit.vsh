@@ -51,7 +51,7 @@ void main() {
    color   = gl_Color;
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
-   ambient = texture2DLod(lightmap, vec2(AMBIENT_UV.s, lightUV.t), 1);
+   ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
 
    #ifdef THE_END
 
