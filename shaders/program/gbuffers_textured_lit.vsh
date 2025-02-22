@@ -55,6 +55,10 @@ void main() {
    ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
    isLava  = float(mc_Entity.x == 10068.0);
 
+   if (isLava > 0.9) {
+      color.rgb = mix(vec3(0.8, 0.5, 0.3), vec3(1.0), rescale(color.rgb, vec3(0.54), vec3(0.9)));
+   }
+
    #ifdef THE_END
 
       ambient.rgb *= END_AMBIENT + 0.02*(gl_NormalMatrix * gl_Normal).xyz;

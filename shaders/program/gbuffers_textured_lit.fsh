@@ -54,7 +54,7 @@ void main() {
 
    #endif
 
-   albedo *= mix(color, vec4(1.0), 0.75*isLava);
+   albedo *= color;
 
    #ifdef ENABLE_SHADOWS
 
