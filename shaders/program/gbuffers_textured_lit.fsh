@@ -3,17 +3,18 @@
 #include "/shader.h"
 
 uniform int entityId;
+uniform sampler2D texture;
 uniform vec3 fogColor;
 uniform vec4 entityColor;
-uniform sampler2D texture;
 
-varying vec2 texUV;
-varying vec2 lightUV;
-varying vec3 worldPos;
-varying vec4 color;
-varying vec4 ambient;
 varying float fogMix;
+varying float isLava;
 varying float torchStrength;
+varying vec2 lightUV;
+varying vec2 texUV;
+varying vec3 worldPos;
+varying vec4 ambient;
+varying vec4 color;
 
 #ifdef GLOWING_ORES
    varying float isOre;
@@ -53,11 +54,11 @@ void main() {
 
    #endif
 
-   albedo *= color;
+   albedo *= mix(color, vec4(1.0), 0.75*isLava);
 
    #ifdef ENABLE_SHADOWS
 
-      float sunStrength = getSunStrength();
+      float sunStrength = max(0.75*isLava, getSunStrength());
       float blueness = (1.0 - sunStrength) * SHADOW_BLUENESS;
 
       ambient.rgb *= 1.0 - SHADOW_DARKNESS;

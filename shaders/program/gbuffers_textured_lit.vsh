@@ -4,22 +4,23 @@
 
 attribute vec4 mc_Entity;
 
-uniform int fogShape;
-uniform int worldTime;
-uniform int isEyeInWater;
-uniform mat4 gbufferModelViewInverse;
 uniform float fogEnd;
 uniform float fogStart;
 uniform float rainStrength;
+uniform int fogShape;
+uniform int isEyeInWater;
+uniform int worldTime;
+uniform mat4 gbufferModelViewInverse;
 uniform sampler2D lightmap;
 
-varying vec2 texUV;
-varying vec2 lightUV;
-varying vec3 worldPos;
-varying vec4 color;
-varying vec4 ambient;
 varying float fogMix;
+varying float isLava;
 varying float torchStrength;
+varying vec2 lightUV;
+varying vec2 texUV;
+varying vec3 worldPos;
+varying vec4 ambient;
+varying vec4 color;
 
 #ifdef GLOWING_ORES
    varying float isOre;
@@ -52,6 +53,7 @@ void main() {
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
+   isLava  = float(mc_Entity.x == 10068.0);
 
    #ifdef THE_END
 
