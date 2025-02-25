@@ -4,7 +4,7 @@ varying vec2 texUV;
 varying float alpha;
 
 void main() {
-   vec4 albedo = texture2D(texture, texUV);
+   vec4 albedo = texture2DLod(texture, texUV, 0);
 
    albedo.a *= alpha;
 
