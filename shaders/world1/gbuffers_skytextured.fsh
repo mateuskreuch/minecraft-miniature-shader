@@ -25,5 +25,5 @@ void main() {
 
    vec4 stars = exp(fract(invDist + slice + time) * -END_STARS_DRAG) / invDist;
 
-   gl_FragData[0] = albedo + stars;
+   gl_FragData[0] = albedo + clamp(stars, vec4(0.0), vec4(1.0)) * END_STARS_OPACITY;
 }

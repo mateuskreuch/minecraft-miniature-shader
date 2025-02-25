@@ -32,6 +32,7 @@ option.OVERWORLD_FOG_MIN_SLIDER=Overworld fog
 option.NETHER_FOG_SLIDER=Nether fog
 option.END_STARS_SPEED=End stars speed
 option.END_STARS_AMOUNT=End stars amount
+option.END_STARS_OPACITY=End stars opacity
 
 screen.LIGHTING_SCREEN=Lighting
 option.SHADOW_BLUENESS=Shadow blueness

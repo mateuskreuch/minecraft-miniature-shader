@@ -43,6 +43,7 @@ const float sunPathRotation = 0.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.0 
 #define END_STARS_SPEED  0.01  //[0.002 0.005 0.01 0.02 0.05 0.1 0.5]
 #define END_STARS_AMOUNT 512.0 //[128.0 256.0 512.0 1024.0 2048.0]
 #define END_STARS_FLOOR  256.0
+#define END_STARS_OPACITY 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
 
 #define FLAT_LIGHTING
 #define GLOWING_ORES
