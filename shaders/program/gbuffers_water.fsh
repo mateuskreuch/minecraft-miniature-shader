@@ -30,11 +30,14 @@ void main() {
 
    if (isWater > 0.9) {
       #if MC_VERSION >= 11300
-
          albedo.rgb = vec3(WATER_BRIGHTNESS * max(vec3(1.0), contrast(albedo.rgb, 3.2*waterTexStrength)));
 
+         #define WATER_BUFFER color
+      #else
+         #define WATER_BUFFER albedo
       #endif
-      color.ba = min(color.ba, vec2(max(color.r, color.g)*WATER_B, WATER_A));
+
+      WATER_BUFFER.ba = min(WATER_BUFFER.ba, vec2(max(WATER_BUFFER.r, WATER_BUFFER.g)*WATER_B, WATER_A));
    }
 
    ambient.rgb += 0.5*getTorchColor(ambient.rgb);
