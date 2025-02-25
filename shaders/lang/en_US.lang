@@ -42,6 +42,7 @@ option.entityShadowDistanceMul=Entity shadow distance
 option.SHADOW_PIXEL=Shadow pixelization
 option.SUN_BRIGHTNESS=Sun brightness
 option.sunPathRotation=Sun path angle §e[!]
+option.sunPathRotation.comment=Miniature was made with straight shadows in mind, and may produce artifacts if changed
 option.SHADOW_DARKNESS=Shadow darkness
 option.REFLECTIONS=Reflections
 option.FLAT_LIGHTING=Use flat lighting
