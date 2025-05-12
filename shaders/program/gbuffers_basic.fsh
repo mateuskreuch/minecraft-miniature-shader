@@ -1,4 +1,4 @@
-#define gbuffers_armor_glint
+#define gbuffers_basic
 
 uniform sampler2D texture;
 
