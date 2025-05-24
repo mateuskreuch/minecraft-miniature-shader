@@ -16,6 +16,7 @@ float getFogMix(vec3 worldPos) {
 
       x = min(x, 1.0 - rainStrength);
       x = max(x, float(isEyeInWater != 0));
+      x = max(x, 0.05); // Hopefully prevents fog covering everything in some cards
 
       return rescale(len, x*fogStart, fogEnd);
 
