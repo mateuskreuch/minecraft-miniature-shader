@@ -1,37 +1,51 @@
 float getFogMix(vec3 worldPos) {
-#if MC_VERSION >= 11300 && defined ENABLE_FOG
-   float len = fogShape == 1 ? length(worldPos.xz) : length(worldPos);
+   #ifndef ENABLE_FOG
 
-   #if defined gbuffers_clouds
+      return 0.0;
 
-      return rescale(len, fogStart, fogStart + 150.0);
+   #endif
 
-   #elif defined OVERWORLD
+   float len = fogShape == 1 ? max(length(worldPos.xz), abs(worldPos.y)) : length(worldPos);
 
-      float x = worldTime * NORMALIZE_TIME;
+   #if MC_VERSION >= 11700
 
-      x = clamp(25.0*(x < MIDNIGHT ? SUNSET - x : x - SUNRISE) + 0.3,
-                OVERWORLD_FOG_MIN,
-                OVERWORLD_FOG_MAX);
+      if (fogEnd < far) {
+         return rescale(len, min(fogStart, fogEnd), fogEnd);
+      }
 
-      x = min(x, 1.0 - rainStrength);
-      x = max(x, float(isEyeInWater != 0));
-      x = max(x, 0.05); // Hopefully prevents fog covering everything in some cards
+      #if defined gbuffers_skybasic
 
-      return rescale(len, x*fogStart, fogEnd);
+         return 0.0;
 
-   #elif defined THE_NETHER
+      #elif defined gbuffers_clouds
 
-      return rescale(len, fogStart, fogEnd * (isEyeInWater == 0 ? NETHER_FOG : 1.0));
+         return clamp((len - far) * (near * 0.01), 0.0, 1.0);
+
+      #elif defined OVERWORLD
+
+         float x = worldTime * NORMALIZE_TIME;
+
+         x = clamp(25.0*(x < MIDNIGHT ? SUNSET - x : x - SUNRISE) + 0.3,
+                  OVERWORLD_FOG_MIN,
+                  OVERWORLD_FOG_MAX);
+
+         x = min(x, 1.0 - rainStrength);
+         x = max(x, 0.05); // Hopefully prevents fog covering everything in some cards
+
+         return rescale(len, 0.9*x*far, far);
+
+      #else
+
+         return rescale(len, 0.9*far, far);
+
+      #endif
 
    #else
 
-      return rescale(len, fogStart, fogEnd);
+      gl_FogFragCoord = len;
+
+      return (isEyeInWater > 0) ? 1.0 - exp(-gl_FogFragCoord * gl_Fog.density)
+                                 : clamp((gl_FogFragCoord - gl_Fog.start) * gl_Fog.scale, 0.0, 1.0);
 
    #endif
-#else
-
-   return 0.0;
-
-#endif
 }

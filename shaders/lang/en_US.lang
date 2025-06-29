@@ -29,7 +29,6 @@ option.ENABLE_FOG=Enable fog
 option.OVERWORLD_FOG_MAX_SLIDER=Overworld transition fog
 option.OVERWORLD_FOG_MAX_SLIDER.comment=Fog amount during sunsets and sunrises
 option.OVERWORLD_FOG_MIN_SLIDER=Overworld fog
-option.NETHER_FOG_SLIDER=Nether fog
 option.END_STARS_SPEED=End stars speed
 option.END_STARS_AMOUNT=End stars amount
 option.END_STARS_OPACITY=End stars opacity

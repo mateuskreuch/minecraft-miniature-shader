@@ -6,6 +6,7 @@ attribute vec4 mc_Entity;
 
 uniform float fogEnd;
 uniform float fogStart;
+uniform float near, far;
 uniform float rainStrength;
 uniform int fogShape;
 uniform int isEyeInWater;

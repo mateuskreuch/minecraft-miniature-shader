@@ -1,17 +1,26 @@
 #define gbuffers_skybasic
 
+#include "/shader.h"
+
+uniform float fogEnd;
+uniform float fogStart;
+uniform float near, far;
+uniform int fogShape;
 uniform mat4 gbufferModelView;
 uniform mat4 gbufferModelViewInverse;
 
-varying vec4 color;
+varying float fogMix;
+varying vec4 starColor;
 
-void main()
-{
-   vec3 position = (gl_ModelViewMatrix * gl_Vertex).xyz;
-   position = (gbufferModelViewInverse * vec4(position, 1.0)).xyz;
+#include "/common/math.glsl"
+#include "/common/getFogMix.vsh"
 
-   gl_Position = gl_ProjectionMatrix * gbufferModelView * vec4(position, 1.0);
-   gl_FogFragCoord = length(position);
+void main() {
+   gl_Position = ftransform();
 
-   color = gl_Color;
+   fogMix = getFogMix(vec3(9999999999.0));
+   starColor = vec4(
+      random(gl_Vertex.xy) * gl_Color.rgb,
+      float(gl_Color.r == gl_Color.g && gl_Color.g == gl_Color.b && gl_Color.r > 0.0)
+   );
 }

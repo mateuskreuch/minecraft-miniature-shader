@@ -4,16 +4,17 @@
 
 attribute vec4 mc_Entity;
 
-uniform int fogShape;
-uniform int worldTime;
-uniform int isEyeInWater;
-uniform vec3 cameraPosition;
-uniform mat4 gbufferModelViewInverse;
 uniform float fogEnd;
 uniform float fogStart;
-uniform float rainStrength;
 uniform float frameTimeCounter;
+uniform float near, far;
+uniform float rainStrength;
+uniform int fogShape;
+uniform int isEyeInWater;
+uniform int worldTime;
+uniform mat4 gbufferModelViewInverse;
 uniform sampler2D lightmap;
+uniform vec3 cameraPosition;
 
 varying vec2 texUV;
 varying vec2 lightUV;
