@@ -4,14 +4,17 @@ float getFogMix(vec3 worldPos) {
       return 0.0;
 
    #endif
+	#ifdef DISTANT_HORIZONS
+		return 0.0;
+	#endif
 
    float len = fogShape == 1 ? max(length(worldPos.xz), abs(worldPos.y)) : length(worldPos);
 
    #if MC_VERSION >= 11700
 
-      if (fogEnd < far) {
-         return rescale(len, min(fogStart, fogEnd), fogEnd);
-      }
+      	if (fogEnd < far) {
+         	return rescale(len, min(fogStart, fogEnd), fogEnd);
+      	}
 
       #if defined gbuffers_skybasic
 

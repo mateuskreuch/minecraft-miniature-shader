@@ -42,7 +42,12 @@ void main() {
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    normal  = vec4(gl_Normal, 1.0);
    ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
-   isWater = float(mc_Entity.x == 10008.0);
+
+   #ifdef DISTANT_HORIZONS_WATER
+      isWater = float(dhMaterialId == DH_BLOCK_WATER);
+   #else
+      isWater = float(mc_Entity.x == 10008.0);
+   #endif
 
    torchStrength = getTorchStrength(lightUV.s);
    worldPos = getWorldPosition();
