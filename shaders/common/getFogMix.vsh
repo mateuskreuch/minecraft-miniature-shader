@@ -12,9 +12,11 @@ float getFogMix(vec3 worldPos) {
 
    #if MC_VERSION >= 11700
 
+		#if MC_VERSION >= 12106
       	if (fogEnd < far) {
          	return rescale(len, min(fogStart, fogEnd), fogEnd);
       	}
+		#endif
 
       #if defined gbuffers_skybasic
 
