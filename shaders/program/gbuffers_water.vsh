@@ -53,6 +53,7 @@ void main() {
    worldPos = getWorldPosition();
    fogMix = getFogMix(worldPos);
 
+#ifndef DISTANT_HORIZONS_WATER
    if (isWater > 0.9) {
       float posRandom = random(floor(worldPos.xz) + floor(cameraPosition.xz));
 
@@ -64,6 +65,7 @@ void main() {
 
       waterTexStrength = getWaterTextureStrength(posRandom);
    }
+#endif
 
    // scale normal to 0..1
    normal = vec4(0.5 + 0.5*normal.xyz, 1.0);

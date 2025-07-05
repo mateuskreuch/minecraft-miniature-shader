@@ -10,6 +10,10 @@ uniform sampler2D colortex6;
 uniform sampler2D colortex7;
 uniform sampler2D depthtex0;
 
+#ifdef DISTANT_HORIZONS
+uniform sampler2D dhDepthTex0;
+#endif
+
 varying vec2 texUV;
 
 #include "/common/math.glsl"
@@ -34,7 +38,11 @@ void main() {
 
       #endif
 
+#ifdef DISTANT_HORIZONS
+		float depth          = texture2D(dhDepthTex0, texUV).x;
+#else
       float depth          = texture2D(depthtex0, texUV).x;
+#endif
       vec3 normal          = world2screen(prenormal);
       vec3 fragPos         = uv2screen(texUV, depth);
       vec4 reflectionColor = getReflectionColor(depth, normal, fragPos);
