@@ -5,6 +5,13 @@
 uniform vec3 fogColor;
 uniform sampler2D texture;
 
+#ifdef DISTANT_HORIZONS_WATER
+uniform sampler2D depthtex0;
+uniform float viewHeight;
+uniform float viewWidth;
+vec2 resolution = vec2(viewWidth, viewHeight);
+#endif
+
 varying vec2 texUV;
 varying vec2 lightUV;
 varying vec3 worldPos;
@@ -24,6 +31,11 @@ varying float torchStrength;
 #include "/common/getTorchColor.fsh"
 
 void main() {
+	#ifdef DISTANT_HORIZONS_WATER
+   if(texture(depthtex0, gl_FragCoord.xy / resolution).r < 1.0){
+      discard;
+   }
+	#endif
    vec4 albedo  = texture2D(texture, texUV);
    vec4 ambient = ambient;
    vec4 color   = color;

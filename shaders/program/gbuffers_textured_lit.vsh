@@ -48,13 +48,17 @@ varying vec4 color;
 #endif
 
 void main() {
-   gl_Position = ftransform();
+	gl_Position = ftransform();
 
    color   = gl_Color;
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
-   isLava  = float(mc_Entity.x == 10068.0);
+	#ifdef DISTANT_HORIZONS_TERRAIN
+		isLava  = float(dhMaterialId == DH_BLOCK_LAVA);
+	#else
+   	isLava  = float(mc_Entity.x == 10068.0);
+	#endif
 
    if (isLava > 0.9) {
       color.rgb = mix(vec3(0.8, 0.5, 0.3), vec3(1.0), rescale(color.rgb, vec3(0.54), vec3(0.9)));
@@ -67,12 +71,15 @@ void main() {
    #endif
 
    #ifdef GLOWING_ORES
-
-      isOre = float(mc_Entity.x == 10014.0);
+		#ifdef DISTANT_HORIZONS_TERRAIN
+			isOre = float(dhMaterialId == DH_BLOCK_METAL);
+		#else
+      	isOre = float(mc_Entity.x == 10014.0);
+		#endif
 
    #endif
 
-   #ifdef HIGHLIGHT_WAXED
+	#ifdef HIGHLIGHT_WAXED && !DISTANT_HORIZONS_TERRAIN
 
       if ((heldItemId == 10041 || heldItemId2 == 10041) && mc_Entity.x == 10041.0) {
          color.rgb *= 0.4;

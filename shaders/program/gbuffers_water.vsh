@@ -42,12 +42,18 @@ void main() {
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    normal  = vec4(gl_Normal, 1.0);
    ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
-   isWater = float(mc_Entity.x == 10008.0);
+
+   #ifdef DISTANT_HORIZONS_WATER
+      isWater = float(dhMaterialId == DH_BLOCK_WATER);
+   #else
+      isWater = float(mc_Entity.x == 10008.0);
+   #endif
 
    torchStrength = getTorchStrength(lightUV.s);
    worldPos = getWorldPosition();
    fogMix = getFogMix(worldPos);
 
+#ifndef DISTANT_HORIZONS_WATER
    if (isWater > 0.9) {
       float posRandom = random(floor(worldPos.xz) + floor(cameraPosition.xz));
 
@@ -59,6 +65,7 @@ void main() {
 
       waterTexStrength = getWaterTextureStrength(posRandom);
    }
+#endif
 
    // scale normal to 0..1
    normal = vec4(0.5 + 0.5*normal.xyz, 1.0);

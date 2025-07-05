@@ -5,6 +5,7 @@
 uniform float viewHeight;
 uniform float viewWidth;
 uniform mat4 gbufferModelView;
+uniform mat4 gbufferProjection;
 uniform mat4 gbufferProjectionInverse;
 uniform vec3 fogColor;
 uniform vec3 skyColor;

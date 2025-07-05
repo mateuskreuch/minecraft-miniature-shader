@@ -7,6 +7,13 @@ uniform sampler2D texture;
 uniform vec3 fogColor;
 uniform vec4 entityColor;
 
+#ifdef DISTANT_HORIZONS_TERRAIN
+uniform sampler2D depthtex0;
+uniform float viewHeight;
+uniform float viewWidth;
+vec2 resolution = vec2(viewWidth, viewHeight);
+#endif
+
 varying float fogMix;
 varying float isLava;
 varying float torchStrength;
@@ -41,6 +48,11 @@ varying vec4 color;
 #endif
 
 void main() {
+	#ifdef DISTANT_HORIZONS_TERRAIN
+	if(texture(depthtex0, gl_FragCoord.xy / resolution).r < 1.0){
+      discard;
+	}
+	#endif
    vec4 albedo  = texture2D(texture, texUV);
    vec4 ambient = ambient;
 
