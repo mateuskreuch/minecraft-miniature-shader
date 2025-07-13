@@ -8,6 +8,7 @@ uniform float fogEnd;
 uniform float fogStart;
 uniform float near, far;
 uniform float rainStrength;
+uniform float screenBrightness;
 uniform int fogShape;
 uniform int isEyeInWater;
 uniform int worldTime;
@@ -34,6 +35,7 @@ varying vec4 color;
 
 #include "/common/math.glsl"
 #include "/common/getFogMix.vsh"
+#include "/common/getAmbientColor.vsh"
 #include "/common/getWorldPosition.vsh"
 #include "/common/getTorchStrength.vsh"
 
@@ -53,7 +55,7 @@ void main() {
    color   = gl_Color;
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
-   ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
+   ambient = getAmbientColor();
    isLava  = float(mc_Entity.x == 10068.0);
 
    if (isLava > 0.9) {
