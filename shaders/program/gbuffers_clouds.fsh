@@ -13,7 +13,7 @@ void main() {
    vec4 albedo = texture2D(texture, texUV) * color;
 
    albedo.a = mix(albedo.a, 0, fogMix);
-   albedo.rgb = mix(albedo.rgb, fogColor, 0.3);
+   albedo.rgb = mix(albedo.rgb, fogColor, 0.6);
 
    gl_FragData[0] = albedo;
 }
