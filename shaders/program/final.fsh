@@ -2,6 +2,7 @@
 
 #include "/shader.h"
 
+uniform int isEyeInWater;
 uniform mat4 gbufferModelView;
 uniform mat4 gbufferProjection;
 uniform mat4 gbufferProjectionInverse;

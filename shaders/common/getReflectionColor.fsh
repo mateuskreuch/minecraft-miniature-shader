@@ -4,7 +4,10 @@
 #define REFINEMENT_MULT 0.1
 
 float getReflectionVignette(vec2 uv) {
-   uv.y = 1.0 - uv.y;
+   if (isEyeInWater == 0) {
+      uv.y = 1.0 - uv.y;
+   }
+
    uv.x *= 1.0 - uv.x;
    uv.y *= uv.y;
 
