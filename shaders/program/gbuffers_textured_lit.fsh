@@ -34,10 +34,10 @@ varying vec4 color;
    uniform mat4 gbufferProjectionInverse;
    uniform sampler2D shadowtex1;
 
-   varying vec3 sunColor;
+   varying vec3 lightColor;
    varying float diffuse;
 
-   #include "/common/getSunStrength.fsh"
+   #include "/common/getLightStrength.fsh"
 #endif
 
 void main() {
@@ -58,16 +58,16 @@ void main() {
 
    #ifdef ENABLE_SHADOWS
 
-      float sunStrength = max(0.75*isLava, getSunStrength());
-      float blueness = (1.0 - sunStrength) * SHADOW_BLUENESS;
+      float lightStrength = max(0.75*isLava, getLightStrength());
+      float blueness = (1.0 - lightStrength) * SHADOW_BLUENESS;
 
       ambient.rgb *= 1.0 - SHADOW_DARKNESS;
       ambient.g *= 1.0 + 0.3333*blueness;
       ambient.b *= 1.0 + blueness;
 
-      float sunBrightness = max(0.0, SUN_BRIGHTNESS - 0.5*pow3(luma(albedo.rgb)));
+      float lightBrightness = max(0.0, LIGHT_BRIGHTNESS - 0.5*pow3(luma(albedo.rgb)));
 
-      ambient.rgb *= 1.0 + (sunBrightness * sunStrength) * sunColor;
+      ambient.rgb *= 1.0 + (lightBrightness * lightStrength) * lightColor;
 
    #endif
 

@@ -1,6 +1,6 @@
 #include "/common/getShadowDistortion.glsl"
 
-float getSunStrength() {
+float getLightStrength() {
    #if SHADOW_PIXEL > 0
 
       vec3 pos = worldPos + cameraPosition;
