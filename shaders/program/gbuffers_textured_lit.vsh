@@ -4,19 +4,16 @@
 
 attribute vec4 mc_Entity;
 
-uniform bool isDay;
 uniform float fogEnd;
 uniform float fogStart;
 uniform float near, far;
 uniform float rainStrength;
 uniform float screenBrightness;
-uniform float shadowLightStrength;
 uniform int fogShape;
 uniform int isEyeInWater;
 uniform int worldTime;
 uniform mat4 gbufferModelViewInverse;
 uniform sampler2D lightmap;
-uniform vec3 sunColor;
 
 varying float fogMix;
 varying float isLava;
@@ -43,6 +40,7 @@ varying vec4 color;
 #include "/common/getTorchStrength.vsh"
 
 #ifdef ENABLE_SHADOWS
+   uniform vec3 sunPosition;
    uniform vec3 shadowLightPosition;
 
    varying vec3 lightColor;
