@@ -54,30 +54,36 @@ void main() {
 
    #endif
 
-   albedo *= color;
+   albedo.rgb *= color.rgb;
+   // render thunder
+   albedo.a = entityId == 11000.0 ? 0.15 : albedo.a;
+   // render entity color changes (e.g taking damage)
+   albedo.rgb = mix(albedo.rgb, entityColor.rgb, entityColor.a);
+
+   float albedoLuma = luma(albedo.rgb);
 
    #ifdef ENABLE_SHADOWS
 
       float lightStrength = max(0.75*isLava, getLightStrength());
-      float blueness = (1.0 - lightStrength) * SHADOW_BLUENESS;
+      vec3 shadowColor = vec3(1.0 - SHADOW_DARKNESS);
+      shadowColor.g += 0.3333*SHADOW_BLUENESS;
+      shadowColor.b += SHADOW_BLUENESS;
 
-      ambient.rgb *= 1.0 - SHADOW_DARKNESS;
-      ambient.g *= 1.0 + 0.3333*blueness;
-      ambient.b *= 1.0 + blueness;
+      ambient.rgb = mix(
+         ambient.rgb * shadowColor,
+         ambient.rgb,
+         lightStrength
+      );
 
-      float lightBrightness = max(0.0, LIGHT_BRIGHTNESS - 0.5*pow3(luma(albedo.rgb)));
+      float lightBrightness = max(0.0, LIGHT_BRIGHTNESS - 0.5*pow3(albedoLuma));
 
-      ambient.rgb *= 1.0 + (lightBrightness * lightStrength) * lightColor;
+      ambient.rgb *= 0.75 + (lightBrightness * lightStrength) * lightColor;
 
    #endif
 
    ambient.rgb += getTorchColor(ambient.rgb);
 
-   // render thunder
-   albedo.a = entityId == 11000.0 ? 0.15 : albedo.a;
-
-   // render entity color changes (e.g taking damage)
-   albedo.rgb = mix(albedo.rgb, entityColor.rgb, entityColor.a);
+   albedo.rgb = mix(vec3(0.0), albedo.rgb, color.a);
 
    albedo *= ambient;
 
