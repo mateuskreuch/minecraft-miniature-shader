@@ -16,6 +16,7 @@ uniform mat4 gbufferModelViewInverse;
 uniform sampler2D lightmap;
 uniform vec3 fogColor;
 uniform vec3 skyColor;
+uniform vec3 sunPosition;
 
 varying float fogMix;
 varying float isLava;
@@ -44,7 +45,6 @@ varying vec4 color;
 #include "/common/getTorchStrength.vsh"
 
 #ifdef ENABLE_SHADOWS
-   uniform vec3 sunPosition;
    uniform vec3 shadowLightPosition;
 
    varying vec3 lightColor;
@@ -57,10 +57,12 @@ varying vec4 color;
 void main() {
    gl_Position = ftransform();
 
+   float sunHeight = (gbufferModelViewInverse * vec4(sunPosition, 1.0)).y;
+
    color   = gl_Color;
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
-   ambient = getAmbientColor();
+   ambient = getAmbientColor(sunHeight);
    isLava  = float(mc_Entity.x == 10068.0);
 
    if (isLava > 0.9) {
@@ -94,6 +96,6 @@ void main() {
 
    #ifdef ENABLE_SHADOWS
       diffuse = getDiffuse(lightUV.t);
-      lightColor = getLightColor();
+      lightColor = getLightColor(sunHeight);
    #endif
 }

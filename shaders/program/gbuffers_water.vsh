@@ -18,6 +18,7 @@ uniform sampler2D lightmap;
 uniform vec3 cameraPosition;
 uniform vec3 fogColor;
 uniform vec3 skyColor;
+uniform vec3 sunPosition;
 
 varying float fogMix;
 varying float isWater;
@@ -43,11 +44,13 @@ varying vec4 normal;
 void main() {
    gl_Position = ftransform();
 
+   float sunHeight = (gbufferModelViewInverse * vec4(sunPosition, 1.0)).y;
+
    color   = gl_Color;
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    normal  = vec4(gl_Normal, 1.0);
-   ambient = getAmbientColor();
+   ambient = getAmbientColor(sunHeight);
    isWater = float(mc_Entity.x == 10008.0);
 
    torchStrength = getTorchStrength(lightUV.s);
