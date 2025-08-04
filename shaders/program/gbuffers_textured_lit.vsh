@@ -14,12 +14,15 @@ uniform int isEyeInWater;
 uniform int worldTime;
 uniform mat4 gbufferModelViewInverse;
 uniform sampler2D lightmap;
+uniform vec3 fogColor;
+uniform vec3 skyColor;
 
 varying float fogMix;
 varying float isLava;
 varying float torchStrength;
 varying vec2 lightUV;
 varying vec2 texUV;
+varying vec3 gradientFogColor;
 varying vec3 worldPos;
 varying vec4 ambient;
 varying vec4 color;
@@ -35,6 +38,7 @@ varying vec4 color;
 
 #include "/common/math.glsl"
 #include "/common/getFogMix.vsh"
+#include "/common/getFogColor.vsh"
 #include "/common/getAmbientColor.vsh"
 #include "/common/getWorldPosition.vsh"
 #include "/common/getTorchStrength.vsh"
@@ -86,6 +90,7 @@ void main() {
    torchStrength = getTorchStrength(lightUV.s);
    worldPos = getWorldPosition();
    fogMix = getFogMix(worldPos);
+   gradientFogColor = getFogColor(worldPos);
 
    #ifdef ENABLE_SHADOWS
       diffuse = getDiffuse(lightUV.t);

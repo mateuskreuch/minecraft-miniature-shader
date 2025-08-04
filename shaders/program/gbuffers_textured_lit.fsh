@@ -4,7 +4,6 @@
 
 uniform int entityId;
 uniform sampler2D texture;
-uniform vec3 fogColor;
 uniform vec4 entityColor;
 
 varying float fogMix;
@@ -12,6 +11,7 @@ varying float isLava;
 varying float torchStrength;
 varying vec2 lightUV;
 varying vec2 texUV;
+varying vec3 gradientFogColor;
 varying vec3 worldPos;
 varying vec4 ambient;
 varying vec4 color;
@@ -81,7 +81,7 @@ void main() {
 
    albedo *= ambient;
 
-   albedo.rgb = mix(albedo.rgb, fogColor, fogMix);
+   albedo.rgb = mix(albedo.rgb, gradientFogColor, fogMix);
 
    gl_FragData[0] = albedo;
 }

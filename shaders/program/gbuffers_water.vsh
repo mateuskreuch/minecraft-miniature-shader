@@ -16,20 +16,24 @@ uniform int worldTime;
 uniform mat4 gbufferModelViewInverse;
 uniform sampler2D lightmap;
 uniform vec3 cameraPosition;
+uniform vec3 fogColor;
+uniform vec3 skyColor;
 
-varying vec2 texUV;
-varying vec2 lightUV;
-varying vec3 worldPos;
-varying vec4 color;
-varying vec4 normal;
-varying vec4 ambient;
 varying float fogMix;
 varying float isWater;
-varying float waterTexStrength;
 varying float torchStrength;
+varying float waterTexStrength;
+varying vec2 lightUV;
+varying vec2 texUV;
+varying vec3 gradientFogColor;
+varying vec3 worldPos;
+varying vec4 ambient;
+varying vec4 color;
+varying vec4 normal;
 
 #include "/common/math.glsl"
 #include "/common/getFogMix.vsh"
+#include "/common/getFogColor.vsh"
 #include "/common/getAmbientColor.vsh"
 #include "/common/getWorldPosition.vsh"
 #include "/common/getTorchStrength.vsh"
@@ -49,6 +53,7 @@ void main() {
    torchStrength = getTorchStrength(lightUV.s);
    worldPos = getWorldPosition();
    fogMix = getFogMix(worldPos);
+   gradientFogColor = getFogColor(worldPos);
 
    if (isWater > 0.9) {
       float posRandom = random(floor(worldPos.xz) + floor(cameraPosition.xz));

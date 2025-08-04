@@ -2,19 +2,19 @@
 
 #include "/shader.h"
 
-uniform vec3 fogColor;
 uniform sampler2D texture;
 
-varying vec2 texUV;
-varying vec2 lightUV;
-varying vec3 worldPos;
-varying vec4 color;
-varying vec4 normal;
-varying vec4 ambient;
 varying float fogMix;
 varying float isWater;
-varying float waterTexStrength;
 varying float torchStrength;
+varying float waterTexStrength;
+varying vec2 lightUV;
+varying vec2 texUV;
+varying vec3 gradientFogColor;
+varying vec3 worldPos;
+varying vec4 ambient;
+varying vec4 color;
+varying vec4 normal;
 
 #ifdef HAND_DYNAMIC_LIGHTING
    uniform int heldBlockLightValue;
@@ -44,7 +44,7 @@ void main() {
 
    albedo *= color * ambient;
 
-   albedo.rgb = mix(albedo.rgb, fogColor, fogMix);
+   albedo.rgb = mix(albedo.rgb, gradientFogColor, fogMix);
 
    /* DRAWBUFFERS:067 */
    gl_FragData[0] = albedo;
