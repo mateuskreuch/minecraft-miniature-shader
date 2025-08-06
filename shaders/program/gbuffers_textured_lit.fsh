@@ -83,7 +83,7 @@ void main() {
 
    ambient.rgb += getTorchColor(ambient.rgb);
 
-   albedo.rgb = mix(vec3(0.0), albedo.rgb, color.a);
+   albedo = mix(vec4(0.0), albedo, color.a);
 
    albedo *= ambient;
 
