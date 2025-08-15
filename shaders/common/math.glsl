@@ -53,3 +53,22 @@ float pow2(float x) {
 float pow3(float x) {
    return x*x*x;
 }
+
+vec2 sphericalEncode(vec3 n) {
+   float yaw   = atan(n.y, n.x);
+   float pitch = asin(clamp(n.z, -1.0, 1.0));
+
+   if (yaw < 0.0) {
+      yaw += 2.0*PI;
+   }
+
+   return vec2(INV_2PI * yaw, INV_PI * (pitch + 0.5*PI));
+}
+
+vec3 sphericalDecode(vec2 e) {
+   float yaw   = 2.0*PI * e.x;
+   float pitch =     PI * e.y - 0.5*PI;
+   float cy    = cos(pitch);
+
+   return vec3(cos(yaw) * cy, sin(yaw) * cy, sin(pitch));
+}

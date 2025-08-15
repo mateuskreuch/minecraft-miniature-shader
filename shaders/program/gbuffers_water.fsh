@@ -5,7 +5,7 @@
 uniform sampler2D texture;
 
 varying float fogMix;
-varying float isWater;
+varying float reflectiveness;
 varying float torchStrength;
 varying float waterTexStrength;
 varying vec2 lightUV;
@@ -28,7 +28,7 @@ void main() {
    vec4 ambient = ambient;
    vec4 color   = color;
 
-   if (isWater > 0.9) {
+   if (reflectiveness > WATER_REFLECTIVENESS - 0.01) {
       #if MC_VERSION >= 11300
          albedo.rgb = vec3(WATER_BRIGHTNESS * max(vec3(1.0), contrast(albedo.rgb, 3.2*waterTexStrength)));
 
@@ -46,8 +46,7 @@ void main() {
 
    albedo.rgb = mix(albedo.rgb, gradientFogColor, fogMix);
 
-   /* DRAWBUFFERS:067 */
+   /* DRAWBUFFERS:06 */
    gl_FragData[0] = albedo;
-   gl_FragData[1] = normal;
-   gl_FragData[2] = vec4(1.0, isWater, 0.0, 1.0);
+   gl_FragData[1] = vec4(sphericalEncode(normal.xyz), reflectiveness, 1.0);
 }

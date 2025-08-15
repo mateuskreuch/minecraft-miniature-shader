@@ -4,10 +4,7 @@
 #define REFINEMENT_MULT 0.1
 
 float getReflectionVignette(vec2 uv) {
-   if (isEyeInWater == 0) {
-      uv.y = 1.0 - uv.y;
-   }
-
+   uv.y = min(uv.y, 1.0 - uv.y);
    uv.x *= 1.0 - uv.x;
    uv.y *= uv.y;
 
@@ -34,7 +31,7 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 fragPos) {
       // check if distance between last and current depth is
       // smaller than the current length of the reflection vector
       // the numbers are trial and error to produce less distortion
-      if (dist*dist < 2.0*len * exp(0.03*len) && !(texture2D(colortex7, curUV).x > 0.99)) {
+      if (dist*dist < 2.0*len * exp(0.03*len) && !(texture2D(colortex6, curUV).z > 0.1)) {
          j++;
 
          if (j >= MAX_REFINEMENTS && sampleDepth + 0.001 >= depth) {

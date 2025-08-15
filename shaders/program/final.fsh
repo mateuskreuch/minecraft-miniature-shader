@@ -19,17 +19,19 @@ varying vec2 texUV;
 
 void main() {
    vec4 color = texture2D(colortex0, texUV);
-   vec4 info  = texture2D(colortex7, texUV);
+   vec4 normalAndReflectiveness = texture2D(colortex6, texUV);
+   float reflectiveness = normalAndReflectiveness.z;
 
-   if (info.x > 0.99) {
+   if (reflectiveness > 0.1) {
       // the normal doesn't come premultiplied by the normal matrix to
       // avoid the modelview transformations when view bobbing is on
       // which causes severe artifacts when moving
-      vec3 prenormal = texture2D(colortex6, texUV).xyz*2.0 - 1.0;
+      vec3 prenormal = sphericalDecode(normalAndReflectiveness.xy);
 
       #if WATER_WAVE_SIZE > 0
 
-         if (info.y > 0.99 && abs(prenormal.y) > 0.8) {
+         if (reflectiveness > WATER_REFLECTIVENESS - 0.01 && abs(prenormal.y) > 0.3333) {
+            prenormal.xyz *= 1.0 / prenormal.y;
             prenormal.xz *= 0.01 * WATER_WAVE_SIZE;
          }
 
@@ -44,7 +46,7 @@ void main() {
       color.rgb = mix(
          color.rgb,
          reflectionColor.rgb,
-         reflectionColor.a * fresnel * 0.1*REFLECTIONS * (1.0 - color.rgb)
+         reflectionColor.a * fresnel * 0.1*REFLECTIONS * (1.0 - color.rgb) * reflectiveness
       );
    }
 

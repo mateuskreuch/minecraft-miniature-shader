@@ -21,7 +21,7 @@ uniform vec3 skyColor;
 uniform vec3 sunPosition;
 
 varying float fogMix;
-varying float isWater;
+varying float reflectiveness;
 varying float torchStrength;
 varying float waterTexStrength;
 varying vec2 lightUV;
@@ -46,19 +46,19 @@ void main() {
 
    float sunHeight = (gbufferModelViewInverse * vec4(sunPosition, 1.0)).y;
 
-   color   = gl_Color;
-   texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
-   lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
-   normal  = vec4(gl_Normal, 1.0);
-   ambient = getAmbientColor(sunHeight);
-   isWater = float(mc_Entity.x == 10008.0);
+   color          = gl_Color;
+   texUV          = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
+   lightUV        = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
+   normal         = vec4(gl_Normal, 1.0);
+   ambient        = getAmbientColor(sunHeight);
+   reflectiveness = GLASS_REFLECTIVENESS;
 
    torchStrength = getTorchStrength(lightUV.s);
    worldPos = getWorldPosition();
    fogMix = getFogMix(worldPos);
    gradientFogColor = getFogColor(fogMix, worldPos);
 
-   if (isWater > 0.9) {
+   if (mc_Entity.x == 10008.0) {
       float posRandom = random(floor(worldPos.xz) + floor(cameraPosition.xz));
 
       #if WATER_WAVE_SIZE > 0
@@ -67,9 +67,7 @@ void main() {
 
       #endif
 
+      reflectiveness = WATER_REFLECTIVENESS;
       waterTexStrength = getWaterTextureStrength(posRandom);
    }
-
-   // scale normal to 0..1
-   normal = vec4(0.5 + 0.5*normal.xyz, 1.0);
 }
