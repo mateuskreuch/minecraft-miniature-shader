@@ -1,5 +1,5 @@
 #version 330 compatibility
 
-#define OVERWORLD
+#define THE_END
 
 #include "/program/gbuffers_block.fsh"

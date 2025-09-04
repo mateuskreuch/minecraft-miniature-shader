@@ -1,5 +1,5 @@
 #version 120
 
-#define OVERWORLD
+#define THE_NETHER
 
 #include "/program/gbuffers_hand.vsh"

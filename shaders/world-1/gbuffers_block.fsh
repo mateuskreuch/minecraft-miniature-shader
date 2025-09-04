@@ -1,5 +1,5 @@
 #version 330 compatibility
 
-#define OVERWORLD
+#define THE_NETHER
 
 #include "/program/gbuffers_block.fsh"

@@ -1,5 +1,5 @@
 #version 120
 
-#define OVERWORLD
+#define THE_END
 
 #include "/program/gbuffers_hand.fsh"
