@@ -3,6 +3,7 @@
 #include "/shader.h"
 
 uniform int entityId;
+uniform ivec2 eyeBrightnessSmooth;
 uniform sampler2D texture;
 uniform vec4 entityColor;
 

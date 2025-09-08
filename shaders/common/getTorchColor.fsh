@@ -12,6 +12,7 @@ vec3 getTorchColor(vec3 ambient) {
    #endif
 
    strength = smoothe(strength);
+   strength = mix(strength*strength, strength, eyeBrightnessSmooth.y/240.0);
 
    return mix(TORCH_OUTER_COLOR, TORCH_COLOR, strength) * strength * max(0.0, 1.0 - luma(ambient));
 }

@@ -2,6 +2,7 @@
 
 #include "/shader.h"
 
+uniform ivec2 eyeBrightnessSmooth;
 uniform sampler2D texture;
 
 varying float fogMix;
