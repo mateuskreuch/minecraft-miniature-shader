@@ -89,5 +89,7 @@ void main() {
 
    albedo.rgb = mix(albedo.rgb, gradientFogColor, fogMix);
 
+   /* DRAWBUFFERS:06 */
    gl_FragData[0] = albedo;
+   gl_FragData[1] = vec4(vec3(0.0), 1.0);
 }

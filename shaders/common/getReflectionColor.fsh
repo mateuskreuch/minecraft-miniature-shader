@@ -1,7 +1,5 @@
-#define MAX_RAYS 16
-#define MAX_REFINEMENTS 4
-#define RAY_MULT 2.0
-#define REFINEMENT_MULT 0.1
+#define MAX_STEPS 16
+#define BINARY_STEPS 6
 
 float getReflectionVignette(vec2 uv) {
    uv.y = min(uv.y, 1.0 - uv.y);
@@ -11,41 +9,50 @@ float getReflectionVignette(vec2 uv) {
    return 1.0 - pow(1.0 - uv.x, 50.0*uv.y);
 }
 
-vec4 getReflectionColor(float depth, vec3 normal, vec3 fragPos) {
-   vec3 reflection = normalize(reflect(fragPos, normal));
-   vec3 curPos = fragPos + reflection;
-   vec3 oldPos = fragPos;
-   int j = 0;
+vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
+   vec3 V = normalize(viewPos);
+   vec3 R = normalize(reflect(V, normal));
 
-   for (int _ = 0; _ < MAX_RAYS; _++) {
-      vec2 curUV = screen2uv(curPos);
+   if (R.z >= -0.05) return vec4(0.0);
+
+   float fresnel = 1.0 - dot(normal, -V);
+   float epsilon = mix(1.0, 1.15, pow(fresnel, 10.0));
+   vec3  oldPos  = viewPos;
+
+   for (int i = 0; i < MAX_STEPS; i++) {
+      float stepSize = pow(2.0, float(i));
+      vec3 curPos = viewPos + R * stepSize;
+      vec2 curUV  = view2uv(curPos);
 
       if (curUV.s < 0.0 || curUV.s > 1.0 || curUV.t < 0.0 || curUV.t > 1.0)
          break;
 
-      float sampleDepth = texture2D(depthtex0, curUV).x;
-      vec3  samplePos   = uv2screen(curUV, sampleDepth);
-      float dist        = abs(curPos.z - samplePos.z);
-      float len         = squaredLength(reflection);
+      float sceneDepth = texture2D(depthtex0, curUV).x;
+      float sceneZ = uv2view(curUV, sceneDepth).z;
 
-      // check if distance between last and current depth is
-      // smaller than the current length of the reflection vector
-      // the numbers are trial and error to produce less distortion
-      if (dist*dist < 2.0*len * exp(0.03*len) && !(texture2D(colortex6, curUV).z > 0.1)) {
-         j++;
+      if (-curPos.z >= -sceneZ * epsilon && sceneDepth + 0.001 > depth) {
+         vec3 a = oldPos;
+         vec3 b = curPos;
+         vec2 midUV = curUV;
 
-         if (j >= MAX_REFINEMENTS && sampleDepth + 0.001 >= depth) {
-            return vec4(texture2D(colortex0, curUV).rgb,
-                        getReflectionVignette(curUV));
+         for (int j = 0; j < BINARY_STEPS; j++) {
+            vec3 mid = (a + b) * 0.5;
+            midUV = view2uv(mid);
+
+            float midDepth  = texture2D(depthtex0, midUV).x;
+            float midZ = uv2view(midUV, midDepth).z;
+
+            if (midDepth + 0.001 < depth) return vec4(0.0);
+
+            if (-mid.z < -midZ) { a = mid; }
+            else                { b = mid; }
          }
 
-         curPos = oldPos;
-         reflection *= REFINEMENT_MULT;
+         return vec4(texture2D(colortex0, midUV).rgb,
+                     getReflectionVignette(midUV) * fresnel);
       }
 
-      reflection *= RAY_MULT;
       oldPos = curPos;
-      curPos += reflection;
    }
 
    return vec4(0.0);

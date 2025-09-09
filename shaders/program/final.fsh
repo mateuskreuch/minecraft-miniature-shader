@@ -4,12 +4,14 @@
 
 uniform int isEyeInWater;
 uniform mat4 gbufferModelView;
+uniform mat4 gbufferModelViewInverse;
 uniform mat4 gbufferProjection;
 uniform mat4 gbufferProjectionInverse;
 uniform sampler2D colortex0;
 uniform sampler2D colortex6;
 uniform sampler2D colortex7;
 uniform sampler2D depthtex0;
+uniform vec3 cameraPosition;
 
 varying vec2 texUV;
 
@@ -38,15 +40,14 @@ void main() {
       #endif
 
       float depth          = texture2D(depthtex0, texUV).x;
-      vec3 normal          = world2screen(prenormal);
-      vec3 fragPos         = uv2screen(texUV, depth);
-      vec4 reflectionColor = getReflectionColor(depth, normal, fragPos);
-      float fresnel        = 1.0 - dot(normal, -normalize(fragPos));
+      vec3 normal          = feet2viewBobless(prenormal);
+      vec3 viewPos         = uv2view(texUV, depth);
+      vec4 reflectionColor = getReflectionColor(depth, normal, viewPos);
 
       color.rgb = mix(
          color.rgb,
          reflectionColor.rgb,
-         reflectionColor.a * fresnel * 0.1*REFLECTIONS * (1.0 - color.rgb) * reflectiveness
+         reflectionColor.a * 0.1*REFLECTIONS * (1.0 - color.rgb) * reflectiveness
       );
    }
 
