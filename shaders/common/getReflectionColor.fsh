@@ -1,5 +1,6 @@
 #define MAX_STEPS 16
 #define BINARY_STEPS 6
+#define STEP_SIZE 2.0
 
 float getReflectionVignette(vec2 uv) {
    uv.y = min(uv.y, 1.0 - uv.y);
@@ -16,12 +17,11 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
    if (R.z >= -0.05) return vec4(0.0);
 
    float fresnel = 1.0 - dot(normal, -V);
-   float epsilon = mix(1.0, 1.15, pow(fresnel, 10.0));
-   vec3  oldPos  = viewPos;
+   float grazingEpsilon = rescale(1.0 - abs(dot(R, normal)), 0.95, 1.0);
+   vec3 oldPos = viewPos;
 
    for (int i = 0; i < MAX_STEPS; i++) {
-      float stepSize = pow(2.0, float(i));
-      vec3 curPos = viewPos + R * stepSize;
+      vec3 curPos = viewPos + R;
       vec2 curUV  = view2uv(curPos);
 
       if (curUV.s < 0.0 || curUV.s > 1.0 || curUV.t < 0.0 || curUV.t > 1.0)
@@ -29,30 +29,32 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
 
       float sceneDepth = texture2D(depthtex0, curUV).x;
       float sceneZ = uv2view(curUV, sceneDepth).z;
+      float distanceEpsilon = clamp(abs(sceneZ) / far, 0.0, 1.0);
+      float epsilon = 1.0 + 0.15*max(distanceEpsilon, grazingEpsilon);
 
       if (-curPos.z >= -sceneZ * epsilon && sceneDepth + 0.001 > depth) {
          vec3 a = oldPos;
          vec3 b = curPos;
-         vec2 midUV = curUV;
 
          for (int j = 0; j < BINARY_STEPS; j++) {
             vec3 mid = (a + b) * 0.5;
-            midUV = view2uv(mid);
 
-            float midDepth  = texture2D(depthtex0, midUV).x;
-            float midZ = uv2view(midUV, midDepth).z;
+            curUV = view2uv(mid);
+            sceneDepth = texture2D(depthtex0, curUV).x;
+            sceneZ = uv2view(curUV, sceneDepth).z;
 
-            if (midDepth + 0.001 < depth) return vec4(0.0);
+            if (sceneDepth + 0.001 <= depth) return vec4(0.0);
 
-            if (-mid.z < -midZ) { a = mid; }
-            else                { b = mid; }
+            if (-mid.z < -sceneZ) { a = mid; }
+            else                  { b = mid; }
          }
 
-         return vec4(texture2D(colortex0, midUV).rgb,
-                     getReflectionVignette(midUV) * fresnel);
+         return vec4(texture2D(colortex0, curUV).rgb,
+                     getReflectionVignette(curUV) * fresnel);
       }
 
       oldPos = curPos;
+      R *= STEP_SIZE;
    }
 
    return vec4(0.0);
