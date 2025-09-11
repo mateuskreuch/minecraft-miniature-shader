@@ -2,6 +2,7 @@
 
 #include "/shader.h"
 
+uniform float far;
 uniform int isEyeInWater;
 uniform mat4 gbufferModelView;
 uniform mat4 gbufferModelViewInverse;
