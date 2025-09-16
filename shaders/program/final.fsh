@@ -48,7 +48,7 @@ void main() {
       color.rgb = mix(
          color.rgb,
          reflectionColor.rgb,
-         reflectionColor.a * 0.1*REFLECTIONS * (1.0 - color.rgb) * reflectiveness
+         reflectionColor.a * reflectiveness * 0.1*REFLECTIONS
       );
    }
 
