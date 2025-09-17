@@ -1,6 +1,5 @@
-#define MAX_STEPS 16
-#define BINARY_STEPS 6
-#define STEP_SIZE 2.0
+#define MAX_STEPS 10
+#define BINARY_STEPS 4
 
 float getReflectionVignette(vec2 uv) {
    uv.y = min(uv.y, 1.0 - uv.y);
@@ -18,10 +17,12 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
 
    float fresnel = 1.0 - dot(normal, -V);
    float grazingEpsilon = rescale(1.0 - abs(dot(R, normal)), 0.95, 1.0);
+   float invR = 1.0 / abs(R.z);
+   float lengthR = 1.0;
    vec3 oldPos = viewPos;
 
    for (int i = 0; i < MAX_STEPS; i++) {
-      vec3 curPos = viewPos + R;
+      vec3 curPos = viewPos + R * lengthR;
       vec2 curUV  = view2uv(curPos);
 
       if (curUV.s < 0.0 || curUV.s > 1.0 || curUV.t < 0.0 || curUV.t > 1.0)
@@ -30,9 +31,10 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
       float sceneDepth = texture2D(depthtex0, curUV).x;
       float sceneZ = uv2view(curUV, sceneDepth).z;
       float distanceEpsilon = clamp(abs(sceneZ) / far, 0.0, 1.0);
-      float epsilon = 1.0 + 0.15*max(distanceEpsilon, grazingEpsilon);
+      float epsilon = 1.0 + 0.1*max(distanceEpsilon, grazingEpsilon);
+      float diffZ = curPos.z - sceneZ * epsilon;
 
-      if (-curPos.z >= -sceneZ * epsilon && sceneDepth + 0.001 > depth) {
+      if (diffZ < 0.0) {
          vec3 a = oldPos;
          vec3 b = curPos;
 
@@ -54,7 +56,7 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
       }
 
       oldPos = curPos;
-      R *= STEP_SIZE;
+      lengthR += max(1.6*abs(diffZ) * invR, 1.0);
    }
 
    return vec4(0.0);
