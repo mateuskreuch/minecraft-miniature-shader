@@ -15,5 +15,7 @@ void main() {
    albedo.a = mix(albedo.a, 0, fogMix);
    albedo.rgb = mix(albedo.rgb, fogColor, 0.6);
 
+   /* DRAWBUFFERS:06 */
    gl_FragData[0] = albedo;
+   gl_FragData[1] = vec4(vec3(0.0), 1.0);
 }
