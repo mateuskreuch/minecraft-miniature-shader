@@ -49,5 +49,5 @@ void main() {
 
    /* DRAWBUFFERS:06 */
    gl_FragData[0] = albedo;
-   gl_FragData[1] = vec4(sphericalEncode(normal.xyz), reflectiveness, 1.0);
+   gl_FragData[1] = vec4(sphericalEncode(normal.xyz), reflectiveness * step(fogMix, 0.999), 1.0);
 }

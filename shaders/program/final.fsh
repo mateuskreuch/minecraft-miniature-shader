@@ -33,7 +33,7 @@ void main() {
 
       #if WATER_WAVE_SIZE > 0
 
-         if (reflectiveness > WATER_REFLECTIVENESS - 0.01 && abs(prenormal.y) > 0.3333) {
+         if ((abs(prenormal.x) > 0.0 || abs(prenormal.z) > 0.0) && abs(prenormal.y) > 0.3333) {
             prenormal.xyz *= 1.0 / prenormal.y;
             prenormal.xz *= 0.01 * WATER_WAVE_SIZE;
          }
