@@ -64,14 +64,16 @@ const float sunPathRotation = 0.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.0 
 #define WATER_REFLECTIVENESS 1.0
 #define GLASS_REFLECTIVENESS 0.8
 
-#define PI 3.14159
+#define HALF_PI 1.570796326
+#define PI 3.141592653
+#define TAU 6.283185307
 #define NOON 0.25 // 6000
 #define SUNSET 0.5325 // 12780
 #define MIDNIGHT 0.75 // 18000
 #define SUNRISE 0.9675 // 23220
 
 const float INV_PI = 1.0 / PI;
-const float INV_2PI = 1.0 / (2.0*PI);
+const float INV_TAU = 1.0 / TAU;
 
 const float NORMALIZE_TIME = 1.0/24000.0;
 
