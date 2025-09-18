@@ -58,9 +58,7 @@ vec2 sphericalEncode(vec3 n) {
    float yaw   = atan(n.y, n.x);
    float pitch = asin(clamp(n.z, -1.0, 1.0));
 
-   if (yaw < 0.0) {
-      yaw += 2.0*PI;
-   }
+   yaw += (yaw < 0.0 ? 2.0*PI : 0.0);
 
    return vec2(INV_2PI * yaw, INV_PI * (pitch + 0.5*PI));
 }
