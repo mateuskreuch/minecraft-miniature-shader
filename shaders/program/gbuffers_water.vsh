@@ -36,7 +36,7 @@ varying vec4 normal;
 #include "/common/getFogMix.vsh"
 #include "/common/getFogColor.vsh"
 #include "/common/getAmbientColor.vsh"
-#include "/common/getWorldPosition.vsh"
+#include "/common/getPosition.vsh"
 #include "/common/getTorchStrength.vsh"
 #include "/common/getWaterTextureStrength.vsh"
 #include "/common/getWaterWave.vsh"
@@ -54,7 +54,7 @@ void main() {
    reflectivity = GLASS_REFLECTIVITY;
 
    torchStrength = getTorchStrength(lightUV.s);
-   worldPos = getWorldPosition();
+   worldPos = getFeetPosition();
    fogMix = getFogMix(worldPos);
    gradientFogColor = getFogColor(fogMix, worldPos);
 

@@ -10,7 +10,7 @@ varying vec2 texUV;
 varying vec4 color;
 varying vec3 worldPos;
 
-#include "/common/getWorldPosition.vsh"
+#include "/common/getPosition.vsh"
 
 void main() {
    gl_Position = ftransform();
@@ -18,6 +18,6 @@ void main() {
    color = gl_Color;
    texUV = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
 
-   worldPos = getWorldPosition();
+   worldPos = getFeetPosition();
    worldPos.y += END_STARS_FLOOR;
 }

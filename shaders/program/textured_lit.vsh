@@ -48,7 +48,7 @@ varying vec4 color;
 #include "/common/getFogMix.vsh"
 #include "/common/getFogColor.vsh"
 #include "/common/getAmbientColor.vsh"
-#include "/common/getWorldPosition.vsh"
+#include "/common/getPosition.vsh"
 #include "/common/getTorchStrength.vsh"
 
 #ifdef ENABLE_SHADOWS
@@ -110,7 +110,7 @@ void main() {
    #endif
 
    torchStrength = getTorchStrength(lightUV.s);
-   worldPos = getWorldPosition();
+   worldPos = getFeetPosition();
    fogMix = getFogMix(worldPos);
    gradientFogColor = getFogColor(fogMix, worldPos);
 
