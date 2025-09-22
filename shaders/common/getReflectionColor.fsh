@@ -18,6 +18,7 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
    float fresnel = 1.0 - dot(normal, -V);
    float grazingEpsilon = rescale(1.0 - abs(dot(R, normal)), 0.95, 1.0);
    float invR = 1.0 / abs(R.z);
+   float invFar = 1.0 / (2.0*far);
    float lengthR = 1.0;
    vec3 oldPos = viewPos;
 
@@ -30,7 +31,7 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
 
       float sceneDepth = texture2D(depthtex0, curUV).x;
       float sceneZ = uv2view(curUV, sceneDepth).z;
-      float distanceEpsilon = clamp(abs(sceneZ) / far, 0.0, 1.0);
+      float distanceEpsilon = clamp(abs(sceneZ) * invFar, 0.0, 1.0);
       float epsilon = 1.0 + 0.1*max(distanceEpsilon, grazingEpsilon);
       float diffZ = curPos.z - sceneZ * epsilon;
 
