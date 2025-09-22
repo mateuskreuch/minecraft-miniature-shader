@@ -17,6 +17,13 @@ varying vec3 worldPos;
 varying vec4 ambient;
 varying vec4 color;
 
+#ifdef ENABLE_BLOCK_REFLECTIONS
+   varying float reflectionMaxLuma;
+   varying float reflectionMinLuma;
+   varying float reflectivity;
+   varying vec4 normal;
+#endif
+
 #ifdef GLOWING_ORES
    varying float isOre;
 #endif
@@ -91,5 +98,14 @@ void main() {
 
    /* DRAWBUFFERS:06 */
    gl_FragData[0] = albedo;
-   gl_FragData[1] = vec4(vec3(0.0), 1.0);
+
+   #ifdef ENABLE_BLOCK_REFLECTIONS
+      float finalReflectivity = rescale(albedoLuma, reflectionMinLuma, reflectionMaxLuma);
+
+      finalReflectivity *= finalReflectivity * reflectivity;
+
+      gl_FragData[1] = vec4(sphericalEncode(normal.xyz), finalReflectivity * step(fogMix, 0.999), 1.0);
+   #else
+      gl_FragData[1] = vec4(vec3(0.0), 1.0);
+   #endif
 }

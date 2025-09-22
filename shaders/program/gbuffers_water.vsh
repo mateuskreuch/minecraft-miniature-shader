@@ -21,7 +21,7 @@ uniform vec3 skyColor;
 uniform vec3 sunPosition;
 
 varying float fogMix;
-varying float reflectiveness;
+varying float reflectivity;
 varying float torchStrength;
 varying float waterTexStrength;
 varying vec2 lightUV;
@@ -46,12 +46,12 @@ void main() {
 
    float sunHeight = (gbufferModelViewInverse * vec4(sunPosition, 1.0)).y;
 
-   color          = gl_Color;
-   texUV          = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
-   lightUV        = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
-   normal         = vec4(gl_Normal, 1.0);
-   ambient        = getAmbientColor(sunHeight);
-   reflectiveness = GLASS_REFLECTIVENESS;
+   color        = gl_Color;
+   texUV        = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
+   lightUV      = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
+   normal       = vec4(gl_Normal, 1.0);
+   ambient      = getAmbientColor(sunHeight);
+   reflectivity = GLASS_REFLECTIVITY;
 
    torchStrength = getTorchStrength(lightUV.s);
    worldPos = getWorldPosition();
@@ -67,7 +67,7 @@ void main() {
 
       #endif
 
-      reflectiveness = WATER_REFLECTIVENESS;
+      reflectivity = WATER_REFLECTIVITY;
       waterTexStrength = getWaterTextureStrength(posRandom);
    }
 }

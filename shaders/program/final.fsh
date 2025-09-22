@@ -21,14 +21,15 @@ varying vec2 texUV;
 
 void main() {
    vec4 color = texture2D(colortex0, texUV);
-   vec4 normalAndReflectiveness = texture2D(colortex6, texUV);
-   float reflectiveness = normalAndReflectiveness.z;
+   vec4 normalAndReflectivity = texture2D(colortex6, texUV);
+   float reflectivity = normalAndReflectivity.z;
+   float decodedReflectivity = fract(2.0*reflectivity);
 
-   if (reflectiveness > 0.1) {
+   if (decodedReflectivity > MIN_REFLECTIVITY) {
       // the normal doesn't come premultiplied by the normal matrix to
       // avoid the modelview transformations when view bobbing is on
       // which causes severe artifacts when moving
-      vec3 prenormal = sphericalDecode(normalAndReflectiveness.xy);
+      vec3 prenormal = sphericalDecode(normalAndReflectivity.xy);
 
       #if WATER_WAVE_SIZE > 0
 
@@ -39,15 +40,19 @@ void main() {
 
       #endif
 
-      float depth          = texture2D(depthtex0, texUV).x;
-      vec3 normal          = feet2viewBobless(prenormal);
-      vec3 viewPos         = uv2view(texUV, depth);
+      bool isSmoothReflection = reflectivity > 0.5;
+      float depth  = texture2D(depthtex0, texUV).x;
+      vec3 normal  = feet2viewBobless(prenormal);
+      vec3 viewPos = isSmoothReflection
+                   ? uv2view(texUV, depth)
+                   : world2view(bandify(uv2world(texUV, depth), REFLECTIONS_PIXEL));
+
       vec4 reflectionColor = getReflectionColor(depth, normal, viewPos);
 
       color.rgb = mix(
          color.rgb,
-         reflectionColor.rgb,
-         reflectionColor.a * reflectiveness * 0.1*REFLECTIONS
+         isSmoothReflection ? reflectionColor.rgb : max(color.rgb, reflectionColor.rgb),
+         reflectionColor.a * decodedReflectivity * 0.1*REFLECTIONS
       );
    }
 

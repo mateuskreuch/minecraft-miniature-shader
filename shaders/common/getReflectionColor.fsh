@@ -1,6 +1,3 @@
-#define MAX_STEPS 10
-#define BINARY_STEPS 4
-
 float getReflectionVignette(vec2 uv) {
    uv.y = min(uv.y, 1.0 - uv.y);
    uv.x *= 1.0 - uv.x;
@@ -22,7 +19,7 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
    float lengthR = 1.0;
    vec3 oldPos = viewPos;
 
-   for (int i = 0; i < MAX_STEPS; i++) {
+   for (int i = 0; i < SSR_MAX_STEPS; i++) {
       vec3 curPos = viewPos + R * lengthR;
       vec2 curUV  = view2uv(curPos);
 
@@ -39,7 +36,7 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
          vec3 a = oldPos;
          vec3 b = curPos;
 
-         for (int j = 0; j < BINARY_STEPS; j++) {
+         for (int j = 0; j < SSR_BINARY_STEPS; j++) {
             vec3 mid = (a + b) * 0.5;
 
             curUV = view2uv(mid);
@@ -57,7 +54,7 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
       }
 
       oldPos = curPos;
-      lengthR += max(1.6*abs(diffZ) * invR, 1.0);
+      lengthR += max(SSR_STEP_SIZE * abs(diffZ) * invR, 1.0);
    }
 
    return vec4(0.0);

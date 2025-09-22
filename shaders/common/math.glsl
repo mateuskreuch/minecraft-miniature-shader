@@ -22,8 +22,8 @@ float squaredLength(vec3 v) {
    return dot(v, v);
 }
 
-float bandify(float value, float bands) {
-   return floor(bands*value) / (bands - 1.0);
+vec3 bandify(vec3 value, float bands) {
+   return floor(bands*value) / bands;
 }
 
 float fogify(float x, float w) {
