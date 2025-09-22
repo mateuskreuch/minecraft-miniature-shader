@@ -26,8 +26,8 @@ varying float torchStrength;
 varying float waterTexStrength;
 varying vec2 lightUV;
 varying vec2 texUV;
+varying vec3 feetPos;
 varying vec3 gradientFogColor;
-varying vec3 worldPos;
 varying vec4 ambient;
 varying vec4 color;
 varying vec4 normal;
@@ -54,16 +54,16 @@ void main() {
    reflectivity = GLASS_REFLECTIVITY;
 
    torchStrength = getTorchStrength(lightUV.s);
-   worldPos = getFeetPosition();
-   fogMix = getFogMix(worldPos);
-   gradientFogColor = getFogColor(fogMix, worldPos);
+   feetPos = getFeetPosition();
+   fogMix = getFogMix(feetPos);
+   gradientFogColor = getFogColor(fogMix, feetPos);
 
    if (mc_Entity.x == 10008.0) {
-      float posRandom = random(floor(worldPos.xz) + floor(cameraPosition.xz));
+      float posRandom = random(floor(feetPos.xz) + floor(cameraPosition.xz));
 
       #if WATER_WAVE_SIZE > 0
 
-         getWaterWave(normal, posRandom);
+         getWaterWave(normal, posRandom, feetPos);
 
       #endif
 

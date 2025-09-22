@@ -1,16 +1,16 @@
 #include "/common/getShadowDistortion.glsl"
 
-float getLightStrength() {
+float getLightStrength(vec3 feetPos) {
    #if SHADOW_PIXEL > 0
 
-      vec3 pos = worldPos + cameraPosition;
+      vec3 pos = feetPos + cameraPosition;
       pos = pos * SHADOW_PIXEL;
       pos = floor(pos + 0.01) + 0.5;
       pos = pos / SHADOW_PIXEL - cameraPosition;
 
    #else
 
-      vec3 pos = worldPos;
+      vec3 pos = feetPos;
 
    #endif
 

@@ -7,8 +7,8 @@
 uniform mat4 gbufferModelViewInverse;
 
 varying vec2 texUV;
+varying vec3 feetPos;
 varying vec4 color;
-varying vec3 worldPos;
 
 #include "/common/getPosition.vsh"
 
@@ -18,6 +18,6 @@ void main() {
    color = gl_Color;
    texUV = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
 
-   worldPos = getFeetPosition();
-   worldPos.y += END_STARS_FLOOR;
+   feetPos = getFeetPosition();
+   feetPos.y += END_STARS_FLOOR;
 }

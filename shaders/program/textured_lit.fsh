@@ -12,8 +12,8 @@ varying float isLava;
 varying float torchStrength;
 varying vec2 lightUV;
 varying vec2 texUV;
+varying vec3 feetPos;
 varying vec3 gradientFogColor;
-varying vec3 worldPos;
 varying vec4 ambient;
 varying vec4 color;
 
@@ -72,7 +72,7 @@ void main() {
 
    #ifdef ENABLE_SHADOWS
 
-      float lightStrength = max(0.75*isLava, getLightStrength());
+      float lightStrength = max(0.75*isLava, getLightStrength(feetPos));
       vec3 shadowColor = vec3(1.0 - SHADOW_DARKNESS);
       shadowColor.g += 0.3333*SHADOW_BLUENESS;
       shadowColor.b += SHADOW_BLUENESS;
@@ -89,7 +89,7 @@ void main() {
 
    #endif
 
-   ambient.rgb += getTorchColor(ambient.rgb);
+   ambient.rgb += getTorchColor(ambient.rgb, feetPos);
 
    albedo *= color.a;
    albedo *= ambient;

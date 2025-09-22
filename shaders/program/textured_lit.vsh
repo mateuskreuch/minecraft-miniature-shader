@@ -23,8 +23,8 @@ varying float isLava;
 varying float torchStrength;
 varying vec2 lightUV;
 varying vec2 texUV;
+varying vec3 feetPos;
 varying vec3 gradientFogColor;
-varying vec3 worldPos;
 varying vec4 ambient;
 varying vec4 color;
 
@@ -110,9 +110,9 @@ void main() {
    #endif
 
    torchStrength = getTorchStrength(lightUV.s);
-   worldPos = getFeetPosition();
-   fogMix = getFogMix(worldPos);
-   gradientFogColor = getFogColor(fogMix, worldPos);
+   feetPos = getFeetPosition();
+   fogMix = getFogMix(feetPos);
+   gradientFogColor = getFogColor(fogMix, feetPos);
 
    #ifdef ENABLE_SHADOWS
       diffuse = getDiffuse(lightUV.t);

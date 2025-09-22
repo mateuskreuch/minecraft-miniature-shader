@@ -11,8 +11,8 @@ varying float torchStrength;
 varying float waterTexStrength;
 varying vec2 lightUV;
 varying vec2 texUV;
+varying vec3 feetPos;
 varying vec3 gradientFogColor;
-varying vec3 worldPos;
 varying vec4 ambient;
 varying vec4 color;
 varying vec4 normal;
@@ -41,7 +41,7 @@ void main() {
       WATER_BUFFER.ba = min(WATER_BUFFER.ba, vec2(max(WATER_BUFFER.r, WATER_BUFFER.g)*WATER_B, WATER_A));
    }
 
-   ambient.rgb += 0.5*getTorchColor(ambient.rgb);
+   ambient.rgb += 0.5*getTorchColor(ambient.rgb, feetPos);
 
    albedo *= color * ambient;
 

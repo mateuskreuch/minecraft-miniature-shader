@@ -9,8 +9,8 @@ uniform sampler2D texture;
 uniform vec3 fogColor;
 
 varying vec2 texUV;
+varying vec3 feetPos;
 varying vec4 color;
-varying vec3 worldPos;
 
 void main() {
    vec4 albedo = texture2D(texture, texUV) * color;
@@ -19,8 +19,8 @@ void main() {
       albedo.rgb = mix(albedo.rgb, albedo.rgb * fogColor, 0.9);
    #endif
 
-   float theta   = mod(atan(worldPos.y, worldPos.x), PI) - HALF_PI;
-   float phi     = acos(worldPos.z / length(worldPos))   - HALF_PI;
+   float theta   = mod(atan(feetPos.y, feetPos.x), PI) - HALF_PI;
+   float phi     = acos(feetPos.z / length(feetPos))   - HALF_PI;
    float slice   = ceil(atan(theta, phi) * END_STARS_AMOUNT);
    float offset  = cos(slice);
    float invDist = offset / (theta*theta + phi*phi);

@@ -1,11 +1,11 @@
-float getFogMix(vec3 worldPos) {
+float getFogMix(vec3 feetPos) {
    #ifndef ENABLE_FOG
 
       return 0.0;
 
    #endif
 
-   float len = fogShape == 1 ? max(length(worldPos.xz), abs(worldPos.y)) : length(worldPos);
+   float len = fogShape == 1 ? max(length(feetPos.xz), abs(feetPos.y)) : length(feetPos);
 
    #if MC_VERSION >= 11700
 

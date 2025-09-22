@@ -1,9 +1,9 @@
-vec3 getTorchColor(vec3 ambient) {
+vec3 getTorchColor(vec3 ambient, vec3 feetPos) {
    #ifdef HAND_DYNAMIC_LIGHTING
 
       float strength = float(heldBlockLightValue);
 
-      strength = max(torchStrength, min(1.0, strength / pow2(length(worldPos) + 1.5)));
+      strength = max(torchStrength, min(1.0, strength / pow2(length(feetPos) + 1.5)));
 
    #else
 
