@@ -63,7 +63,9 @@ void main() {
 
       #if WATER_WAVE_SIZE > 0
 
-         getWaterWave(normal, posRandom, feetPos);
+         if (abs(normal.y) > 0.8) {
+            normal.xyz = normalize(normal.xyz + getWaterWave(posRandom, feetPos));
+         }
 
       #endif
 
