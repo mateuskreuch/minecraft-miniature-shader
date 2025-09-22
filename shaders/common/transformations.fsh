@@ -23,11 +23,11 @@ vec3 feet2view(vec3 world) {
 }
 
 vec3 feet2world(vec3 feet) {
-   return feet + floor(cameraPosition*1000.0)/1000.0;
+   return feet + cameraPosition;
 }
 
 vec3 world2feet(vec3 world) {
-   return world - floor(cameraPosition*1000.0)/1000.0;
+   return world - cameraPosition;
 }
 
 // combined functions

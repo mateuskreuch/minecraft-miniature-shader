@@ -2,16 +2,9 @@
 
 float getLightStrength(vec3 feetPos) {
    #if SHADOW_PIXEL > 0
-
-      vec3 pos = feetPos + cameraPosition;
-      pos = pos * SHADOW_PIXEL;
-      pos = floor(pos + 0.01) + 0.5;
-      pos = pos / SHADOW_PIXEL - cameraPosition;
-
+      vec3 pos = world2feet(bandify(feet2world(feetPos), SHADOW_PIXEL));
    #else
-
       vec3 pos = feetPos;
-
    #endif
 
    float posDistance = squaredLength(pos);

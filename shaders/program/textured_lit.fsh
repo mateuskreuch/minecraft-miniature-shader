@@ -39,12 +39,16 @@ varying vec4 color;
    uniform vec3 cameraPosition;
    uniform mat4 shadowModelView;
    uniform mat4 shadowProjection;
+   uniform mat4 gbufferModelView;
+   uniform mat4 gbufferModelViewInverse;
+   uniform mat4 gbufferProjection;
    uniform mat4 gbufferProjectionInverse;
    uniform sampler2D shadowtex1;
 
    varying vec3 lightColor;
    varying float diffuse;
 
+   #include "/common/transformations.fsh"
    #include "/common/getLightStrength.fsh"
 #endif
 
