@@ -2,11 +2,6 @@
 
 #include "/shader.h"
 
-uniform float fogEnd;
-uniform float fogStart;
-uniform float near, far;
-uniform int fogShape;
-
 varying float fogMix;
 varying vec4 starColor;
 

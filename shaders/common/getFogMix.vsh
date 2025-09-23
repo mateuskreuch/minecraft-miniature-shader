@@ -1,3 +1,7 @@
+uniform float fogEnd, fogStart;
+uniform float near, far;
+uniform int fogShape;
+
 float getFogMix(vec3 feetPos) {
    #ifndef ENABLE_FOG
 
@@ -30,7 +34,6 @@ float getFogMix(vec3 feetPos) {
                   OVERWORLD_FOG_MAX);
 
          x = min(x, 1.0 - rainStrength);
-         x = max(x, 0.05); // Hopefully prevents fog covering everything in some cards
 
          return min(1.0, rescale(len, 0.9*x*far, far) + 0.0015*max(0.0, len - 96.0));
 

@@ -4,18 +4,11 @@
 
 attribute vec4 mc_Entity;
 
-uniform float fogEnd;
-uniform float fogStart;
 uniform float frameTimeCounter;
-uniform float near, far;
 uniform float rainStrength;
-uniform float screenBrightness;
-uniform int fogShape;
 uniform int isEyeInWater;
 uniform int worldTime;
 uniform sampler2D lightmap;
-uniform vec3 fogColor;
-uniform vec3 skyColor;
 uniform vec3 sunPosition;
 
 varying float fogMix;

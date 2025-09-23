@@ -1,3 +1,5 @@
+uniform float screenBrightness;
+
 vec4 getAmbientColor(float sunHeight) {
    vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
 
