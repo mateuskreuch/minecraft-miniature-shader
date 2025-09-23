@@ -1,4 +1,4 @@
-#define gbuffers_textured_lit
+#define textured_lit
 
 #include "/shader.h"
 

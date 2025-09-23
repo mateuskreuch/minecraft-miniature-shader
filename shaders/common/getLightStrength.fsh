@@ -9,11 +9,11 @@ float getLightStrength(vec3 feetPos) {
 
    float posDistance = squaredLength(pos);
    vec4 shadowView   = shadowModelView * vec4(pos, 1.0);
-   vec4 shadowClip = shadowProjection * shadowView;
+   vec4 shadowClip   = shadowProjection * shadowView;
 
    shadowClip.xyz = getShadowDistortion(shadowClip.xyz);
 
-   vec3 shadowUV = nvec3(shadowClip)*0.5 + 0.5;
+   vec3 shadowUV = clip2screen(shadowClip);
 
    if (posDistance < SHADOW_MAX_DIST_SQUARED &&
       diffuse    > 0.0 && shadowUV.z < 1.0 &&
