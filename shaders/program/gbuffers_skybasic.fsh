@@ -4,7 +4,6 @@
 
 uniform float viewHeight;
 uniform float viewWidth;
-uniform vec3 cameraPosition;
 uniform vec3 fogColor;
 uniform vec3 skyColor;
 
@@ -12,7 +11,7 @@ varying float fogMix;
 varying vec4 starColor;
 
 #include "/common/math.glsl"
-#include "/common/transformations.fsh"
+#include "/common/transformations.glsl"
 
 void main() {
 	vec3 color;

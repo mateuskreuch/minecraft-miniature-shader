@@ -7,12 +7,11 @@ uniform int isEyeInWater;
 uniform sampler2D colortex0;
 uniform sampler2D colortex6;
 uniform sampler2D depthtex0;
-uniform vec3 cameraPosition;
 
 varying vec2 texUV;
 
 #include "/common/math.glsl"
-#include "/common/transformations.fsh"
+#include "/common/transformations.glsl"
 #include "/common/getReflectionColor.fsh"
 
 void main() {

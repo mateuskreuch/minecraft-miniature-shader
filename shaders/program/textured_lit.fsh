@@ -36,7 +36,6 @@ varying vec4 color;
 #include "/common/getTorchColor.fsh"
 
 #ifdef ENABLE_SHADOWS
-   uniform vec3 cameraPosition;
    uniform mat4 shadowModelView;
    uniform mat4 shadowProjection;
    uniform sampler2D shadowtex1;
@@ -44,7 +43,7 @@ varying vec4 color;
    varying vec3 lightColor;
    varying float diffuse;
 
-   #include "/common/transformations.fsh"
+   #include "/common/transformations.glsl"
    #include "/common/getLightStrength.fsh"
 #endif
 

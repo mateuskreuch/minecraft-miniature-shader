@@ -12,7 +12,6 @@ uniform float screenBrightness;
 uniform int fogShape;
 uniform int isEyeInWater;
 uniform int worldTime;
-uniform mat4 gbufferModelViewInverse;
 uniform sampler2D lightmap;
 uniform vec3 fogColor;
 uniform vec3 skyColor;
@@ -45,10 +44,11 @@ varying vec4 color;
 #endif
 
 #include "/common/math.glsl"
+#include "/common/transformations.glsl"
 #include "/common/getFogMix.vsh"
 #include "/common/getFogColor.vsh"
 #include "/common/getAmbientColor.vsh"
-#include "/common/getPosition.vsh"
+#include "/common/getViewPosition.vsh"
 #include "/common/getTorchStrength.vsh"
 
 #ifdef ENABLE_SHADOWS
@@ -64,7 +64,7 @@ varying vec4 color;
 void main() {
    gl_Position = ftransform();
 
-   float sunHeight = (gbufferModelViewInverse * vec4(sunPosition, 1.0)).y;
+   float sunHeight = view2feet(sunPosition).y;
 
    color   = gl_Color;
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
@@ -110,7 +110,7 @@ void main() {
    #endif
 
    torchStrength = getTorchStrength(lightUV.s);
-   feetPos = getFeetPosition();
+   feetPos = view2feet(getViewPosition());
    fogMix = getFogMix(feetPos);
    gradientFogColor = getFogColor(fogMix, feetPos);
 

@@ -6,8 +6,6 @@ uniform float fogEnd;
 uniform float fogStart;
 uniform float near, far;
 uniform int fogShape;
-uniform mat4 gbufferModelView;
-uniform mat4 gbufferModelViewInverse;
 
 varying float fogMix;
 varying vec4 starColor;

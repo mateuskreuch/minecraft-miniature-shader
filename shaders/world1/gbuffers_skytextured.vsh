@@ -4,13 +4,12 @@
 
 #include "/shader.h"
 
-uniform mat4 gbufferModelViewInverse;
-
 varying vec2 texUV;
 varying vec3 feetPos;
 varying vec4 color;
 
-#include "/common/getPosition.vsh"
+#include "/common/transformations.glsl"
+#include "/common/getViewPosition.vsh"
 
 void main() {
    gl_Position = ftransform();
@@ -18,6 +17,6 @@ void main() {
    color = gl_Color;
    texUV = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
 
-   feetPos = getFeetPosition();
+   feetPos = view2feet(getViewPosition());
    feetPos.y += END_STARS_FLOOR;
 }
