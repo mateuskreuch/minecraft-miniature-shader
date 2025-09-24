@@ -90,9 +90,7 @@ void main() {
 
    #ifdef HIGHLIGHT_WAXED
 
-      if ((heldItemId == 20007 || heldItemId2 == 20007) && mc_Entity.x == 20007.0) {
-         color.rgb *= 0.4;
-      }
+      color.rgb *= (heldItemId == 20008 || heldItemId2 == 20008) && mc_Entity.x == 20008.0 ? 0.4 : 1.0;
 
    #endif
 
