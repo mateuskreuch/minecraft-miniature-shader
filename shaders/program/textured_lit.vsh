@@ -21,10 +21,10 @@ varying vec4 ambient;
 varying vec4 color;
 
 #ifdef ENABLE_BLOCK_REFLECTIONS
-   varying float reflectionMaxLuma;
-   varying float reflectionMinLuma;
-   varying float reflectivity;
+   flat varying vec3 blockReflectivity;
    varying vec4 normal;
+
+   #include "/common/blockReflectivity.glsl"
 #endif
 
 #ifdef GLOWING_ORES
@@ -68,13 +68,7 @@ void main() {
    #ifdef ENABLE_BLOCK_REFLECTIONS
 
       normal = vec4(gl_Normal, 1.0);
-      reflectivity = 0.0;
-
-      if (mc_Entity.x > 99999.0) {
-         reflectivity      = 0.01*floor(mc_Entity.x / 10000.0);           // [aa]bbcc
-         reflectionMinLuma = 0.01*floor(mod(mc_Entity.x / 100.0, 100.0)); // aa[bb]cc
-         reflectionMaxLuma = 0.01*mod(mc_Entity.x, 100.0);                // aabb[cc]
-      }
+      blockReflectivity = BLOCK_REFLECTIVITY[int(max(0.0, mc_Entity.x - 20000.0))];
 
    #endif
 
@@ -96,7 +90,7 @@ void main() {
 
    #ifdef HIGHLIGHT_WAXED
 
-      if ((heldItemId == 203070 || heldItemId2 == 203070) && mc_Entity.x == 203070.0) {
+      if ((heldItemId == 20007 || heldItemId2 == 20007) && mc_Entity.x == 20007.0) {
          color.rgb *= 0.4;
       }
 

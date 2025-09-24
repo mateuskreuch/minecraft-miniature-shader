@@ -18,9 +18,7 @@ varying vec4 ambient;
 varying vec4 color;
 
 #ifdef ENABLE_BLOCK_REFLECTIONS
-   varying float reflectionMaxLuma;
-   varying float reflectionMinLuma;
-   varying float reflectivity;
+   flat varying vec3 blockReflectivity;
    varying vec4 normal;
 #endif
 
@@ -99,11 +97,11 @@ void main() {
    gl_FragData[0] = albedo;
 
    #ifdef ENABLE_BLOCK_REFLECTIONS
-      float finalReflectivity = rescale(albedoLuma, reflectionMinLuma, reflectionMaxLuma);
+      float reflectivity = rescale(albedoLuma, blockReflectivity.y, blockReflectivity.z);
 
-      finalReflectivity *= finalReflectivity * reflectivity;
+      reflectivity *= reflectivity * blockReflectivity.x;
 
-      gl_FragData[1] = vec4(sphericalEncode(normal.xyz), finalReflectivity * step(fogMix, 0.999), 1.0);
+      gl_FragData[1] = vec4(sphericalEncode(normal.xyz), reflectivity * step(fogMix, 0.999), 1.0);
    #else
       gl_FragData[1] = vec4(vec3(0.0), 1.0);
    #endif
