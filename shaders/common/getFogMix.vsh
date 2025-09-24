@@ -48,7 +48,7 @@ float getFogMix(vec3 feetPos) {
       gl_FogFragCoord = len;
 
       return (isEyeInWater > 0) ? 1.0 - exp(-gl_FogFragCoord * gl_Fog.density)
-                                 : clamp((gl_FogFragCoord - gl_Fog.start) * gl_Fog.scale, 0.0, 1.0);
+                                : clamp((gl_FogFragCoord - gl_Fog.start) * gl_Fog.scale, 0.0, 1.0);
 
    #endif
 }
