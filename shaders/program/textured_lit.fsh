@@ -7,8 +7,8 @@ uniform ivec2 eyeBrightnessSmooth;
 uniform sampler2D texture;
 uniform vec4 entityColor;
 
+flat varying float isLava;
 varying float fogMix;
-varying float isLava;
 varying float torchStrength;
 varying vec2 lightUV;
 varying vec2 texUV;
@@ -23,7 +23,7 @@ varying vec4 color;
 #endif
 
 #ifdef GLOWING_ORES
-   varying float isOre;
+   flat varying float isOre;
 #endif
 
 #ifdef HAND_DYNAMIC_LIGHTING

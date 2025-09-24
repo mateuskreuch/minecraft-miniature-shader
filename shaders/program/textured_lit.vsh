@@ -10,8 +10,8 @@ uniform int worldTime;
 uniform sampler2D lightmap;
 uniform vec3 sunPosition;
 
+flat varying float isLava;
 varying float fogMix;
-varying float isLava;
 varying float torchStrength;
 varying vec2 lightUV;
 varying vec2 texUV;
@@ -28,7 +28,7 @@ varying vec4 color;
 #endif
 
 #ifdef GLOWING_ORES
-   varying float isOre;
+   flat varying float isOre;
 #endif
 
 #ifdef HIGHLIGHT_WAXED
