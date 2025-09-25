@@ -1,5 +1,3 @@
-#define final
-
 #include "/shader.h"
 
 uniform float far;

@@ -1,6 +1,10 @@
 #include "/common/getShadowDistortion.glsl"
 
 float getLightStrength(vec3 feetPos) {
+   #ifdef GBUFFERS_HAND
+      return 0.5*diffuse;
+   #endif
+
    #if SHADOW_PIXEL > 0
       vec3 pos = world2feet(bandify(feet2world(feetPos), SHADOW_PIXEL));
    #else

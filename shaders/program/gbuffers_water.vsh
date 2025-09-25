@@ -1,5 +1,3 @@
-#define gbuffers_water
-
 #include "/shader.h"
 
 attribute vec4 mc_Entity;

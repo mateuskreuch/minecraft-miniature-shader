@@ -1,5 +1,3 @@
-#define final
-
 varying vec2 texUV;
 
 void main() {

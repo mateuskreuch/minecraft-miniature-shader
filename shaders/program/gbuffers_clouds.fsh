@@ -1,4 +1,4 @@
-#define gbuffers_clouds
+#define GBUFFERS_CLOUDS
 
 #include "/shader.h"
 

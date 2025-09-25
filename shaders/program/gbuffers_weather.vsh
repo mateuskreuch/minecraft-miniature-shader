@@ -1,5 +1,3 @@
-#define gbuffers_weather
-
 varying vec2 texUV;
 varying vec4 color;
 

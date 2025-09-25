@@ -17,11 +17,11 @@ float getFogMix(vec3 feetPos) {
          return rescale(len, min(fogStart, fogEnd), fogEnd);
       }
 
-      #if defined gbuffers_skybasic
+      #if defined GBUFFERS_SKYBASIC
 
          return 0.0;
 
-      #elif defined gbuffers_clouds
+      #elif defined GBUFFERS_CLOUDS
 
          return clamp((len - far) * (near * 0.01), 0.0, 1.0);
 

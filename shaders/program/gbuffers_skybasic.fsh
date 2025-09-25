@@ -1,4 +1,4 @@
-#define gbuffers_skybasic
+#define GBUFFERS_SKYBASIC
 
 #include "/shader.h"
 

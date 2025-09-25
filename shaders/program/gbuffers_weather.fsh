@@ -1,5 +1,3 @@
-#define gbuffers_weather
-
 uniform sampler2D texture;
 
 varying vec2 texUV;

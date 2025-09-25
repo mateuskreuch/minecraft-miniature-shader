@@ -1,5 +1,3 @@
-#define textured_lit
-
 #include "/shader.h"
 
 attribute vec4 mc_Entity;

@@ -1,5 +1,3 @@
-#define gbuffers_water
-
 #include "/shader.h"
 
 uniform ivec2 eyeBrightnessSmooth;

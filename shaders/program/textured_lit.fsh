@@ -1,5 +1,3 @@
-#define textured_lit
-
 #include "/shader.h"
 
 uniform int entityId;
