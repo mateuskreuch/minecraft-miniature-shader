@@ -21,7 +21,7 @@ vec3 view2feetBobless(vec3 view) {
 }
 
 vec3 view2feet(vec3 view) {
-   return (mat4(gbufferModelViewInverse) * vec4(view, 1.0)).xyz;
+   return (gbufferModelViewInverse * vec4(view, 1.0)).xyz;
 }
 
 vec3 clip2screen(vec4 clip) {
@@ -33,7 +33,7 @@ vec3 feet2viewBobless(vec3 world) {
 }
 
 vec3 feet2view(vec3 world) {
-   return (mat4(gbufferModelView) * vec4(world, 1.0)).xyz;
+   return (gbufferModelView * vec4(world, 1.0)).xyz;
 }
 
 vec3 feet2world(vec3 feet) {
