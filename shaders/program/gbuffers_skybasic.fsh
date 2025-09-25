@@ -21,7 +21,7 @@ void main() {
 	}
 	else {
       vec2 uv = gl_FragCoord.xy / vec2(viewWidth, viewHeight);
-      vec3 screenPos = normalize(uv2view(uv, 1.0));
+      vec3 screenPos = normalize(screen2view(uv, 1.0));
       float upDot = dot(screenPos, gbufferModelView[1].xyz);
 
 		color = mix(skyColor, fogColor, max(fogMix, fogify(max(upDot, 0.0), 0.05)));

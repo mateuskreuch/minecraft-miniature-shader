@@ -39,8 +39,8 @@ void main() {
       float depth  = texture2D(depthtex0, texUV).x;
       vec3 normal  = feet2viewBobless(prenormal);
       vec3 viewPos = isSmoothReflection
-                   ? uv2view(texUV, depth)
-                   : world2view(bandify(uv2world(texUV, depth), REFLECTIONS_PIXEL));
+                   ? screen2view(texUV, depth)
+                   : world2view(bandify(screen2world(texUV, depth), REFLECTIONS_PIXEL));
 
       vec4 reflectionColor = getReflectionColor(depth, normal, viewPos);
 

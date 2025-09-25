@@ -21,13 +21,13 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
 
    for (int i = 0; i < SSR_MAX_STEPS; i++) {
       vec3 curPos = viewPos + R * lengthR;
-      vec2 curUV  = view2uv(curPos);
+      vec2 curUV  = view2screen(curPos).st;
 
       if (curUV.s < 0.0 || curUV.s > 1.0 || curUV.t < 0.0 || curUV.t > 1.0)
          break;
 
       float sceneDepth = texture2D(depthtex0, curUV).x;
-      float sceneZ = uv2view(curUV, sceneDepth).z;
+      float sceneZ = screen2view(curUV, sceneDepth).z;
       float distanceEpsilon = clamp(abs(sceneZ) * invFar, 0.0, 1.0);
       float epsilon = 1.0 + 0.1*max(distanceEpsilon, grazingEpsilon);
       float diffZ = curPos.z - sceneZ * epsilon;
@@ -39,9 +39,9 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
          for (int j = 0; j < SSR_BINARY_STEPS; j++) {
             vec3 mid = (a + b) * 0.5;
 
-            curUV = view2uv(mid);
+            curUV = view2screen(mid).st;
             sceneDepth = texture2D(depthtex0, curUV).x;
-            sceneZ = uv2view(curUV, sceneDepth).z;
+            sceneZ = screen2view(curUV, sceneDepth).z;
 
             if (sceneDepth + 0.001 <= depth) return vec4(0.0);
 
