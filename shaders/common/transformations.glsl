@@ -8,12 +8,20 @@ vec3 nvec3(vec4 pos) {
    return pos.xyz / pos.w;
 }
 
-vec3 uv2view(vec2 uv, float depth) {
-   return nvec3(gbufferProjectionInverse * vec4(2.0*vec3(uv, depth) - 1.0, 1.0));
+vec3 uv2ndc(vec2 uv, float depth) {
+   return 2.0*vec3(uv, depth) - 1.0;
 }
 
-vec2 view2uv(vec3 view) {
-   return (0.5*nvec3(gbufferProjection * vec4(view, 1.0)) + 0.5).st;
+vec2 ndc2uv(vec3 ndc) {
+   return (0.5*ndc + 0.5).st;
+}
+
+vec3 ndc2view(vec3 ndc) {
+   return nvec3(gbufferProjectionInverse * vec4(ndc, 1.0));
+}
+
+vec3 view2ndc(vec3 view) {
+   return nvec3(gbufferProjection * vec4(view, 1.0));
 }
 
 vec3 view2feetBobless(vec3 view) {
@@ -46,12 +54,20 @@ vec3 world2feet(vec3 world) {
 
 // combined functions
 
+vec3 uv2view(vec2 uv, float depth) {
+   return ndc2view(uv2ndc(uv, depth));
+}
+
 vec3 uv2feet(vec2 uv, float depth) {
    return view2feet(uv2view(uv, depth));
 }
 
 vec3 uv2world(vec2 uv, float depth) {
    return feet2world(uv2feet(uv, depth));
+}
+
+vec2 view2uv(vec3 view) {
+   return ndc2uv(view2ndc(view));
 }
 
 vec3 world2view(vec3 world) {
