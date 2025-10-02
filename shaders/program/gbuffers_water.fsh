@@ -39,7 +39,7 @@ void main() {
       WATER_BUFFER.ba = min(WATER_BUFFER.ba, vec2(max(WATER_BUFFER.r, WATER_BUFFER.g)*WATER_B, WATER_A));
    }
 
-   ambient.rgb += 0.5*getTorchColor(ambient.rgb, feetPos);
+   ambient.rgb += 0.5*getTorchColor(torchStrength, ambient.rgb, feetPos);
 
    albedo *= color * ambient;
 
