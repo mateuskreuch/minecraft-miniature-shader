@@ -11,9 +11,9 @@ varying vec2 lightUV;
 varying vec2 texUV;
 varying vec3 feetPos;
 varying vec3 gradientFogColor;
+varying vec3 normal;
 varying vec4 ambient;
 varying vec4 color;
-varying vec4 normal;
 
 #ifdef HAND_DYNAMIC_LIGHTING
    uniform int heldBlockLightValue;
@@ -47,5 +47,5 @@ void main() {
 
    /* DRAWBUFFERS:06 */
    gl_FragData[0] = albedo;
-   gl_FragData[1] = vec4(sphericalEncode(normal.xyz), reflectivity * step(fogMix, 0.999), 1.0);
+   gl_FragData[1] = vec4(sphericalEncode(normal), reflectivity * step(fogMix, 0.999), 1.0);
 }

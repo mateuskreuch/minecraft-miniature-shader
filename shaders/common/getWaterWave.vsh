@@ -4,9 +4,9 @@ vec3 getWaterWave(float random, vec3 feetPos) {
 
    v = min(1.0, v);
 
-   return vec3(
-      v * pow3(sin(random * WATER_WAVE_SPEED * frameTimeCounter)),
+   return v * vec3(
+      pow3(sin(random * WATER_WAVE_SPEED * frameTimeCounter)),
       0.0,
-      v * pow3(cos(random * WATER_WAVE_SPEED * frameTimeCounter))
+      pow3(cos(random * WATER_WAVE_SPEED * frameTimeCounter))
    );
 }

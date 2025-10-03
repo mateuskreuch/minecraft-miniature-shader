@@ -17,9 +17,9 @@ varying vec2 lightUV;
 varying vec2 texUV;
 varying vec3 feetPos;
 varying vec3 gradientFogColor;
+varying vec3 normal;
 varying vec4 ambient;
 varying vec4 color;
-varying vec4 normal;
 
 #include "/common/math.glsl"
 #include "/common/transformations.glsl"
@@ -39,7 +39,7 @@ void main() {
    color        = gl_Color;
    texUV        = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV      = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
-   normal       = vec4(gl_Normal, 1.0);
+   normal       = gl_Normal;
    ambient      = getAmbientColor(sunHeight);
    reflectivity = GLASS_REFLECTIVITY;
 
@@ -54,7 +54,7 @@ void main() {
       #if WATER_WAVE_SIZE > 0
 
          if (abs(normal.y) > 0.8) {
-            normal.xyz = normalize(normal.xyz + getWaterWave(posRandom, feetPos));
+            normal = normalize(normal + getWaterWave(posRandom, feetPos));
          }
 
       #endif
