@@ -51,6 +51,7 @@ const float sunPathRotation = 0.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.0 
 
 #ifdef OVERWORLD
    #define ENABLE_SHADOWS
+   #define ENABLE_AUTOEXPOSURE
 #endif
 
 #if MC_VERSION >= 11300

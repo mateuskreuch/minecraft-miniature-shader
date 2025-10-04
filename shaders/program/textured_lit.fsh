@@ -2,6 +2,7 @@
 
 uniform int entityId;
 uniform ivec2 eyeBrightnessSmooth;
+uniform int worldTime;
 uniform sampler2D texture;
 uniform vec4 entityColor;
 
@@ -84,7 +85,20 @@ void main() {
 
    #endif
 
-   ambient.rgb += getTorchColor(torchStrength, ambient.rgb, feetPos);
+   vec3 torchColor = getTorchColor(torchStrength, ambient.rgb, feetPos);
+
+   #ifdef ENABLE_AUTOEXPOSURE
+      float blockSkyLight = eyeBrightnessSmooth.y / 240.0;
+
+      float timeBrightness = sin(worldTime * PI /  12000.0) / 2.0 + 0.5;
+      float i = -timeBrightness + 1;
+      timeBrightness = 1 - pow2(i);
+
+      float adjustedBrightness = 1 - timeBrightness * blockSkyLight;
+      torchColor *= adjustedBrightness;
+   #endif
+
+   ambient.rgb += torchColor;
 
    albedo *= color.a;
    albedo *= ambient;

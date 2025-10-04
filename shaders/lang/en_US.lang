@@ -45,6 +45,7 @@ option.sunPathRotation=Sun path angle §e[!]
 option.sunPathRotation.comment=Miniature was made with straight shadows in mind, and may produce artifacts if changed
 option.SHADOW_DARKNESS=Shadow darkness
 option.FLAT_LIGHTING=Use flat lighting
+option.ENABLE_AUTOEXPOSURE=Enable automatic exposure
 option.ENABLE_SHADOWS=Enable shadows
 option.SHADOW_ENTITY=Entity shadow
 value.SHADOW_ENTITY.-1=§aOff
