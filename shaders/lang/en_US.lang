@@ -55,7 +55,6 @@ screen.REFLECTIONS_SCREEN=Reflections
 option.REFLECTIONS=Reflection opacity
 option.ENABLE_BLOCK_REFLECTIONS=Block reflections §e[?]
 option.ENABLE_BLOCK_REFLECTIONS.comment=Reflections for blocks such as stone bricks, quartz, etc
-option.REFLECTIONS_PIXEL=Block reflection pixelization
 option.SSR_MAX_STEPS=Max steps
 option.SSR_BINARY_STEPS=Max refining steps
 option.SSR_STEP_SIZE=Step size

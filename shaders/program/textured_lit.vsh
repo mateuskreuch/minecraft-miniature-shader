@@ -20,7 +20,7 @@ varying vec4 color;
 
 #ifdef ENABLE_BLOCK_REFLECTIONS
    flat varying vec3 blockReflectivity;
-   varying vec4 normal;
+   varying vec3 normal;
 
    #include "/common/blockReflectivity.glsl"
 #endif
@@ -65,7 +65,7 @@ void main() {
 
    #ifdef ENABLE_BLOCK_REFLECTIONS
 
-      normal = vec4(gl_Normal, 1.0);
+      normal = ndc2screen(gl_Normal);
       blockReflectivity = BLOCK_REFLECTIVITY[int(max(0.0, mc_Entity.x - 20000.0))];
 
    #endif

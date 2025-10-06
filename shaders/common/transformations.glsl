@@ -8,8 +8,8 @@ vec3 nvec3(vec4 pos) {
    return pos.xyz / pos.w;
 }
 
-vec3 screen2ndc(vec2 uv, float depth) {
-   return 2.0*vec3(uv, depth) - 1.0;
+vec3 screen2ndc(vec3 screen) {
+   return 2.0*screen - 1.0;
 }
 
 vec3 ndc2screen(vec3 ndc) {
@@ -28,7 +28,8 @@ vec3 view2ndc(vec3 view) {
    return nvec3(gbufferProjection * vec4(view, 1.0));
 }
 
-vec3 view2feetBobless(vec3 view) {
+// eye and feet refer to player eye and player feet
+vec3 view2eye(vec3 view) {
    return mat3(gbufferModelViewInverse) * view;
 }
 
@@ -36,8 +37,8 @@ vec3 view2feet(vec3 view) {
    return (gbufferModelViewInverse * vec4(view, 1.0)).xyz;
 }
 
-vec3 feet2viewBobless(vec3 feet) {
-   return mat3(gbufferModelView) * feet;
+vec3 eye2view(vec3 eye) {
+   return mat3(gbufferModelView) * eye;
 }
 
 vec3 feet2view(vec3 feet) {
@@ -55,7 +56,7 @@ vec3 world2feet(vec3 world) {
 // combined functions
 
 vec3 screen2view(vec2 uv, float depth) {
-   return ndc2view(screen2ndc(uv, depth));
+   return ndc2view(screen2ndc(vec3(uv, depth)));
 }
 
 vec3 screen2feet(vec2 uv, float depth) {

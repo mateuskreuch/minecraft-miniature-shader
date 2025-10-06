@@ -1,9 +1,18 @@
-float random(vec2 pos) {
-	return fract(sin(dot(pos, vec2(18.9898, 28.633))) * 4378.5453);
+float random(vec2 v) {
+	return fract(sin(dot(v, vec2(18.9898, 28.633))) * 4378.5453);
 }
 
-float random(vec3 pos) {
-   return fract(sin(dot(pos, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
+float random(vec3 v) {
+   return fract(sin(dot(v, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
+}
+
+vec3 random3(vec3 v) {
+   v = fract(v * vec3(0.3183099, 0.3678794, 0.7071068)); // 1/π, 1/e, 1/√2
+   v += dot(v, v.yzx + 19.19);
+
+   return fract(vec3(v.x * v.y * 95.4307,
+                     v.y * v.z * 97.5901,
+                     v.z * v.x * 93.8365)) - 0.5;
 }
 
 float luma(vec3 color) {
@@ -18,8 +27,24 @@ vec3 rescale(vec3 x, vec3 a, vec3 b) {
    return clamp((x - a) / (b - a), vec3(0.0), vec3(1.0));
 }
 
+float round(float x) {
+   return floor(x + 0.5);
+}
+
+vec3 round(vec3 x) {
+   return floor(x + 0.5);
+}
+
 float squaredLength(vec3 v) {
    return dot(v, v);
+}
+
+float stepify(float x, float stepSize) {
+   return round(x / stepSize) * stepSize;
+}
+
+vec3 stepify(vec3 x, float stepSize) {
+   return round(x / stepSize) * stepSize;
 }
 
 vec3 bandify(vec3 value, float bands) {

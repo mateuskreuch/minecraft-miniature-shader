@@ -4,6 +4,7 @@ uniform float far;
 uniform int isEyeInWater;
 uniform sampler2D colortex0;
 uniform sampler2D colortex6;
+uniform sampler2D colortex7;
 uniform sampler2D depthtex0;
 
 varying vec2 texUV;
@@ -14,15 +15,15 @@ varying vec2 texUV;
 
 void main() {
    vec4 color = texture2D(colortex0, texUV);
-   vec4 normalAndReflectivity = texture2D(colortex6, texUV);
-   float reflectivity = normalAndReflectivity.z;
-   float decodedReflectivity = fract(2.0*reflectivity);
+   vec4 reflectivityAndRoughness = texture2D(colortex7, texUV);
+   float reflectivity = reflectivityAndRoughness.x;
+   float roughness = reflectivityAndRoughness.y;
 
-   if (decodedReflectivity > MIN_REFLECTIVITY) {
+   if (reflectivity > MIN_REFLECTIVITY) {
       // the normal doesn't come premultiplied by the normal matrix to
       // avoid the modelview transformations when view bobbing is on
       // which causes severe artifacts when moving
-      vec3 prenormal = sphericalDecode(normalAndReflectivity.xy);
+      vec3 prenormal = screen2ndc(texture2D(colortex6, texUV).xyz);
 
       #if WATER_WAVE_SIZE > 0
 
@@ -33,19 +34,23 @@ void main() {
 
       #endif
 
-      bool isSmoothReflection = reflectivity > 0.5;
       float depth  = texture2D(depthtex0, texUV).x;
-      vec3 normal  = feet2viewBobless(prenormal);
-      vec3 viewPos = isSmoothReflection
-                   ? screen2view(texUV, depth)
-                   : world2view(bandify(screen2world(texUV, depth), REFLECTIONS_PIXEL));
+      vec3 normal  = eye2view(prenormal);
+      vec3 viewPos = screen2view(texUV, depth);
+      vec3 feetPos = view2feet(viewPos);
+      vec3 worldPos = feet2world(feetPos);
+      float pixelDistance = min(1.0, length(feetPos)/16.0);
+      float stepSize = stepify(mix(1.0/512.0, 1.0/64.0, pixelDistance), 1.0/512.0);
+
+      normal += roughness * random3(stepify(worldPos, stepSize));
+      normal = normalize(normal);
 
       vec4 reflectionColor = getReflectionColor(depth, normal, viewPos);
 
       color.rgb = mix(
          color.rgb,
-         isSmoothReflection ? reflectionColor.rgb : max(color.rgb, reflectionColor.rgb),
-         reflectionColor.a * decodedReflectivity * 0.1*REFLECTIONS
+         reflectionColor.rgb,
+         reflectionColor.a * reflectivity * 0.1*REFLECTIONS
       );
    }
 

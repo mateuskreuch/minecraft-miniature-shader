@@ -62,4 +62,6 @@ void main() {
       reflectivity = WATER_REFLECTIVITY;
       waterTexStrength = getWaterTextureStrength(posRandom);
    }
+
+   normal = ndc2screen(normal);
 }

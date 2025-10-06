@@ -20,9 +20,8 @@
 #define SSR_MAX_STEPS 10     //[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 24 32 64 96 128 256 512]
 #define SSR_STEP_SIZE 1.6    //[0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
 #define SSR_BINARY_STEPS 4   //[1 2 3 4 5 6 7 8 9 10]
-#define REFLECTIONS_PIXEL 16 //[4 8 16 32 64 128 256 512]
 
-#define SHADOW_PIXEL 16     //[0 4 8 16 32 64 128 256 512]
+#define SHADOW_PIXEL 16     //[0 4 8 16 32 64 128 256 512 1024 2048]
 #define SHADOW_BLUENESS 0.2 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5]
 
 const int   shadowMapResolution = 1024;  //[256 512 1024 2048 3072 4096]
@@ -69,7 +68,7 @@ const float sunPathRotation = 0.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.0 
 
 #define MIN_REFLECTIVITY 0.01
 #define WATER_REFLECTIVITY 0.99
-#define GLASS_REFLECTIVITY 0.9
+#define GLASS_REFLECTIVITY 0.3
 
 #define HALF_PI 1.570796326
 #define PI 3.141592653

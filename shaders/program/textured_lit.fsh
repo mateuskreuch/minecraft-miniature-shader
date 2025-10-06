@@ -17,7 +17,7 @@ varying vec4 color;
 
 #ifdef ENABLE_BLOCK_REFLECTIONS
    flat varying vec3 blockReflectivity;
-   varying vec4 normal;
+   varying vec3 normal;
 #endif
 
 #ifdef GLOWING_ORES
@@ -91,16 +91,16 @@ void main() {
 
    albedo.rgb = mix(albedo.rgb, gradientFogColor, fogMix);
 
-   /* DRAWBUFFERS:06 */
+   /* DRAWBUFFERS:067 */
    gl_FragData[0] = albedo;
 
    #ifdef ENABLE_BLOCK_REFLECTIONS
-      float reflectivity = rescale(albedoLuma, blockReflectivity.y, blockReflectivity.z);
+      float reflectivity = max(0.0, (albedoLuma - blockReflectivity.y) * blockReflectivity.x);
 
-      reflectivity *= reflectivity * blockReflectivity.x;
-
-      gl_FragData[1] = vec4(sphericalEncode(normal.xyz), reflectivity * step(fogMix, 0.999), 1.0);
+      gl_FragData[1] = vec4(normal, 1.0);
+      gl_FragData[2] = vec4(reflectivity * step(fogMix, 0.999), blockReflectivity.z, 0.0, 1.0);
    #else
       gl_FragData[1] = vec4(vec3(0.0), 1.0);
+      gl_FragData[2] = vec4(vec3(0.0), 1.0);
    #endif
 }
