@@ -1,5 +1,6 @@
 #include "/shader.h"
 
+uniform float screenBrightness;
 uniform ivec2 eyeBrightnessSmooth;
 uniform sampler2D texture;
 
