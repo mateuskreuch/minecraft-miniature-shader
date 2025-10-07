@@ -3,7 +3,7 @@
 uniform float screenBrightness;
 uniform int entityId;
 uniform ivec2 eyeBrightnessSmooth;
-uniform sampler2D texture;
+uniform sampler2D gtexture;
 uniform vec4 entityColor;
 
 flat varying float isLava;
@@ -45,7 +45,7 @@ varying vec4 color;
 #endif
 
 void main() {
-   vec4 albedo  = texture2D(texture, texUV);
+   vec4 albedo  = texture2D(gtexture, texUV);
    vec4 ambient = ambient;
 
    #ifdef GLOWING_ORES

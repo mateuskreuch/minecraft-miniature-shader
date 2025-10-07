@@ -2,7 +2,7 @@
 
 uniform float screenBrightness;
 uniform ivec2 eyeBrightnessSmooth;
-uniform sampler2D texture;
+uniform sampler2D gtexture;
 
 varying float fogMix;
 varying float reflectivity;
@@ -24,7 +24,7 @@ varying vec4 color;
 #include "/common/getTorchColor.fsh"
 
 void main() {
-   vec4 albedo  = texture2D(texture, texUV);
+   vec4 albedo  = texture2D(gtexture, texUV);
    vec4 ambient = ambient;
    vec4 color   = color;
 

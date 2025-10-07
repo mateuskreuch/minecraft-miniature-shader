@@ -5,7 +5,7 @@
 #include "/shader.h"
 
 uniform float frameTimeCounter;
-uniform sampler2D texture;
+uniform sampler2D gtexture;
 uniform vec3 fogColor;
 
 varying vec2 texUV;
@@ -13,7 +13,7 @@ varying vec3 feetPos;
 varying vec4 color;
 
 void main() {
-   vec4 albedo = texture2D(texture, texUV) * color;
+   vec4 albedo = texture2D(gtexture, texUV) * color;
 
    #if MC_VERSION >= 12100
       albedo.rgb = mix(albedo.rgb, albedo.rgb * fogColor, 0.9);

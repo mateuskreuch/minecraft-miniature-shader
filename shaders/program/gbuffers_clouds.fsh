@@ -2,7 +2,7 @@
 
 #include "/shader.h"
 
-uniform sampler2D texture;
+uniform sampler2D gtexture;
 uniform vec3 fogColor;
 uniform vec3 sunPosition;
 uniform vec3 moonPosition;
@@ -16,7 +16,7 @@ varying vec4 color;
 #include "/common/math.glsl"
 
 void main() {
-   vec4 albedo = texture2D(texture, texUV) * color;
+   vec4 albedo = texture2D(gtexture, texUV) * color;
    float angleToLight = max(dot(normalizedViewPos, normalize(sunPosition)),
                             dot(normalizedViewPos, normalize(moonPosition)));
 
