@@ -49,5 +49,5 @@ void main() {
    /* DRAWBUFFERS:067 */
    gl_FragData[0] = albedo;
    gl_FragData[1] = vec4(normal, 1.0);
-   gl_FragData[2] = vec4(reflectivity * step(fogMix, 0.999), 0.0, 0.0, 1.0);
+   gl_FragData[2] = vec4(reflectivity * step(fogMix, 0.999), 0.0, 1.0, 1.0);
 }
