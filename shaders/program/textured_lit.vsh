@@ -99,7 +99,9 @@ void main() {
    gradientFogColor = getFogColor(fogMix, feetPos);
 
    #ifdef ENABLE_SHADOWS
-      diffuse = getDiffuse(lightUV.t);
-      lightColor = getLightColor(sunHeight);
+      float skyLight = clamp(lightUV.t, 0.0, 1.0);
+
+      diffuse = getDiffuse(skyLight);
+      lightColor = getLightColor(sunHeight, skyLight);
    #endif
 }
