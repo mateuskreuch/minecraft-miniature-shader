@@ -32,8 +32,12 @@ option.OVERWORLD_FOG_MIN_SLIDER=Overworld fog
 option.END_STARS_SPEED=End stars speed
 option.END_STARS_AMOUNT=End stars amount
 option.END_STARS_OPACITY=End stars opacity
+option.HAND_DYNAMIC_LIGHTING=Hand dynamic lighting
+option.HIGHLIGHT_WAXED=Highlight waxed blocks
+option.HIGHLIGHT_WAXED.comment=Holding a honeycomb highlights waxed blocks
+option.GLOWING_ORES=Glowing ores
 
-screen.LIGHTING_SCREEN=Lighting
+screen.SHADOWS_SCREEN=Shadows
 option.SHADOW_BLUENESS=Shadow blueness
 option.shadowDistance=Max shadow distance
 option.shadowMapResolution=Shadow resolution
@@ -59,8 +63,6 @@ option.SSR_MAX_STEPS=Max steps
 option.SSR_BINARY_STEPS=Max refining steps
 option.SSR_STEP_SIZE=Step size
 
-screen.GIMMICKS_SCREEN=Gimmicks
-option.HAND_DYNAMIC_LIGHTING=Hand dynamic lighting
-option.HIGHLIGHT_WAXED=Highlight waxed blocks
-option.HIGHLIGHT_WAXED.comment=Holding a honeycomb highlights waxed blocks
-option.GLOWING_ORES=Glowing ores
+screen.COMPATIBILITY_SCREEN=Compatibility
+option.ENABLE_SKY=Enable sky §e[?]
+option.ENABLE_SKY.comment=Disable if you are using a sky resource pack

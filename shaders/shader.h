@@ -47,6 +47,7 @@ const float sunPathRotation = 0.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.0 
 #define GLOWING_ORES
 #define HIGHLIGHT_WAXED
 #define SHADOW_ENTITY 0 //[-1 0 1]
+#define ENABLE_SKY
 
 #ifdef OVERWORLD
    #define ENABLE_SHADOWS
@@ -58,6 +59,8 @@ const float sunPathRotation = 0.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.0 
 
 // optifine needs these to show on menu
 #ifdef ENABLE_FOG
+#endif
+#ifdef ENABLE_SKY
 #endif
 #ifdef FLAT_LIGHTING
 #endif
