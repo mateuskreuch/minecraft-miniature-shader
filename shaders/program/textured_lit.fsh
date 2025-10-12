@@ -14,7 +14,12 @@ varying vec2 texUV;
 varying vec3 feetPos;
 varying vec3 gradientFogColor;
 varying vec4 ambient;
-varying vec4 color;
+
+#ifdef GBUFFERS_TERRAIN
+   varying vec4 color;
+#else
+   flat varying vec4 color;
+#endif
 
 #ifdef ENABLE_BLOCK_REFLECTIONS
    flat varying vec3 blockReflectivity;
