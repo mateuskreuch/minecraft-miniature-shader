@@ -24,6 +24,10 @@ varying vec4 color;
 #include "/common/getTorchColor.fsh"
 
 void main() {
+   if (fogMix > 0.999) {
+      discard;
+   }
+
    vec4 albedo  = texture2D(gtexture, texUV);
    vec4 ambient = ambient;
    vec4 color   = color;
@@ -49,5 +53,5 @@ void main() {
    /* DRAWBUFFERS:067 */
    gl_FragData[0] = albedo;
    gl_FragData[1] = vec4(normal, 1.0);
-   gl_FragData[2] = vec4(reflectivity * step(fogMix, 0.999), 0.0, 1.0, 1.0);
+   gl_FragData[2] = vec4(reflectivity * step(fogMix, 0.999), 0.003, 0.5, 1.0);
 }
