@@ -2,6 +2,7 @@
 
 #include "/shader.h"
 
+uniform vec3 isEyeInWater;
 uniform vec3 sunPosition;
 
 varying float fogMix;
