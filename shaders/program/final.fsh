@@ -19,7 +19,7 @@ void main() {
    float reflectivity = reflectivityAndRoughness.x;
    float roughness = reflectivityAndRoughness.y;
 
-   if (reflectivity > MIN_REFLECTIVITY && reflectivityAndRoughness.z > 0.99) {
+   if (reflectivity > MIN_REFLECTIVITY && abs(reflectivityAndRoughness.z - 0.5) < 0.01) {
       // the normal doesn't come premultiplied by the normal matrix to
       // avoid the modelview transformations when view bobbing is on
       // which causes severe artifacts when moving
