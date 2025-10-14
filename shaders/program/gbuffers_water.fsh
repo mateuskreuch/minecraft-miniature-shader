@@ -43,6 +43,10 @@ void main() {
 
       WATER_BUFFER.ba = min(WATER_BUFFER.ba, vec2(max(WATER_BUFFER.r, WATER_BUFFER.g)*WATER_B, WATER_A));
    }
+   else {
+      ambient.rgb *= color.a;
+      color.a = 1.0;
+   }
 
    ambient.rgb += 0.5*getTorchColor(torchStrength, ambient.rgb, feetPos);
 
