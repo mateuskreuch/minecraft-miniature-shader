@@ -1,3 +1,5 @@
+#define SSR_BINARY_Z_CUTOFF 16.0
+
 float getReflectionVignette(vec2 uv) {
    uv.y = min(uv.y, 1.0 - uv.y);
    uv.x *= 1.0 - uv.x;
@@ -36,21 +38,22 @@ vec4 getReflectionColor(float depth, vec3 normal, vec3 viewPos) {
          vec3 a = oldPos;
          vec3 b = curPos;
 
-         for (int j = 0; j < SSR_BINARY_STEPS; j++) {
-            vec3 mid = (a + b) * 0.5;
+         if (diffZ > -SSR_BINARY_Z_CUTOFF) {
+            for (int j = 0; j < SSR_BINARY_STEPS; j++) {
+               curPos = (a + b) * 0.5;
+               curUV = view2screen(curPos).st;
+               sceneDepth = texture2D(depthtex0, curUV).x;
+               sceneZ = screen2view(curUV, sceneDepth).z;
 
-            curUV = view2screen(mid).st;
-            sceneDepth = texture2D(depthtex0, curUV).x;
-            sceneZ = screen2view(curUV, sceneDepth).z;
-
-            if (sceneDepth + 0.001 <= depth) return vec4(0.0);
-
-            if (-mid.z < -sceneZ) { a = mid; }
-            else                  { b = mid; }
+               if (-curPos.z < -sceneZ) { a = curPos; }
+               else                     { b = curPos; }
+            }
          }
 
-         return vec4(texture2D(colortex0, curUV).rgb,
-                     getReflectionVignette(curUV) * fresnel);
+         return sceneDepth + 0.0001 <= depth
+               ? vec4(0.0)
+               : vec4(texture2D(colortex0, curUV).rgb,
+                      getReflectionVignette(curUV) * fresnel);
       }
 
       oldPos = curPos;
