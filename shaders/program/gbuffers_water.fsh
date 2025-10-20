@@ -48,7 +48,7 @@ void main() {
       color.a = 1.0;
    }
 
-   ambient.rgb += 0.5*getTorchColor(torchStrength, ambient.rgb, feetPos);
+   ambient.rgb += getTorchColor(torchStrength, ambient.rgb, feetPos);
 
    albedo *= color * ambient;
 
