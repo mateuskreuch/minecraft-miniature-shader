@@ -2,6 +2,10 @@
 
 attribute vec4 mc_Entity;
 
+#ifdef IRIS_FEATURE_BLOCK_EMISSION_ATTRIBUTE
+   attribute vec4 at_midBlock;
+#endif
+
 uniform float rainStrength;
 uniform float screenBrightness;
 uniform int isEyeInWater;
@@ -9,7 +13,7 @@ uniform int worldTime;
 uniform sampler2D lightmap;
 uniform vec3 sunPosition;
 
-flat varying float isLava;
+flat varying float isLightSource;
 varying float fogMix;
 varying float torchStrength;
 varying vec2 lightUV;
@@ -67,7 +71,12 @@ void main() {
    texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    ambient = getAmbientColor(sunHeight);
-   isLava  = float(mc_Entity.x == 10068.0);
+
+   #ifdef IRIS_FEATURE_BLOCK_EMISSION_ATTRIBUTE
+      isLightSource = float(at_midBlock.w > 1.5);
+   #else
+      isLightSource = float(mc_Entity.x == 10068.0 || mc_Entity.x == 10072.0);
+   #endif
 
    #ifdef ENABLE_BLOCK_REFLECTIONS
 
@@ -76,7 +85,7 @@ void main() {
 
    #endif
 
-   if (isLava > 0.9) {
+   if (mc_Entity.x == 10068.0) { // lava
       color.rgb = mix(vec3(0.8, 0.5, 0.3), vec3(1.0), rescale(color.rgb, vec3(0.54), vec3(0.9)));
    }
 
