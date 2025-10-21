@@ -50,6 +50,10 @@ varying vec4 ambient;
 #endif
 
 void main() {
+   if (fogMix > 0.999) {
+      discard;
+   }
+
    vec4 albedo  = texture2D(gtexture, texUV);
    vec4 ambient = ambient;
 
@@ -110,7 +114,7 @@ void main() {
       float reflectivity = max(0.0, (albedoLuma - blockReflectivity.y) * blockReflectivity.x);
 
       gl_FragData[1] = vec4(normal, 1.0);
-      gl_FragData[2] = vec4(reflectivity * step(fogMix, 0.999), blockReflectivity.z, 0.5, 1.0);
+      gl_FragData[2] = vec4(reflectivity, blockReflectivity.z, 0.5, 1.0);
    #else
       gl_FragData[1] = vec4(vec3(0.0), 1.0);
       gl_FragData[2] = vec4(vec3(0.0), 1.0);
