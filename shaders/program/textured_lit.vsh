@@ -13,7 +13,7 @@ uniform int worldTime;
 uniform sampler2D lightmap;
 uniform vec3 sunPosition;
 
-flat varying float isLightSource;
+flat varying float lightSourceLevel;
 varying float fogMix;
 varying float torchStrength;
 varying vec2 lightUV;
@@ -73,9 +73,9 @@ void main() {
    ambient = getAmbientColor(sunHeight);
 
    #ifdef IRIS_FEATURE_BLOCK_EMISSION_ATTRIBUTE
-      isLightSource = float(at_midBlock.w > 1.5);
+      lightSourceLevel = rescale(at_midBlock.w, 1.0, 15.0);
    #else
-      isLightSource = float(mc_Entity.x == 10068.0 || mc_Entity.x == 10072.0);
+      lightSourceLevel = float(mc_Entity.x == 10068.0 || mc_Entity.x == 10072.0);
    #endif
 
    #ifdef ENABLE_BLOCK_REFLECTIONS

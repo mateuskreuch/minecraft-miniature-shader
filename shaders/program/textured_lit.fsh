@@ -6,7 +6,7 @@ uniform ivec2 eyeBrightnessSmooth;
 uniform sampler2D gtexture;
 uniform vec4 entityColor;
 
-flat varying float isLightSource;
+flat varying float lightSourceLevel;
 varying float fogMix;
 varying float torchStrength;
 varying vec2 lightUV;
@@ -79,7 +79,7 @@ void main() {
    float albedoLuma = luma(albedo.rgb);
 
    #ifdef ENABLE_SHADOWS
-      float lightStrength = max(0.75*isLightSource, getLightStrength(feetPos));
+      float lightStrength = max(0.75*lightSourceLevel, getLightStrength(feetPos));
       vec3 shadowColor = vec3(1.0 - SHADOW_DARKNESS);
       shadowColor.g += 0.3333*SHADOW_BLUENESS;
       shadowColor.b += SHADOW_BLUENESS;
@@ -96,8 +96,8 @@ void main() {
    #endif
 
    ambient.rgb += getTorchColor(torchStrength, ambient.rgb, feetPos);
-   ambient.rgb *= 1.0 + 0.5*isLightSource * pow3(albedoLuma);
-   ambient.rgb = redistribute(ambient.rgb);
+
+   ambient.rgb = mix(ambient.rgb, vec3(luma(ambient.rgb)), 0.5*lightSourceLevel);
 
    #ifdef GBUFFERS_TERRAIN
       albedo *= color.a;
