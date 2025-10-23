@@ -91,15 +91,3 @@ vec3 sphericalDecode(vec2 e) {
 
    return vec3(cos(yaw) * cy, sin(yaw) * cy, sin(pitch));
 }
-
-// (1.6, 1.0, 0.4) -> (1.0, 1.0, 1.0)
-// (1.6, 0.5, 0.5) -> (1.0, 0.8, 0.8)
-vec3 redistribute(vec3 v) {
-   float excess = dot(max(v - 1.0, 0.0), vec3(1.0));
-   vec3 base = min(v, 1.0);
-   vec3 capacity = 1.0 - base;
-   float total_capacity = dot(capacity, vec3(1.0));
-   float fill_ratio = clamp(excess / (total_capacity + 1e-6), 0.0, 1.0);
-
-   return base + capacity * fill_ratio;
-}
