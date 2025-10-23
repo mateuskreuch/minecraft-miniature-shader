@@ -75,6 +75,10 @@ float pow3(float x) {
    return x*x*x;
 }
 
+float slopeTo1(float x, float m) {
+   return max(0.0, x*m - (m - 1.0));
+}
+
 vec2 sphericalEncode(vec3 n) {
    float yaw   = atan(n.y, n.x);
    float pitch = asin(clamp(n.z, -1.0, 1.0));

@@ -3,7 +3,7 @@ vec3 getTorchColor(float torchStrength, vec3 ambient, vec3 feetPos) {
 
       float strength = float(heldBlockLightValue);
 
-      strength = max(torchStrength, min(1.0, strength / pow2(length(feetPos) + 1.5)));
+      strength = max(torchStrength, rescale(strength - SQRT_2 * length(feetPos), 0.0, 15.0));
 
    #else
 
@@ -14,5 +14,9 @@ vec3 getTorchColor(float torchStrength, vec3 ambient, vec3 feetPos) {
    strength = mix(strength*strength, smoothe(strength), screenBrightness);
    strength = mix(strength*strength, strength, max(1.0 - screenBrightness, eyeBrightnessSmooth.y/240.0));
 
-   return mix(TORCH_OUTER_COLOR, TORCH_COLOR, strength) * strength * max(0.0, 1.0 - luma(ambient));
+   return max(0.0, 1.0 - luma(ambient)) * strength * mix(
+      mix(TORCH_OUTER_COLOR, TORCH_MIDDLE_COLOR, strength),
+      TORCH_INNER_COLOR,
+      slopeTo1(strength, 8.0)
+   );
 }
