@@ -80,24 +80,13 @@ void main() {
 
    #ifdef ENABLE_SHADOWS
       float lightStrength = max(0.75*lightSourceLevel, getLightStrength(feetPos));
-      vec3 shadowColor = vec3(1.0 - SHADOW_DARKNESS);
-      shadowColor.g += 0.3333*SHADOW_BLUENESS;
-      shadowColor.b += SHADOW_BLUENESS;
-
-      ambient.rgb = mix(
-         ambient.rgb * shadowColor,
-         ambient.rgb,
-         lightStrength
-      );
-
       float lightBrightness = max(0.0, LIGHT_BRIGHTNESS - 0.5*pow3(albedoLuma));
 
+      ambient.rgb *= mix(SHADOW_COLOR, vec3(1.0), lightStrength);
       ambient.rgb *= 0.75 + (lightBrightness * lightStrength) * lightColor;
    #endif
 
    ambient.rgb += getTorchColor(torchStrength, ambient.rgb, feetPos);
-
-   ambient.rgb = mix(ambient.rgb, vec3(luma(ambient.rgb)), 0.5*lightSourceLevel);
 
    #ifdef GBUFFERS_TERRAIN
       albedo *= color.a;
