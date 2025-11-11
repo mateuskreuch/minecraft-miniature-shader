@@ -3,6 +3,7 @@
 uniform float far;
 uniform int isEyeInWater;
 uniform sampler2D colortex0;
+uniform sampler2D colortex5;
 uniform sampler2D colortex6;
 uniform sampler2D colortex7;
 uniform sampler2D depthtex0;
@@ -53,6 +54,11 @@ void main() {
          reflectionColor.a * reflectivity * 0.1*REFLECTIONS
       );
    }
+   
+   #ifdef ENABLE_BLOOM
+      vec3 bloom = texture2D(colortex5, texUV).rgb;
+      color.rgb += bloom;
+   #endif
 
    gl_FragData[0] = color;
 }
