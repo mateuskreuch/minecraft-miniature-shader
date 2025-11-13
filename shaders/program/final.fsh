@@ -6,6 +6,11 @@ uniform sampler2D colortex0;
 uniform sampler2D colortex5;
 uniform sampler2D colortex6;
 uniform sampler2D colortex7;
+
+uniform sampler2D colortex10;
+uniform sampler2D colortex11;
+uniform sampler2D colortex12;
+uniform sampler2D colortex13;
 uniform sampler2D depthtex0;
 
 varying vec2 texUV;
@@ -56,7 +61,12 @@ void main() {
    }
    
    #ifdef ENABLE_BLOOM
-      vec3 bloom = texture2D(colortex5, texUV).rgb;
+      vec3 bloom = // Different weights for different mipmaps
+         texture2D(colortex10, texUV).rgb * 0.75 +
+         texture2D(colortex11, texUV).rgb * 1.0 +
+         texture2D(colortex12, texUV).rgb * 1.5 +
+         texture2D(colortex13, texUV).rgb * 2.0;
+      bloom *= BLOOM_INTENSITY;
       color.rgb += bloom;
    #endif
 

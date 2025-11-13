@@ -15,6 +15,6 @@ void main() {
       vec3 bright = vec3(0.0);
    #endif
 
-   /* RENDERTARGETS: 3 */
+   /* RENDERTARGETS: 5 */
    gl_FragData[0] = vec4(bright, 1.0);
 }
