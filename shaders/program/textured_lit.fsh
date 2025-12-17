@@ -89,7 +89,7 @@ void main() {
    ambient.rgb += getTorchColor(torchStrength, ambient.rgb, feetPos);
 
    #ifdef GBUFFERS_TERRAIN
-      albedo *= color.a;
+      albedo.rgb *= color.a;
    #endif
 
    albedo *= ambient;
