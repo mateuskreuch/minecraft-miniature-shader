@@ -28,7 +28,7 @@ varying vec4 ambient;
    flat varying vec4 color;
 #endif
 
-#ifdef ENABLE_BLOCK_REFLECTIONS
+#if BLOCK_REFLECTIONS > 0
    flat varying vec3 blockReflectivity;
    varying vec3 normal;
 
@@ -78,7 +78,7 @@ void main() {
       lightSourceLevel = float(mc_Entity.x == 10068.0 || mc_Entity.x == 10072.0);
    #endif
 
-   #ifdef ENABLE_BLOCK_REFLECTIONS
+   #if BLOCK_REFLECTIONS > 0
 
       normal = ndc2screen(gl_Normal);
       blockReflectivity = BLOCK_REFLECTIVITY[int(max(0.0, mc_Entity.x - 20000.0))];

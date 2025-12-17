@@ -63,8 +63,8 @@ value.SHADOW_ENTITY.1=§eAll
 
 screen.REFLECTIONS_SCREEN=Reflections
 option.REFLECTIONS=Reflection opacity
-option.ENABLE_BLOCK_REFLECTIONS=Enable block reflections §e[?]
-option.ENABLE_BLOCK_REFLECTIONS.comment=Adds reflections to blocks such as stone bricks, quartz, etc.
+option.BLOCK_REFLECTIONS=Block reflection opacity §e[?]
+option.BLOCK_REFLECTIONS.comment=Adds reflections to blocks such as stone bricks, quartz, etc.
 option.SSR_MAX_STEPS=Maximum steps
 option.SSR_BINARY_STEPS=Maximum refining steps
 option.SSR_STEP_SIZE=Step size

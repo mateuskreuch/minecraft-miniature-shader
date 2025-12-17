@@ -21,7 +21,7 @@ varying vec4 ambient;
    flat varying vec4 color;
 #endif
 
-#ifdef ENABLE_BLOCK_REFLECTIONS
+#if BLOCK_REFLECTIONS > 0
    flat varying vec3 blockReflectivity;
    varying vec3 normal;
 #endif
@@ -99,8 +99,8 @@ void main() {
    /* DRAWBUFFERS:067 */
    gl_FragData[0] = albedo;
 
-   #ifdef ENABLE_BLOCK_REFLECTIONS
-      float reflectivity = max(0.0, (albedoLuma - blockReflectivity.y) * blockReflectivity.x);
+   #if BLOCK_REFLECTIONS > 0
+      float reflectivity = max(0.0, (albedoLuma - blockReflectivity.y) * blockReflectivity.x * 0.2*BLOCK_REFLECTIONS);
 
       gl_FragData[1] = vec4(normal, 1.0);
       gl_FragData[2] = vec4(reflectivity, blockReflectivity.z, 0.5, 1.0);
