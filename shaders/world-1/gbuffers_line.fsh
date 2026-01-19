@@ -1,5 +1,7 @@
 #if MC_VERSION >= 1800
-#version 460 core
+#version 120
+
+#define THE_NETHER
 
 #include "/program/line.fsh"
 #endif
