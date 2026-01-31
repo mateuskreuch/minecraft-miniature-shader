@@ -2,4 +2,4 @@
 
 #define THE_NETHER
 
-#include "/program/gbuffers_basic.fsh"
+#include "/program/basic.fsh"

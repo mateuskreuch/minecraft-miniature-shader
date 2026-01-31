@@ -3,5 +3,5 @@
 
 #define OVERWORLD
 
-#include "/program/gbuffers_skybasic.fsh"
+#include "/program/skybasic.fsh"
 #endif

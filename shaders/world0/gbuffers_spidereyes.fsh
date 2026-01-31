@@ -2,4 +2,4 @@
 
 #define OVERWORLD
 
-#include "/program/gbuffers_basic.fsh"
+#include "/program/basic.fsh"

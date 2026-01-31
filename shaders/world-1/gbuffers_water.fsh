@@ -2,4 +2,4 @@
 
 #define THE_NETHER
 
-#include "/program/gbuffers_water.fsh"
+#include "/program/translucent.fsh"

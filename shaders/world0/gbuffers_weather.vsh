@@ -2,4 +2,4 @@
 
 #define OVERWORLD
 
-#include "/program/gbuffers_weather.vsh"
+#include "/program/weather.vsh"

@@ -3,5 +3,5 @@
 
 #define OVERWORLD
 
-#include "/program/gbuffers_clouds.fsh"
+#include "/program/clouds.fsh"
 #endif

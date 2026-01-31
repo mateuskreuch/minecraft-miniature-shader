@@ -2,4 +2,4 @@
 
 #define THE_END
 
-#include "/program/gbuffers_water.fsh"
+#include "/program/translucent.fsh"

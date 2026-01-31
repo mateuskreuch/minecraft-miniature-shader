@@ -2,4 +2,4 @@
 
 #define THE_END
 
-#include "/program/gbuffers_water.vsh"
+#include "/program/translucent.vsh"
