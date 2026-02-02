@@ -10,17 +10,15 @@ uniform float rainStrength;
 uniform float screenBrightness;
 uniform int isEyeInWater;
 uniform int worldTime;
-uniform sampler2D lightmap;
 uniform vec3 sunPosition;
 
 flat varying float lightSourceLevel;
 varying float fogMix;
-varying float torchStrength;
+varying float sunHeight;
 varying vec2 lightUV;
 varying vec2 texUV;
 varying vec3 feetPos;
 varying vec3 gradientFogColor;
-varying vec4 ambient;
 
 #ifdef GBUFFERS_TERRAIN
    varying vec4 color;
@@ -48,9 +46,7 @@ varying vec4 ambient;
 #include "/common/transformations.glsl"
 #include "/common/getFogMix.vsh"
 #include "/common/getFogColor.vsh"
-#include "/common/getAmbientColor.vsh"
 #include "/common/getViewPosition.vsh"
-#include "/common/getTorchStrength.vsh"
 
 #ifdef ENABLE_SHADOWS
    uniform vec3 shadowLightPosition;
@@ -65,12 +61,10 @@ varying vec4 ambient;
 void main() {
    gl_Position = ftransform();
 
-   float sunHeight = view2feet(sunPosition).y;
-
-   color   = gl_Color;
-   texUV   = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
-   lightUV = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
-   ambient = getAmbientColor(sunHeight);
+   sunHeight = view2feet(sunPosition).y;
+   color     = gl_Color;
+   texUV     = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
+   lightUV   = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
 
    #ifdef IRIS_FEATURE_BLOCK_EMISSION_ATTRIBUTE
       lightSourceLevel = rescale(at_midBlock.w, 1.0, 15.0);
@@ -89,12 +83,6 @@ void main() {
       color.rgb = mix(vec3(0.8, 0.5, 0.3), vec3(1.0), rescale(color.rgb, vec3(0.54), vec3(0.9)));
    }
 
-   #ifdef THE_END
-
-      ambient.rgb *= END_AMBIENT + 0.02*(gl_NormalMatrix * gl_Normal).xyz;
-
-   #endif
-
    #ifdef GLOWING_ORES
 
       isOre = float(mc_Entity.x == 10014.0);
@@ -107,7 +95,6 @@ void main() {
 
    #endif
 
-   torchStrength = getTorchStrength(lightUV.s);
    feetPos = view2feet(getViewPosition());
    fogMix = getFogMix(feetPos);
    gradientFogColor = getFogColor(fogMix, feetPos);

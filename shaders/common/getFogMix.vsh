@@ -12,9 +12,11 @@ float getFogMix(vec3 feetPos) {
    float len = fogShape == 1 ? max(length(feetPos.xz), abs(feetPos.y)) : length(feetPos);
 
    #if MC_VERSION >= 11700
-      if (fogEnd < far) {
-         return rescale(len, min(fogStart, fogEnd), fogEnd);
-      }
+      #ifndef MOD_COLORWHEEL
+         if (fogEnd < far) {
+            return rescale(len, min(fogStart, fogEnd), fogEnd);
+         }
+      #endif
 
       #if defined GBUFFERS_SKYBASIC
          return 0.0;

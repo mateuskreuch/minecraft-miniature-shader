@@ -1,5 +1,5 @@
-vec4 getAmbientColor(float sunHeight) {
-   vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, lightUV.t));
+vec4 getAmbientColor(float skyLight, float sunHeight) {
+   vec4 ambient = texture2D(lightmap, vec2(AMBIENT_UV.s, skyLight));
 
    float x = ambient.g;
    float final = (((0.8494 * x + 0.9687) * x - 5.238) * x + 3.711) * x - 0.2864;

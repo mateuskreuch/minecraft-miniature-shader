@@ -12,7 +12,6 @@ uniform vec3 sunPosition;
 
 varying float fogMix;
 varying float reflectivity;
-varying float torchStrength;
 varying float waterTexStrength;
 varying vec2 lightUV;
 varying vec2 texUV;
@@ -28,7 +27,6 @@ varying vec4 color;
 #include "/common/getFogColor.vsh"
 #include "/common/getAmbientColor.vsh"
 #include "/common/getViewPosition.vsh"
-#include "/common/getTorchStrength.vsh"
 #include "/common/getWaterTextureStrength.vsh"
 #include "/common/getWaterWave.vsh"
 
@@ -41,10 +39,9 @@ void main() {
    texUV        = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV      = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
    normal       = gl_Normal;
-   ambient      = getAmbientColor(sunHeight);
+   ambient      = getAmbientColor(lightUV.t, sunHeight);
    reflectivity = GLASS_REFLECTIVITY;
 
-   torchStrength = getTorchStrength(lightUV.s);
    feetPos = view2feet(getViewPosition());
    fogMix = getFogMix(feetPos);
    gradientFogColor = getFogColor(fogMix, feetPos);

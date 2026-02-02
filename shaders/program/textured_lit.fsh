@@ -4,16 +4,16 @@ uniform float screenBrightness;
 uniform int entityId;
 uniform ivec2 eyeBrightnessSmooth;
 uniform sampler2D gtexture;
+uniform sampler2D lightmap;
 uniform vec4 entityColor;
 
 flat varying float lightSourceLevel;
 varying float fogMix;
-varying float torchStrength;
+varying float sunHeight;
 varying vec2 lightUV;
 varying vec2 texUV;
 varying vec3 feetPos;
 varying vec3 gradientFogColor;
-varying vec4 ambient;
 
 #ifdef GBUFFERS_TERRAIN
    varying vec4 color;
@@ -36,6 +36,7 @@ varying vec4 ambient;
 
 #include "/common/math.glsl"
 #include "/common/getTorchColor.fsh"
+#include "/common/getAmbientColor.vsh"
 
 #ifdef ENABLE_SHADOWS
    uniform mat4 shadowModelView;
@@ -54,10 +55,18 @@ void main() {
       discard;
    }
 
-   vec4 albedo  = texture2D(gtexture, texUV);
-   vec4 ambient = ambient;
-   vec4 color   = color;
+   vec4 albedo = texture2D(gtexture, texUV);
+   vec4 color  = color;
    float ambientOcclusion = 1.0;
+
+   #ifdef MOD_COLORWHEEL
+      vec2 lightUV;
+      vec4 entityColor;
+
+      clrwl_computeFragment(albedo, albedo, lightUV, ambientOcclusion, entityColor);
+   #endif
+
+   vec4 ambient = getAmbientColor(lightUV.t, sunHeight);
 
    #ifdef GBUFFERS_TERRAIN
       ambientOcclusion = color.a;
@@ -82,14 +91,16 @@ void main() {
    float albedoLuma = luma(albedo.rgb);
 
    #ifdef ENABLE_SHADOWS
-      float lightStrength = max(0.75*lightSourceLevel, getLightStrength(feetPos));
+      float lightStrength = getLightStrength(diffuse, lightUV.t, feetPos);
       float lightBrightness = max(0.0, LIGHT_BRIGHTNESS - 0.5*pow3(albedoLuma));
+
+      lightStrength = max(lightStrength, 0.75*lightSourceLevel);
 
       ambient.rgb *= mix(SHADOW_COLOR, vec3(1.0), lightStrength);
       ambient.rgb *= 0.75 + (lightBrightness * lightStrength) * lightColor;
    #endif
 
-   ambient.rgb += getTorchColor(torchStrength, ambient.rgb, feetPos);
+   ambient.rgb += getTorchColor(lightUV.s, ambient.rgb, feetPos);
 
    albedo.rgb *= ambientOcclusion;
 

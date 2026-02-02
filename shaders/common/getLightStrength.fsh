@@ -1,6 +1,9 @@
 #include "/common/getShadowDistortion.glsl"
 
-float getLightStrength(vec3 feetPos) {
+float getLightStrength(float diffuse, float skyLight, vec3 feetPos) {
+   // reduce diffuse with sky light
+   diffuse *= rescale(skyLight, 0.3137, 0.6235);
+
    #ifdef GBUFFERS_HAND
       return 0.5*diffuse;
    #endif

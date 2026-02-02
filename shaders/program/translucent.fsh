@@ -6,7 +6,6 @@ uniform sampler2D gtexture;
 
 varying float fogMix;
 varying float reflectivity;
-varying float torchStrength;
 varying float waterTexStrength;
 varying vec2 lightUV;
 varying vec2 texUV;
@@ -44,7 +43,7 @@ void main() {
       WATER_BUFFER.ba = min(WATER_BUFFER.ba, vec2(max(WATER_BUFFER.r, WATER_BUFFER.g)*WATER_B, WATER_A));
    }
 
-   ambient.rgb += getTorchColor(torchStrength, ambient.rgb, feetPos);
+   ambient.rgb += getTorchColor(lightUV.s, ambient.rgb, feetPos);
 
    albedo *= color * ambient;
 
