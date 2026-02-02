@@ -56,6 +56,13 @@ void main() {
 
    vec4 albedo  = texture2D(gtexture, texUV);
    vec4 ambient = ambient;
+   vec4 color   = color;
+   float ambientOcclusion = 1.0;
+
+   #ifdef GBUFFERS_TERRAIN
+      ambientOcclusion = color.a;
+      color.a = 1.0;
+   #endif
 
    #ifdef GLOWING_ORES
       ambient.rgb = mix(
@@ -65,11 +72,7 @@ void main() {
       );
    #endif
 
-   #ifdef GBUFFERS_TERRAIN
-      albedo.rgb *= color.rgb;
-   #else
-      albedo *= color;
-   #endif
+   albedo *= color;
 
    // render thunder
    albedo.a = entityId == 11000.0 ? 0.15 : albedo.a;
@@ -88,9 +91,7 @@ void main() {
 
    ambient.rgb += getTorchColor(torchStrength, ambient.rgb, feetPos);
 
-   #ifdef GBUFFERS_TERRAIN
-      albedo.rgb *= color.a;
-   #endif
+   albedo.rgb *= ambientOcclusion;
 
    albedo *= ambient;
 
