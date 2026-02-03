@@ -57,7 +57,13 @@ void main() {
 
    vec4 albedo = texture2D(gtexture, texUV);
    vec4 color  = color;
-   float ambientOcclusion = 1.0;
+
+   #ifdef GBUFFERS_TERRAIN
+      float ambientOcclusion = color.a;
+      color.a = 1.0;
+   #else
+      float ambientOcclusion = 1.0;
+   #endif
 
    #ifdef MOD_COLORWHEEL
       vec2 lightUV;
@@ -68,10 +74,6 @@ void main() {
 
    vec4 ambient = getAmbientColor(lightUV.t, sunHeight);
 
-   #ifdef GBUFFERS_TERRAIN
-      ambientOcclusion = color.a;
-      color.a = 1.0;
-   #endif
 
    #ifdef GLOWING_ORES
       ambient.rgb = mix(
