@@ -74,7 +74,6 @@ void main() {
 
    vec4 ambient = getAmbientColor(lightUV.t, sunHeight);
 
-
    #ifdef GLOWING_ORES
       ambient.rgb = mix(
          ambient.rgb,
