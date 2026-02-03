@@ -21,6 +21,10 @@ varying vec3 gradientFogColor;
    flat varying vec4 color;
 #endif
 
+#ifdef THE_END
+   varying vec3 endTint;
+#endif
+
 #if BLOCK_REFLECTIONS > 0
    flat varying vec3 blockReflectivity;
    varying vec3 normal;
@@ -73,6 +77,10 @@ void main() {
    #endif
 
    vec4 ambient = getAmbientColor(lightUV.t, sunHeight);
+
+   #ifdef THE_END
+      ambient.rgb *= endTint;
+   #endif
 
    #ifdef GLOWING_ORES
       ambient.rgb = mix(

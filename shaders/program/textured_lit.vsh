@@ -12,6 +12,11 @@ uniform int isEyeInWater;
 uniform int worldTime;
 uniform vec3 sunPosition;
 
+#ifdef HIGHLIGHT_WAXED
+   uniform int heldItemId;
+   uniform int heldItemId2;
+#endif
+
 flat varying float lightSourceLevel;
 varying float fogMix;
 varying float sunHeight;
@@ -26,6 +31,10 @@ varying vec3 gradientFogColor;
    flat varying vec4 color;
 #endif
 
+#ifdef THE_END
+   varying vec3 endTint;
+#endif
+
 #if BLOCK_REFLECTIONS > 0
    flat varying vec3 blockReflectivity;
    varying vec3 normal;
@@ -35,11 +44,6 @@ varying vec3 gradientFogColor;
 
 #ifdef GLOWING_ORES
    flat varying float isOre;
-#endif
-
-#ifdef HIGHLIGHT_WAXED
-   uniform int heldItemId;
-   uniform int heldItemId2;
 #endif
 
 #include "/common/math.glsl"
@@ -72,11 +76,13 @@ void main() {
       lightSourceLevel = float(mc_Entity.x == 10068.0 || mc_Entity.x == 10072.0);
    #endif
 
-   #if BLOCK_REFLECTIONS > 0
+   #ifdef THE_END
+      endTint = END_AMBIENT + 0.02*(gl_NormalMatrix * gl_Normal).xyz;
+   #endif
 
+   #if BLOCK_REFLECTIONS > 0
       normal = ndc2screen(gl_Normal);
       blockReflectivity = BLOCK_REFLECTIVITY[int(max(0.0, mc_Entity.x - 20000.0))];
-
    #endif
 
    if (mc_Entity.x == 10068.0) { // lava
@@ -84,15 +90,11 @@ void main() {
    }
 
    #ifdef GLOWING_ORES
-
       isOre = float(mc_Entity.x == 10014.0);
-
    #endif
 
    #ifdef HIGHLIGHT_WAXED
-
       color.rgb *= (heldItemId == 20008 || heldItemId2 == 20008) && mc_Entity.x == 20008.0 ? 0.4 : 1.0;
-
    #endif
 
    feetPos = view2feet(getViewPosition());
