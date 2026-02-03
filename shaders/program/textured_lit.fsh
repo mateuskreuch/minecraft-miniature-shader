@@ -36,7 +36,7 @@ varying vec3 gradientFogColor;
 
 #include "/common/math.glsl"
 #include "/common/getTorchColor.fsh"
-#include "/common/getAmbientColor.vsh"
+#include "/common/getAmbientColor.glsl"
 
 #ifdef ENABLE_SHADOWS
    uniform mat4 shadowModelView;

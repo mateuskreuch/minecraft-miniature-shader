@@ -25,7 +25,7 @@ varying vec4 color;
 #include "/common/transformations.glsl"
 #include "/common/getFogMix.vsh"
 #include "/common/getFogColor.vsh"
-#include "/common/getAmbientColor.vsh"
+#include "/common/getAmbientColor.glsl"
 #include "/common/getViewPosition.vsh"
 #include "/common/getWaterTextureStrength.vsh"
 #include "/common/getWaterWave.vsh"
