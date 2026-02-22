@@ -59,8 +59,6 @@ const float sunPathRotation = 0.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.0 
 
 #if MC_VERSION >= 11300
    #define HAND_DYNAMIC_LIGHTING 0 //[-1 0 1]
-#else
-   #define HAND_DYNAMIC_LIGHTING -1 //[-1 1]
 #endif
 
 // optifine needs these to show on menu
