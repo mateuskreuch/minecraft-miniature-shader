@@ -15,8 +15,10 @@ varying vec3 normal;
 varying vec4 ambient;
 varying vec4 color;
 
-#ifdef HAND_DYNAMIC_LIGHTING
+#if HAND_DYNAMIC_LIGHTING == 0
    uniform int heldBlockLightValue;
+#elif HAND_DYNAMIC_LIGHTING == 1
+   #define heldBlockLightValue 14
 #endif
 
 #include "/common/math.glsl"

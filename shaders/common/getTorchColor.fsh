@@ -1,7 +1,7 @@
 vec3 getTorchColor(float torchLight, vec3 ambient, vec3 feetPos) {
    float strength = rescale(torchLight, TORCH_UV_SCALE.x, TORCH_UV_SCALE.y);
 
-   #ifdef HAND_DYNAMIC_LIGHTING
+   #if HAND_DYNAMIC_LIGHTING >= 0
 
       strength = max(strength, rescale(float(heldBlockLightValue) - SQRT_2 * length(feetPos), 0.0, 15.0));
 

@@ -34,8 +34,10 @@ varying vec3 gradientFogColor;
    flat varying float isOre;
 #endif
 
-#ifdef HAND_DYNAMIC_LIGHTING
+#if HAND_DYNAMIC_LIGHTING == 0
    uniform int heldBlockLightValue;
+#elif HAND_DYNAMIC_LIGHTING == 1
+   #define heldBlockLightValue 14
 #endif
 
 #include "/common/math.glsl"
