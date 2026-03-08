@@ -24,8 +24,12 @@ vec3 clip2screen(vec4 clip) {
    return 0.5*nvec3(clip) + 0.5;
 }
 
-vec3 view2ndc(vec3 view) {
-   return nvec3(gbufferProjection * vec4(view, 1.0));
+vec3 clip2ndc(vec4 clip) {
+   return nvec3(clip);
+}
+
+vec4 view2clip(vec3 view) {
+   return gbufferProjection * vec4(view, 1.0);
 }
 
 // eye and feet refer to player eye and player feet
@@ -65,6 +69,10 @@ vec3 screen2feet(vec2 uv, float depth) {
 
 vec3 screen2world(vec2 uv, float depth) {
    return feet2world(screen2feet(uv, depth));
+}
+
+vec3 view2ndc(vec3 view) {
+   return nvec3(view2clip(view));
 }
 
 vec3 view2screen(vec3 view) {
