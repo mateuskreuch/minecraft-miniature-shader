@@ -19,11 +19,9 @@ float getFogMix(vec3 feetPos) {
    #endif
 
    #if MC_VERSION >= 11700
-      #ifndef MOD_COLORWHEEL
-         if (fogEnd < far) {
-            return calcFogMix(feetPos, 1.0);
-         }
-      #endif
+      if (fogEnd < far) {
+         return calcFogMix(feetPos, 1.0);
+      }
 
       #if defined GBUFFERS_SKYBASIC
          return 0.0;
