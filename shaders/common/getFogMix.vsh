@@ -4,7 +4,7 @@ uniform int fogShape;
 
 float getFogMix(vec3 feetPos) {
    #ifndef ENABLE_FOG
-      if (isEyeInWater == 0) {
+      if (isEyeInWater == 0 && fogEnd >= far) {
          return 0.0;
       }
    #endif
