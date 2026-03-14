@@ -21,6 +21,10 @@ varying vec3 normal;
 varying vec4 ambient;
 varying vec4 color;
 
+#ifdef VOXY
+   varying float vanillaMix;
+#endif
+
 #include "/common/math.glsl"
 #include "/common/transformations.glsl"
 #include "/common/getFogMix.vsh"
@@ -45,6 +49,10 @@ void main() {
    feetPos = view2feet(getViewPosition());
    fogMix = getFogMix(feetPos);
    gradientFogColor = getFogColor(fogMix, feetPos);
+
+   #ifdef VOXY
+      vanillaMix = calcFogMix(feetPos, 0.3, far);
+   #endif
 
    if (mc_Entity.x == 10008.0) {
       float posRandom = random(floor(feetPos.xz) + floor(cameraPosition.xz));

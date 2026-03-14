@@ -1,7 +1,7 @@
 uniform float fogEnd, fogStart;
 uniform float near, far;
 
-float calcFogMix(vec3 feetPos, float fogStartMult) {
+float calcFogMix(vec3 feetPos, float fogStartMult, float far) {
    float len = length(feetPos);
    float cylinderLen = max(length(feetPos.xz), abs(feetPos.y));
 
@@ -12,6 +12,11 @@ float calcFogMix(vec3 feetPos, float fogStartMult) {
 }
 
 float getFogMix(vec3 feetPos) {
+   #ifdef VOXY
+      float far = 48000.0;
+      float near = 16.0;
+   #endif
+
    #ifndef ENABLE_FOG
       if (fogEnd >= far) {
          return 0.0;
@@ -20,7 +25,7 @@ float getFogMix(vec3 feetPos) {
 
    #if MC_VERSION >= 11700
       if (fogEnd < far) {
-         return calcFogMix(feetPos, 1.0);
+         return calcFogMix(feetPos, 1.0, far);
       }
 
       #if defined GBUFFERS_SKYBASIC
@@ -40,7 +45,7 @@ float getFogMix(vec3 feetPos) {
             float x = 1.0;
          #endif
 
-         return calcFogMix(feetPos, x);
+         return calcFogMix(feetPos, x, far);
       #endif
    #else
       gl_FogFragCoord = length(feetPos);

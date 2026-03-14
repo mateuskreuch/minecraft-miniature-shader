@@ -21,6 +21,10 @@ varying vec4 color;
    #define heldBlockLightValue 14
 #endif
 
+#ifdef VOXY
+   varying float vanillaMix;
+#endif
+
 #include "/common/math.glsl"
 #include "/common/getTorchColor.fsh"
 
@@ -32,6 +36,10 @@ void main() {
    vec4 albedo  = texture2D(gtexture, texUV);
    vec4 ambient = ambient;
    vec4 color   = color;
+
+   #ifdef VOXY
+      vec4 vanilla = albedo * color * ambient;
+   #endif
 
    if (reflectivity > WATER_REFLECTIVITY - 0.01) {
       #if MC_VERSION >= 11300
@@ -48,6 +56,12 @@ void main() {
    ambient.rgb += getTorchColor(lightUV.s, ambient.rgb, feetPos);
 
    albedo *= color * ambient;
+
+   #ifdef VOXY
+      float reflectivity = mix(reflectivity, 0.0, vanillaMix);
+
+      albedo = mix(albedo, vanilla, vanillaMix);
+   #endif
 
    albedo.rgb = mix(albedo.rgb, gradientFogColor, fogMix);
 
