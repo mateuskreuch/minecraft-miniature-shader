@@ -12,7 +12,7 @@ float calcFogMix(vec3 feetPos, float fogStartMult, float far) {
 }
 
 float getFogMix(vec3 feetPos) {
-   #ifdef VOXY
+   #if defined VOXY && !defined GBUFFERS_SKYBASIC && !defined GBUFFERS_CLOUDS
       float far = 48000.0;
       float near = 16.0;
    #endif
@@ -25,6 +25,7 @@ float getFogMix(vec3 feetPos) {
 
    #if MC_VERSION >= 11700
       if (fogEnd < far) {
+         // a fog effect (like blindness) is active
          return calcFogMix(feetPos, 1.0, far);
       }
 
