@@ -50,6 +50,9 @@ void main() {
    fogMix = getFogMix(feetPos);
    gradientFogColor = getFogColor(fogMix, feetPos);
 
+   ambient.rgb *= color.a;
+   color.a = 1.0;
+
    #ifdef VOXY
       vanillaMix = calcFogMix(feetPos, 0.3, far);
    #endif
@@ -67,10 +70,6 @@ void main() {
 
       reflectivity = WATER_REFLECTIVITY;
       waterTexStrength = getWaterTextureStrength(posRandom);
-   }
-   else {
-      ambient.rgb *= color.a;
-      color.a = 1.0;
    }
 
    normal = ndc2screen(normal);
