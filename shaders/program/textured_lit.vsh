@@ -97,6 +97,20 @@ void main() {
       color.rgb *= (heldItemId == 20008 || heldItemId2 == 20008) && mc_Entity.x == 20008.0 ? 0.4 : 1.0;
    #endif
 
+   bool isThin = mc_Entity.x == 10031.0 || mc_Entity.x == 10059.0
+              || mc_Entity.x == 10175.0 || mc_Entity.x == 10176.0
+              || (abs(gl_Normal.y) < 0.01 && abs(abs(gl_Normal.x) - abs(gl_Normal.z)) < 0.01);
+
+   #ifndef FLAT_LIGHTING
+      vec3 lightNormal = gl_NormalMatrix * gl_Normal;
+
+      lightNormal = isThin ? vec3(0.0, 1.0, 0.0) : view2feet(lightNormal);
+
+      color.rgb *= min(1.0, lightNormal.x * lightNormal.x * 0.6
+                          + lightNormal.y * lightNormal.y * 0.25 * (3.0 + lightNormal.y)
+                          + lightNormal.z * lightNormal.z * 0.8);
+   #endif
+
    feetPos = view2feet(getViewPosition());
    fogMix = getFogMix(feetPos);
    gradientFogColor = getFogColor(fogMix, feetPos);
@@ -104,7 +118,7 @@ void main() {
    #ifdef ENABLE_SHADOWS
       float skyLight = clamp(lightUV.t, 0.0, 1.0);
 
-      diffuse = getDiffuse(skyLight);
+      diffuse = getDiffuse(skyLight, isThin);
       lightColor = getLightColor(sunHeight, skyLight);
    #endif
 }

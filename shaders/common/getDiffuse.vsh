@@ -1,8 +1,4 @@
-float getDiffuse(float skyLight) {
-  bool isThin = mc_Entity.x == 10031.0 || mc_Entity.x == 10059.0
-             || mc_Entity.x == 10175.0 || mc_Entity.x == 10176.0
-             || (abs(gl_Normal.y) < 0.01 && abs(abs(gl_Normal.x) - abs(gl_Normal.z)) < 0.01);
-
+float getDiffuse(float skyLight, bool isThin) {
         //  reduce under water
   return (isEyeInWater == 0 ? 1.0 : 0.5)
         //  reduce with fog
