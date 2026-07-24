@@ -113,6 +113,7 @@ void main() {
 
    feetPos = view2feet(getViewPosition());
    fogMix = getFogMix(feetPos);
+   fogMix = mix(fogMix, fogMix*fogMix, lightSourceLevel);
    gradientFogColor = getFogColor(fogMix, feetPos);
 
    #ifdef ENABLE_SHADOWS
