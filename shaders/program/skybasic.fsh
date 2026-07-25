@@ -5,27 +5,21 @@
 uniform float viewHeight;
 uniform float viewWidth;
 uniform vec3 fogColor;
-uniform vec3 skyColor;
 
 varying float fogMix;
-varying vec4 starColor;
+varying vec4 color;
 
 #include "/common/math.glsl"
 #include "/common/transformations.glsl"
 
 void main() {
-	vec3 color;
+	vec4 color = color;
 
-	if (starColor.a > 0.9) {
-		color = starColor.rgb;
-	}
-	else {
-      vec2 uv = gl_FragCoord.xy / vec2(viewWidth, viewHeight);
-      vec3 screenPos = normalize(screen2view(uv, 1.0));
-      float upDot = dot(screenPos, gbufferModelView[1].xyz);
+	vec2 uv = gl_FragCoord.xy / vec2(viewWidth, viewHeight);
+	vec3 screenPos = normalize(screen2view(uv, 1.0));
+	float upDot = dot(screenPos, gbufferModelView[1].xyz);
 
-		color = mix(skyColor, fogColor, max(fogMix, fogify(max(upDot, 0.0), 0.05)));
-	}
+	color.rgb = mix(color.rgb, fogColor, max(fogMix, fogify(max(upDot, 0.0), 0.05)));
 
-   gl_FragData[0] = vec4(color, 1.0);
+   gl_FragData[0] = color;
 }
