@@ -43,7 +43,8 @@ void main() {
 
    if (reflectivity > WATER_REFLECTIVITY - 0.01) {
       #if MC_VERSION >= 11300
-         albedo.rgb = vec3(WATER_BRIGHTNESS * max(vec3(1.0), contrast(albedo.rgb, 3.2*waterTexStrength)));
+         albedo.rgb = rescale(albedo.rgb * waterTexStrength, vec3(WATER_GLINT_CUTOFF), vec3(1.0));
+         albedo.rgb = vec3(WATER_BRIGHTNESS) + WATER_GLINT_BRIGHTNESS * albedo.rgb;
 
          #define WATER_BUFFER color
       #else

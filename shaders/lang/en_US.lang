@@ -9,8 +9,10 @@ screen.WATER_SCREEN=Water
 option.WATER_BRIGHTNESS=Water brightness
 option.WATER_B=Water blueness
 option.WATER_A=Water opacity
-option.WATER_MIN_TEXTURE=Water texture strength §e[?]
-option.WATER_MIN_TEXTURE.comment=Determines how much texture the water retains; moving water still keeps all texture
+option.WATER_MIN_GLINT=Water glint strength §e[?]
+option.WATER_MIN_GLINT.comment=Determines how much texture the water retains; moving water still keeps all texture
+option.WATER_GLINT_BRIGHTNESS=Water glint brightness
+option.WATER_GLINT_CUTOFF=Water glint cutoff
 option.WATER_WAVE_SIZE=Wave size
 option.WATER_WAVE_SPEED=Wave speed
 
