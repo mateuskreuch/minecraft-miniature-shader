@@ -71,7 +71,7 @@ void main() {
    lightUV   = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
 
    #ifdef IRIS_FEATURE_BLOCK_EMISSION_ATTRIBUTE
-      lightSourceLevel = rescale(at_midBlock.w, 1.0, 15.0);
+      lightSourceLevel = at_midBlock.w < 16.0 ? at_midBlock.w / 15.0 : 0.0;
    #else
       lightSourceLevel = float(mc_Entity.x == 10068.0 || mc_Entity.x == 10072.0);
    #endif
