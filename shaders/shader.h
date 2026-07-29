@@ -54,6 +54,7 @@ const float sunPathRotation = 0.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.0 
 #define HIGHLIGHT_WAXED
 #define SHADOW_ENTITY 0 //[-1 0 1]
 #define ENABLE_SKY
+#define NETHER_COLOR_GRADING
 
 #ifdef OVERWORLD
    #define ENABLE_SHADOWS
@@ -71,6 +72,8 @@ const float sunPathRotation = 0.0; //[-90.0 -85.0 -80.0 -75.0 -70.0 -65.0 -60.0 
 #ifdef FLAT_LIGHTING
 #endif
 #ifdef SHADOW_ENTITY
+#endif
+#ifdef NETHER_COLOR_GRADING
 #endif
 
 //----------------------------------------------------------------------------//

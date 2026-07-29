@@ -117,6 +117,14 @@ void main() {
 
    albedo *= ambient;
 
+   #if defined THE_NETHER && defined NETHER_COLOR_GRADING
+      albedo.rgb = mix(
+         vec3(luma(albedo.rgb)),
+         albedo.rgb,
+         max(rescale(luma(ambient.rgb), 0.2, 0.6), rescale(albedoLuma, 0.15, 0.4))
+      );
+   #endif
+
    albedo.rgb = mix(albedo.rgb, gradientFogColor, fogMix);
 
    /* DRAWBUFFERS:067 */
