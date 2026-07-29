@@ -94,7 +94,7 @@ void main() {
    #endif
 
    #ifdef HIGHLIGHT_WAXED
-      color.rgb *= (heldItemId == 20008 || heldItemId2 == 20008) && mc_Entity.x == 20008.0 ? 0.4 : 1.0;
+      color.rgb *= (heldItemId == 20007 || heldItemId2 == 20007) && mc_Entity.x == 20007.0 ? 0.4 : 1.0;
    #endif
 
    bool isThin = mc_Entity.x == 10031.0 || mc_Entity.x == 10059.0
