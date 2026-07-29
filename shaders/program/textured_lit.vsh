@@ -119,7 +119,7 @@ void main() {
    #ifdef ENABLE_SHADOWS
       float skyLight = clamp(lightUV.t, 0.0, 1.0);
 
-      diffuse = getDiffuse(skyLight, isThin);
+      diffuse = getDiffuse(sunHeight, skyLight, isThin);
       lightColor = getLightColor(sunHeight, skyLight);
    #endif
 }
