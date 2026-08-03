@@ -69,11 +69,14 @@ void main() {
    color     = gl_Color;
    texUV     = (gl_TextureMatrix[0] * gl_MultiTexCoord0).st;
    lightUV   = (gl_TextureMatrix[1] * gl_MultiTexCoord1).st;
+   lightSourceLevel = float(mc_Entity.x == 10068.0 || mc_Entity.x == 10072.0 ||
+                            mc_Entity.x == 10076.0 || mc_Entity.x == 10496.0 ||
+                            mc_Entity.x == 10528.0 || mc_Entity.x == 10604.0 ||
+                            mc_Entity.x == 10652.0 || mc_Entity.x == 10656.0 ||
+                            mc_Entity.x == 10984.0);
 
    #ifdef IRIS_FEATURE_BLOCK_EMISSION_ATTRIBUTE
-      lightSourceLevel = at_midBlock.w < 16.0 ? at_midBlock.w / 15.0 : 0.0;
-   #else
-      lightSourceLevel = float(mc_Entity.x == 10068.0 || mc_Entity.x == 10072.0);
+      lightSourceLevel = max(lightSourceLevel, at_midBlock.w < 16.0 ? at_midBlock.w / 15.0 : 0.0);
    #endif
 
    #ifdef THE_END
@@ -107,7 +110,7 @@ void main() {
 
       color.rgb *= clamp(lightNormal.x * lightNormal.x * 0.6
                        + lightNormal.y * lightNormal.y * 0.25 * (3.0 + lightNormal.y)
-                       + lightNormal.z * lightNormal.z * 0.8, lightSourceLevel, 1.0);
+                       + lightNormal.z * lightNormal.z * 0.8, step(0.933, lightSourceLevel), 1.0);
    #endif
 
    feetPos = view2feet(getViewPosition());
