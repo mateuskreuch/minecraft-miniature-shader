@@ -104,7 +104,7 @@ void main() {
    #ifndef FLAT_LIGHTING
       vec3 lightNormal = gl_NormalMatrix * gl_Normal;
 
-      lightNormal = isThin ? vec3(0.0, 1.0, 0.0) : view2feet(lightNormal);
+      lightNormal = isThin ? vec3(0.0, 1.0, 0.0) : view2eye(lightNormal);
 
       color.rgb *= clamp(lightNormal.x * lightNormal.x * 0.6
                        + lightNormal.y * lightNormal.y * 0.25 * (3.0 + lightNormal.y)
