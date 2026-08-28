@@ -90,6 +90,7 @@ void main() {
 
    if (mc_Entity.x == 10068.0) { // lava
       color.rgb = mix(vec3(0.8, 0.5, 0.3), vec3(1.0), rescale(color.rgb, vec3(0.54), vec3(0.9)));
+      color.a = 1.0;
    }
 
    #ifdef GLOWING_ORES
